@@ -1,6 +1,7 @@
-import  "bootstrap/dist/css/bootstrap.min.css"
+//import  "bootstrap/dist/css/bootstrap.min.css"
+import "@/app/styles/custom-bootstrap.scss"
 import "./globals.css";
-//import "../styles/custom-bootstrap.scss";
+
 // import "../styles/swiper-bundle.min.css"
 // import "../styles/glightbox.min.css"
 // import "../styles/aos.css"
