@@ -1,0 +1,151 @@
+.arrow-down::before {
+    display: inline-block;
+    margin-left: .25rem;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    position: absolute;
+    right: 15px;
+      top: 15px;
+  }
+  
+  .arrow-up::before {
+    display: inline-block;
+    margin-left: .25rem;
+    vertical-align: .255em;
+    content: "";
+    border-top: 0;
+    border-right: .3em solid transparent;
+    border-bottom: .3em solid;
+    border-left: .3em solid transparent;
+    position: absolute;
+    right: 15px;
+      top: 15px;
+  }
+
+  .property-type-filter  {
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: #0c2339 !important;
+    position: relative;
+    padding: 1rem 0rem;
+  
+    color: #0c2339;
+      /* text-transform: uppercase; */
+      font-weight: 600;
+      font-size: 15px;
+  }
+  
+  .property-type-filter .selected {
+    display: block;
+    line-height: 1.2;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 400;
+    color: #72809D;
+  }
+  
+  .border-top {
+    border-top: 1px solid #e3e6f0 !important;
+}
+
+.selected-option {
+  padding: 10px 0;
+  border-top: 1px dashed rgba(20, 12, 64, .12);
+  width: 100%;
+  display: inline-block;
+  padding-left: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e1d85;
+  font-family: 'Jost', sans-serif;
+  background-color: #f8f8f8;
+}
+
+
+.options {
+  border-top: 1px dashed rgba(20, 12, 64, .12);
+  width: 100%;
+  display: inline-block;
+  padding: 10px 0 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #053864;
+  font-family: Jost, sans-serif;
+}
+
+
+.check-box-options {
+  padding: 10px 0;
+  border-top: 1px dashed rgba(20, 12, 64, .12);
+  width: 100%;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #053864;
+  font-family: 'Jost', sans-serif;
+}
+
+.selected-check-box-option {
+  padding: 10px 0;
+  border-top: 1px dashed rgba(20, 12, 64, .12);
+  width: 100%;
+  display: inline-block;
+  
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e1d85;
+  font-family: 'Jost', sans-serif;
+  background-color: #f8f8f8;
+}
+
+.options:hover {
+  color: #1e1d85;
+  background-color: #f8f8f8;
+}
+.sub-pro-type-wrapper {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.dis-color {
+  color: #00000061
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a74bb;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1a6aaa;
+}
+
+.switch-filter {
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: #0c2339 !important;
+  position: relative;
+  padding: 12px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #0c2339;
+  /* text-transform: uppercase; */
+  font-weight: 600;
+  font-size: 15px;
+}

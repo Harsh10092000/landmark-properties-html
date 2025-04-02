@@ -1,27 +1,14 @@
 import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
-import pool from "@/app/libs/mysql";
+// import pool from "@/app/libs/mysql";
 import Image from "next/image";
 import { ShowPrice } from "@/components/HelperComponents";
 
-const getData = async () => {
-  try {
-    const db = await pool;
-    const q = `SELECT DISTINCT property_module_images.* , property_module.* , agent_data.agent_type as user_type, agent_data.agent_name , agent_data.agent_sub_district, agent_data.agent_city, agent_data.agent_state FROM property_module left join property_module_images on 
-      property_module.pro_id = property_module_images.img_cnct_id left join (SELECT agent_type,user_cnct_id,agent_name ,agent_sub_district, agent_city, agent_state, agent_image FROM agent_module) as agent_data on 
-      property_module.pro_user_id = agent_data.user_cnct_id where pro_listed = 1 group by pro_id ORDER BY pro_id DESC limit 6`;
-    const [rows] = await db.query(q);
 
-    return { data: rows };
-  } catch (err) {
-    console.log("err : ", err);
-    return err;
-  }
-};
 
-const TrendingProperties = async () => {
-  const { data } = await getData();
+const TrendingProperties = ({data}) => {
+
   const currentUser = "";
   return (
     <section className="featured__section section--padding color-accent-2">
@@ -95,7 +82,7 @@ const TrendingProperties = async () => {
                           }`}
                           className="featured__thumbnail--img"
                           width={380}
-                          height={340}
+                          height={330}
                           loading="lazy"
                         />
                       </a>

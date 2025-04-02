@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Hero = () => {
+const Hero = ({propertyTypeOptions, propertyAdTypeOptions}) => {
   return (
     <div className="hero__section hero__section--bg4 color-accent-2">
             <div className="container-fluid">
@@ -25,9 +25,9 @@ const Hero = () => {
                             <div className="tab-content">
                                 <div className="tab-pane fade show active" id="buy">
                                     <div className="advance__search--inner d-flex">
-                                        <div className="advance__search--items">
+                                        {/* <div className="advance__search--items">
                                             <input className="advance__search--input" placeholder="Enter Keyword..." type="text" />
-                                        </div>
+                                        </div> */}
                                         <div className="advance__search--items">
                                             <select className="advance__search--select">
                                                 <option selected value="1">Property Type</option>

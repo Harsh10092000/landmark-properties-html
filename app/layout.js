@@ -1,7 +1,11 @@
 //import  "bootstrap/dist/css/bootstrap.min.css"
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import "@/app/styles/custom-bootstrap.scss"
 import "./globals.css";
-
+//import "../styles/custom.css";
+import "@/app/styles/custom.css"
 // import "../styles/swiper-bundle.min.css"
 // import "../styles/glightbox.min.css"
 // import "../styles/aos.css"

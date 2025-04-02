@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CityBanner = () => {
+const CityBanner = ({cityCount}) => {
   return (
     <section className="banner__section mb--n30">
     <div className="banner__step d-flex">
@@ -8,8 +8,8 @@ const CityBanner = () => {
             <div className="banner__thumbnail position-relative">
                 <a className="banner__thumbnail--link" href="listing-details.html"><picture><img className="banner__thumbnail--media" src="assets/img/banner/banner1.png" alt="img" /></picture></a>
                 <div className="banner__content">
-                    <h3 className="banner__content--title">Los Angeles</h3>
-                    <span className="banner__content--subtitle"> 20 Properties</span>
+                    <h3 className="banner__content--title">{cityCount[0].pro_city}</h3>
+                    <span className="banner__content--subtitle"> {cityCount[0].pro_city_number} Properties</span>
                 </div>
             </div>
         </div>
@@ -17,8 +17,8 @@ const CityBanner = () => {
             <div className="banner__thumbnail position-relative">
                 <a className="banner__thumbnail--link" href="listing-details.html"><picture><img className="banner__thumbnail--media" src="assets/img/banner/banner2.png" alt="img" /></picture></a>
                 <div className="banner__content">
-                    <h3 className="banner__content--title">Los Angeles</h3>
-                    <span className="banner__content--subtitle"> 20 Properties</span>
+                    <h3 className="banner__content--title">{cityCount[1].pro_city}</h3>
+                    <span className="banner__content--subtitle"> {cityCount[1].pro_city_number} Properties</span>
                 </div>
             </div>
         </div>
@@ -28,8 +28,8 @@ const CityBanner = () => {
             <div className="banner__thumbnail position-relative">
                 <a className="banner__thumbnail--link" href="listing-details.html"><picture><img className="banner__thumbnail--media" src="assets/img/banner/banner3.png" alt="img" /></picture></a>
                 <div className="banner__content">
-                    <h3 className="banner__content--title">Los Angeles</h3>
-                    <span className="banner__content--subtitle"> 20 Properties</span>
+                    <h3 className="banner__content--title">{cityCount[2].pro_city}</h3>
+                    <span className="banner__content--subtitle"> {cityCount[2].pro_city_number} Properties</span>
                 </div>
             </div>
         </div>
@@ -37,8 +37,8 @@ const CityBanner = () => {
             <div className="banner__thumbnail position-relative">
                 <a className="banner__thumbnail--link" href="listing-details.html"><picture><img className="banner__thumbnail--media" src="assets/img/banner/banner4.png" alt="img" /></picture></a>
                 <div className="banner__content">
-                    <h3 className="banner__content--title">Los Angeles</h3>
-                    <span className="banner__content--subtitle"> 20 Properties</span>
+                    <h3 className="banner__content--title">{cityCount[3].pro_city}</h3>
+                    <span className="banner__content--subtitle"> {cityCount[3].pro_city_number} Properties</span>
                 </div>
             </div>
         </div>

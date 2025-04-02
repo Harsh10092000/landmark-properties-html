@@ -629,7 +629,8 @@ hr {
 }
 
 .header__transparent {
-  position: absolute !important;
+  /* position: absolute !important; */
+  background-color: black;
   top: 0;
   left: 0;
   right: 0;
@@ -12917,3 +12918,67 @@ input[type=range]::-moz-range-thumb {
 }/*# sourceMappingURL=style.css.map */
 
 
+
+/* ####################### Added by me ####################### */
+.listing__small--hero__slider--items img {
+  width: 100%;
+  height: 100px; /* Adjust as needed */
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.swiper__nav--btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+/* Optional: Style for pagination dots */
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.8;
+}
+
+.swiper-pagination-bullet-active {
+  background: #FA4B4A;
+}
+
+/* .google-map {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: 20px 0px;
+} */
+
+.maplibregl-map {
+  height: 300px !important;
+  margin: 20px 0px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.pro-slug-space {
+  padding-left: 6px;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  object-fit: cover;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  filter: blur(5px) opacity(0.65);
+  z-index: -1;
+}
