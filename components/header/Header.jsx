@@ -71,7 +71,7 @@ const Header = () => {
                       </a>
                     </li>
                     <li className="main__menu--items">
-                      <a className="main__menu--link" href="blog.html">
+                      <a className="main__menu--link" href="allproperties">
                       Listing
                       </a>
                     </li>
