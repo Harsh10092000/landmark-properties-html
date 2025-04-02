@@ -21,6 +21,7 @@ const getData = async () => {
 
 const page = async ({ searchParams }) => {
   const currentUser = "";
+  
   let currentPage = searchParams["page"] || 1;
   const res = await getData(currentPage);
   const data = res.row;

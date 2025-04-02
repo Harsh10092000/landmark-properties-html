@@ -10,6 +10,8 @@ import FeaturedProperties from "@/components/propertyDetailPage/FeaturedProperti
 import FeaturedItems from "@/components/propertyDetailPage/FeaturedItems";
 import MoreProperties from "@/components/propertyDetailPage/MoreProperties";
 import DynmaicDesc from "@/components/propertyDetailPage/DynmaicDesc";
+import PropertiesAmenities from "@/components/propertyDetailPage/PropertiesAmenities";
+import PropertiesDetails from "@/components/propertyDetailPage/PropertiesDetails";
 
 
 const getData = async (slug, proId) => {
@@ -71,25 +73,28 @@ const page = async ({ params }) => {
     
   return (
     <>
-     <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-7">
+    <section className="listing__page--section section--padding" >
+     <div className="container">
+          <div className="row">
+            <div className="col-lg-6">
       <ProHero images={images} propertyData={propertyData} />
       </div>
-      <div  class="col-lg-5">
+      <div  className="col-lg-6">
       <ProDetail propertyData={propertyData} proSlug={arrproId}/>
-      <Detail2 propertyData={propertyData} />
-      {/* <Address mapdata={propertyData} /> */}
+      <div className="property-details-wrapper">
+      <PropertiesDetails />
+      </div>
+     
       </div>
       </div>
       </div>
-      <section class="listing__details--section section--padding">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="listing__details--wrapper">
+      <section className="listing__details--section section--padding">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8">
+              <div className="listing__details--wrapper">
                <ProDetail propertyData={propertyData} proSlug={arrproId}/>
-               <div class="listing__details--main__content">
+               <div className="listing__details--main__content">
                <div className="listing__details--content__step mb-80">
                 
                <DynmaicDesc data={propertyData}/>
@@ -97,15 +102,17 @@ const page = async ({ params }) => {
               
                {propertyData !== null && <>
                 <Detail2 propertyData={propertyData} />
+                <PropertiesDetails />
+                <PropertiesAmenities />
                     <Address mapdata={propertyData} />
                </>}
                    
                 </div>
               </div>
             </div>
-            <div class="col-lg-4">
+            <div className="col-lg-4">
             <MoreProperties />
-              <div class="pt-5 listing__widget">
+              <div className="pt-5 listing__widget">
                 <FeaturedProperties />
                 <FeaturedItems />
                 
@@ -118,6 +125,7 @@ const page = async ({ params }) => {
         </div>
         {/* <TrendingProperties data={latestProperty}  /> */}
         <Disclaimer />
+      </section>
       </section>
     </>
   );

@@ -2,6 +2,7 @@
 const nextConfig = {
     env: {
         webURL: "https://api.propertyease.in",
+        whatsappNumber: "919996716787"
         //webURL: "http://localhost:8010/",
       },
       images: {
