@@ -5,7 +5,7 @@ const Detail2 = ({propertyData}) => {
     
   return (
     <>
-       <div className="listing__details--content__step mb-80">
+       <div className="listing__details--content__step mt-30">
                                 
                                     
                                     <div className="apartment__info listing__d--info">

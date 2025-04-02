@@ -85,42 +85,8 @@ const ProHero = ({ images, propertyData }) => {
     } else {
       return (
         <div className="listing__hero--slider__items position-relative">
-             {/* <img
-                title="Click to Enlarge Image"
-                decoding="async"
-                width="438px"
-                height="304px"
-                className=" coursor-pointer bg-img"
-                src={
-                  process.env.webURL+
-                  "/propertyImages/watermark/" +
-                  images[0].img_link
-                }
-                alt={`/${
-                  propertyData.pro_area_size + " " + propertyData.pro_area_size_unit + " "
-                }
-                ${propertyData.pro_type ? propertyData.pro_type.split(",")[0] : ""} For ${
-                  " " + propertyData.pro_ad_type + " in " + propertyData.pro_city
-                }}`}
-              /> */}
-            {/* <img
-                title="Click to Enlarge Image"
-                decoding="async"
-                width="438px"
-                height="304px"
-                className=" coursor-pointer bg-img"
-                src={
-                  process.env.webURL+
-                  "/propertyImages/watermark/" +
-                  images[0].img_link
-                }
-                alt={`/${
-                  propertyData.pro_area_size + " " + propertyData.pro_area_size_unit + " "
-                }
-                ${propertyData.pro_type ? propertyData.pro_type.split(",")[0] : ""} For ${
-                  " " + propertyData.pro_ad_type + " in " + propertyData.pro_city
-                }}`}
-              /> */}
+             
+           
           <img 
             className="listing__hero--slider__media" 
            // src={images[0].img_link} 

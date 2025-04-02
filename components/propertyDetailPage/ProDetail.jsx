@@ -5,7 +5,7 @@ import moment from 'moment';
 const ProDetail = ({ propertyData, proSlug }) => {
   return (
     <div className="listing__details--content">
-    <div className="listing__details--content__top mb-25 d-flex align-items-center justify-content-between">
+    {/* <div className="listing__details--content__top mb-25 d-flex align-items-center justify-content-between">
         <div className="listing__details--meta">
             <ul className="listing__details--meta__wrapper d-flex align-items-center">
                 <li><span className="listing__details--badge">Featured</span></li>
@@ -81,7 +81,7 @@ const ProDetail = ({ propertyData, proSlug }) => {
               </a>
             </li>
         </ul>
-    </div>
+    </div> */}
     <div className="listing__details--content__step">
         <h2 className="listing__details--title mb-25">{proSlug
                                 .slice(0, proSlug.length - 1)

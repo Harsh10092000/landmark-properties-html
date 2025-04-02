@@ -1058,25 +1058,25 @@ body.overlay__active::before,
 
 /* Section padding */
 .section--padding {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 @media only screen and (min-width: 768px) {
   .section--padding {
-    padding-top: 7rem;
-    padding-bottom: 7rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 @media only screen and (min-width: 992px) {
   .section--padding {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
 }
 @media only screen and (min-width: 1200px) {
   .section--padding {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
   }
 }
 
@@ -10128,8 +10128,8 @@ input[type=range]::-moz-range-thumb {
 */
 .listing__small--hero__slider {
   position: absolute;
-  bottom: 3rem;
-  right: 4rem;
+  bottom: 2rem;
+  right: 2rem;
   max-width: 35rem;
   padding: 0 3rem;
 }
@@ -10145,15 +10145,15 @@ input[type=range]::-moz-range-thumb {
 }
 @media only screen and (min-width: 992px) {
   .listing__small--hero__slider {
-    bottom: 4rem;
-    right: 5rem;
+    bottom: 2rem;
+    right: 2rem;
     max-width: 38rem;
   }
 }
 @media only screen and (min-width: 1200px) {
   .listing__small--hero__slider {
-    bottom: 5rem;
-    right: 10rem;
+    bottom: 3rem;
+    right: 2rem;
     max-width: 50rem;
   }
 }
@@ -10176,6 +10176,8 @@ input[type=range]::-moz-range-thumb {
   -o-object-fit: cover;
      object-fit: cover;
   height: 25rem;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 @media only screen and (min-width: 480px) {
   .listing__hero--slider__media {
@@ -10758,21 +10760,21 @@ input[type=range]::-moz-range-thumb {
 }
 
 .listing__details--main__content {
-  padding: 6rem 0 0;
+  padding: 0rem 0 0;
 }
 @media only screen and (min-width: 768px) {
   .listing__details--main__content {
-    padding: 7rem 0 0 2rem;
+    padding: 4rem 0 0 2rem;
   }
 }
 @media only screen and (min-width: 992px) {
   .listing__details--main__content {
-    padding: 8rem 0 0 2rem;
+    padding: 5rem 0 0 2rem;
   }
 }
 @media only screen and (min-width: 1200px) {
   .listing__details--main__content {
-    padding: 8rem 3rem 0;
+    padding: 0rem 3rem 0;
   }
 }
 
