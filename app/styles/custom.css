@@ -201,3 +201,26 @@
 .next-prev-link {
   display: none;
 }
+
+.css-1lavjne-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background: red;
+    border-radius: 50% !important;
+    font-weight: 700 !important;
+    font-size: 17px !important;
+    color: white !important;
+}
+
+
+.css-1lavjne-MuiButtonBase-root-MuiPaginationItem-root {
+  border-radius: 50% !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    border: 1px solid #D9D9D9 !important;
+}
+.css-1lavjne-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: red !important;
+}
+
+.MuiPagination-ul.css-1c5o7vy-MuiPagination-ul {
+  gap: 4px;
+}
