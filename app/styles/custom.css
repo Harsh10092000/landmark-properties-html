@@ -224,3 +224,13 @@
 .MuiPagination-ul.css-1c5o7vy-MuiPagination-ul {
   gap: 4px;
 }
+
+.services__categories--text-new {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* .services__categories--arrow__icon-new {
+  width: 19px;
+  height: 19px;
+} */

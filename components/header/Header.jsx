@@ -5,7 +5,7 @@ const Header = () => {
   // Main menu items array
   const mainMenuItems = [
     { id: 1, label: "Home", href: "/", icon: <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#16A34A"/></svg> },
-    { id: 2, label: "Listing", href: "/allproperties" },
+    { id: 2, label: "All Properties", href: "/allproperties" },
     { id: 3, label: "About Us", href: "/aboutus" },
     { id: 4, label: "Contact Us", href: "/contactus" },
     { id: 5, label: "Sale", href: "/blog.html" },
@@ -14,22 +14,10 @@ const Header = () => {
 
   // Offcanvas menu items array with sub-menu support
   const offcanvasMenuItems = [
-    { id: 1, label: "Home", href: "/index.html" },
-    {
-      id: 2,
-      label: "Listing",
-      href: "/listing.html",
-      subMenu: [
-        { id: 1, label: "Listing Left Sidebar", href: "/listing.html" },
-        { id: 2, label: "Listing Right Sidebar", href: "/listing-right-sidebar.html" },
-        { id: 3, label: "Listing Grid", href: "/listing.html" },
-        { id: 4, label: "Listing List", href: "/listing-list.html" },
-        { id: 5, label: "Listing Details", href: "/listing-details.html" },
-      ],
-    },
-    { id: 3, label: "Properties", href: "/admin/my-properties.html" },
-    { id: 4, label: "About Us", href: "/blog.html" },
-    { id: 5, label: "Sale", href: "/blog.html" },
+    { id: 1, label: "Home", href: "/" },
+    { id: 3, label: "Properties", href: "/allproperties" },
+    { id: 4, label: "About Us", href: "/aboutus" },
+    { id: 5, label: "Contact Us", href: "/contactus" },
     { id: 6, label: "Rent", href: "/blog.html" },
     { id: 7, label: "Contact Us", href: "/blog.html" },
   ];
