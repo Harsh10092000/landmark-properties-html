@@ -1,11 +1,11 @@
 //import  "bootstrap/dist/css/bootstrap.min.css"
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import "@/app/styles/custom-bootstrap.scss"
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "@/app/styles/custom-bootstrap.scss";
 import "./globals.css";
 //import "../styles/custom.css";
-import "@/app/styles/custom.css"
+import "@/app/styles/custom.css";
 // import "../styles/swiper-bundle.min.css"
 // import "../styles/glightbox.min.css"
 // import "../styles/aos.css"
@@ -13,7 +13,7 @@ import AddBootstrap from "./AddBootstrap";
 import Header from "@/components/header/Header";
 import Head from "next/head";
 import Footer from "@/components/footer/Footer";
-
+import Providers from "./progressBarprovider";
 
 export const metadata = {
   title: "Create Next App",
@@ -24,16 +24,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Nunito:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
-      {/* <link rel="stylesheet" href="/assets/css/plugins/swiper-bundle.min.css" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Nunito:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"
+        />
+        {/* <link rel="stylesheet" href="/assets/css/plugins/swiper-bundle.min.css" />
         <link rel="stylesheet" href="/assets/css/plugins/glightbox.min.css" />
         <link rel="stylesheet" href="/assets/css/plugins/aos.css" /> */}
       </Head>
       <body>
         <AddBootstrap />
-        <Header />
-        {children}
-        <Footer />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

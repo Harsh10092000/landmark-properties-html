@@ -592,12 +592,13 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
 
               {/* ########### filter 2 ########### */}
               <div
-                className={`property-type-filter pointer position-relative border-top ${
-                  openProCategoryOptions ? "arrow-up" : "arrow-down"
-                }`}
-                onClick={() =>
-                  setOpenProCategoryOptions(!openProCategoryOptions)
-                }
+                className={`property-type-filter pointer position-relative border-top 
+                  
+                  `
+              }
+                // onClick={() =>
+                //   setOpenProCategoryOptions(!openProCategoryOptions)
+                // }
               >
                 <div>Property Types</div>
 

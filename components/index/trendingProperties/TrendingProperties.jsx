@@ -62,7 +62,7 @@ const TrendingProperties = ({data}) => {
                     <div className="media">
                       <Link
                         className="featured__thumbnail--link"
-                        href={pro_url}
+                        href={item.pro_url}
                       >
                         {/* <img
                             className="featured__thumbnail--img"
