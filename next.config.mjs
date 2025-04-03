@@ -4,17 +4,26 @@ const nextConfig = {
         webURL: "https://api.propertyease.in",
         whatsappNumber: "919996716787",
         secondNumber: "919050048884",
-        contactEmail: "propertieslandmark07@gmail.com"
+        contactEmail: "propertieslandmark07@gmail.com",
         //webURL: "http://localhost:8010/",
+        queryOnWhatsapp: "https://wa.me/919996716787?text=https://www.propertyease.in",
+        shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://propertyease.in"
       },
       images: {
+        // remotePatterns: [
+        //   {
+        //     protocol: 'https',
+        //     hostname: 'api.propertyease.in',
+        //     port: '',
+        //     // pathname: '/account123/**',
+        //     search: '',
+        //   },
+        // ],
         remotePatterns: [
           {
-            protocol: 'https',
+            protocol: "https",
             hostname: 'api.propertyease.in',
-            port: '',
-            // pathname: '/account123/**',
-            search: '',
+            pathname: "/propertyImages/watermark/**",
           },
         ],
       },

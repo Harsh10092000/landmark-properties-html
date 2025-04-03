@@ -94,7 +94,7 @@ const MostPopularCities = () => {
         <SwiperSlide key={property.id}>
           <article className="popular__featured--card">
             <div className="popular__featured--thumbnail position-relative">
-              <a className="popular__featured--link" href="listing-details.html">
+              <a className="popular__featured--link" href="/">
                 <img className="popular__featured--img" src={property.img} alt="popular-properties" />
               </a>
               <span className="popular__featured--badge">13</span>

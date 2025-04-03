@@ -8,8 +8,9 @@ const Header = () => {
     { id: 2, label: "All Properties", href: "/allproperties" },
     { id: 3, label: "About Us", href: "/aboutus" },
     { id: 4, label: "Contact Us", href: "/contactus" },
-    { id: 5, label: "Sale", href: "/blog.html" },
-    { id: 6, label: "Rent", href: "/blog.html" },
+    { id: 5, label: "Buy", href: "/blog" },
+    { id: 6, label: "Rent", href: "/blog" },
+    { id: 8, label: "Blog", href: "/blog" },
   ];
 
   // Offcanvas menu items array with sub-menu support
@@ -18,8 +19,9 @@ const Header = () => {
     { id: 3, label: "Properties", href: "/allproperties" },
     { id: 4, label: "About Us", href: "/aboutus" },
     { id: 5, label: "Contact Us", href: "/contactus" },
-    { id: 6, label: "Rent", href: "/blog.html" },
-    { id: 7, label: "Contact Us", href: "/blog.html" },
+    { id: 6, label: "Buy", href: "/blog" },
+    { id: 7, label: "Rent", href: "/blog" },
+    { id: 8, label: "Blog", href: "/blog" },
   ];
 
   // Social media links array
@@ -71,18 +73,10 @@ const Header = () => {
               </div>
               <div className="main__header--right d-flex align-items-center">
                 <div className="header__account d-flex align-items-center">
-                  <ul className="header__author d-flex">
-                    {[1, 2, 3].map((num) => (
-                      <li key={num} className="header__author--list">
-                        <picture>
-                          <img src={`/assets/img/other/header-author${num}.png`} alt="img" />
-                        </picture>
-                      </li>
-                    ))}
-                  </ul>
+                  
                   <ul className="header__account--icon d-flex">
                     <li className="header__account--icon__list">
-                      <Link className="header__account--icon__link" href="/login.html">
+                      <Link className="header__account--icon__link" href="/login">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-users">
                           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                           <circle cx="9" cy="7" r="4"></circle>
@@ -92,25 +86,10 @@ const Header = () => {
                         <span className="visually-hidden">My Account</span>
                       </Link>
                     </li>
-                    <li className="header__account--icon__list">
-                      <Link className="header__account--icon__link search__open--btn" href="javascript:void(0)" data-offcanvas>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clipPath="url(#clip0_46_1375)">
-                            <path d="M8.80758 0C3.95121 0 0 3.95121 0 8.80758C0 13.6642 3.95121 17.6152 8.80758 17.6152C13.6642 17.6152 17.6152 13.6642 17.6152 8.80758C17.6152 3.95121 13.6642 0 8.80758 0ZM8.80758 15.9892C4.84769 15.9892 1.62602 12.7675 1.62602 8.80762C1.62602 4.84773 4.84769 1.62602 8.80758 1.62602C12.7675 1.62602 15.9891 4.84769 15.9891 8.80758C15.9891 12.7675 12.7675 15.9892 8.80758 15.9892Z" fill="currentColor" />
-                            <path d="M19.762 18.6124L15.1007 13.9511C14.7831 13.6335 14.2687 13.6335 13.9511 13.9511C13.6335 14.2684 13.6335 14.7834 13.9511 15.1007L18.6124 19.762C18.7711 19.9208 18.979 20.0002 19.1872 20.0002C19.395 20.0002 19.6031 19.9208 19.762 19.762C20.0796 19.4446 20.0796 18.9297 19.762 18.6124Z" fill="currentColor" />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_46_1375">
-                              <rect width="20" height="20" fill="currentColor" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                        <span className="visually-hidden">Search</span>
-                      </Link>
-                    </li>
+                   
                   </ul>
                 </div>
-                <Link className="add__listing--btn solid__btn" href="/admin/create-listing.html">
+                <Link className="add__listing--btn solid__btn" href="/">
                   <span>Add Listing</span>{" "}
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 15.9992C12.4111 15.9992 16 12.4105 16 7.99962C16 3.58875 12.411 0 8 0C3.58901 0 0 3.58875 0 7.99962C0 12.4105 3.58901 15.9992 8 15.9992ZM4.19508 7.57155H7.57197V4.19439C7.57197 3.95805 7.76381 3.76636 8 3.76636C8.23634 3.76636 8.42804 3.95821 8.42804 4.19439V7.57155H11.8049C12.0413 7.57155 12.233 7.7634 12.233 7.99958C12.233 8.23592 12.0411 8.42762 11.8049 8.42762H8.42804V11.8046C8.42804 12.041 8.23619 12.2327 8 12.2327C7.76366 12.2327 7.57197 12.0408 7.57197 11.8046V8.42762H4.19508C3.95874 8.42762 3.76704 8.23577 3.76704 7.99958C3.76704 7.76324 3.9586 7.57155 4.19508 7.57155Z" fill="white" />
@@ -154,7 +133,7 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-          <Link className="add__listing--btn offcanvas__listing--btn solid__btn" href="/admin/create-listing.html">
+          <Link className="add__listing--btn offcanvas__listing--btn solid__btn" href="/">
             <span>Add Listing</span>{" "}
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 15.9992C12.4111 15.9992 16 12.4105 16 7.99962C16 3.58875 12.411 0 8 0C3.58901 0 0 3.58875 0 7.99962C0 12.4105 3.58901 15.9992 8 15.9992ZM4.19508 7.57155H7.57197V4.19439C7.57197 3.95805 7.76381 3.76636 8 3.76636C8.23634 3.76636 8.42804 3.95821 8.42804 4.19439V7.57155H11.8049C12.0413 7.57155 12.233 7.7634 12.233 7.99958C12.233 8.23592 12.0411 8.42762 11.8049 8.42762H8.42804V11.8046C8.42804 12.041 8.23619 12.2327 8 12.2327C7.76366 12.2327 7.57197 12.0408 7.57197 11.8046V8.42762H4.19508C3.95874 8.42762 3.76704 8.23577 3.76704 7.99958C3.76704 7.76324 3.9586 7.57155 4.19508 7.57155Z" fill="white" />

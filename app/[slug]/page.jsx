@@ -113,7 +113,8 @@ const page = async ({ params }) => {
                 <MoreProperties />
                 <div className="pt-5 listing__widget">
                   <FeaturedProperties />
-                  <FeaturedItems />
+                  <FeaturedProperties />
+                  {/* <FeaturedItems /> */}
                 </div>
               </div>
             </div>

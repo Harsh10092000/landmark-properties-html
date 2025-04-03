@@ -89,7 +89,7 @@ const Section1 = () => {
                     </div>
                 </div>
                 {/* <div class="about__content--footer d-flex align-items-center">
-                    <a class="solid__btn" href="about.html">More about us</a>
+                    <a class="solid__btn" href="/aboutus">More about us</a>
                     <div class="about__video--play">
                         <a class="about__video--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
                             <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">

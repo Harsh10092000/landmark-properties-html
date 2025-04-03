@@ -234,3 +234,12 @@
   width: 19px;
   height: 19px;
 } */
+
+
+.listing__details--action__btn-new {
+  width: 90px;
+}
+
+.listing__details--action__btn-new svg {
+  margin-left: 7px;
+}

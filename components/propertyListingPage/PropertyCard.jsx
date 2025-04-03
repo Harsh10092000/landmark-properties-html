@@ -101,10 +101,11 @@ const PropertyCard = ({ item, index }) => {
                         </a>
                       </li>
                       <li class="featured__share--btn__list position-relative">
+                        {console.log("process.env.queryOnWhatsapp : " , process.env.queryOnWhatsapp)}
                         <Link
-                          class="featured__share--btn"
-                          //href={`{https://wa.me/${process.env.whatsappNumber}?text=https://www.propertyease.in/${item.pro_url}`}\
-                          href={`https://wa.me/${process.env.whatsappNumber}?text=https://www.propertyease.in/${item.pro_url}`}
+                          class="featured__share--btn"         
+                          // href={`https://wa.me/${process.env.whatsappNumber}?text=https://www.propertyease.in/${item.pro_url}`}
+                          href={`${process.env.queryOnWhatsapp}${item.pro_url}`}
                           // aria-label="share button"
                           // aria-expanded="false"
                           // data-bs-toggle="dropdown"
