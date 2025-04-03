@@ -890,11 +890,11 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
         }}
       >
         <option value="Recent Listed">Recently Listed</option>
-        <option value="Newest">Newest</option>
+        {/* <option value="Newest">Newest</option> */}
         <option value="Most Popular">Most Popular</option>
-        <option value="Best Match">Best Match</option>
+        {/* <option value="Best Match">Best Match</option>
         <option value="Price Low">Price Low</option>
-        <option value="Price High">Price High</option>
+        <option value="Price High">Price High</option> */}
       </select>
                 </div>
               </div>
@@ -907,11 +907,11 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
             ))}
         </div>
         {currentPage > 1 && (
-          <a href={`/allproperties?page=${parseInt(currentPage) - 1}`}>Prev</a>
+          <a className="next-prev-link" href={`/allproperties?page=${parseInt(currentPage) - 1}`}>Prev</a>
         )}
         <PaginationComp Pages={nPages} currentPage={currentPage} />
         {currentPage < 16 && (
-          <a href={`/allproperties?page=${parseInt(currentPage) + 1}`}>Next</a>
+          <a className="next-prev-link" href={`/allproperties?page=${parseInt(currentPage) + 1}`}>Next</a>
         )}
       </div>
     </section>

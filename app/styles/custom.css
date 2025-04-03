@@ -198,3 +198,6 @@
 .swiper-button-prev svg, .swiper-button-next svg {
   width: 16px !important;
 }
+.next-prev-link {
+  display: none;
+}

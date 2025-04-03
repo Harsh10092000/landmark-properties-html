@@ -1,5 +1,4 @@
 "use client";
-import PaginationComp from "@/components/propertyListingPage/PaginationComp";
 import PropertyCard from "@/components/propertyListingPage/PropertyCard";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Switch } from "@mui/material";
@@ -12,11 +11,6 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   // const a = searchParams.get("page");
   // console.log("a : " , a);
   const url = `/properties/${cat}`;
-  const [tempCurrPage, setTempCurrPage] = useState(currentPage);
-  // useEffect(() => {
-  //   setTempCurrPage(currentPage);
-  // }, [currentPage]);
-
   //const [data , setData] = useState([]);
   const [openSortByOptions, setOpenSortByOptions] = useState(false);
   const [sortBy, setSortBy] = useState("Recent Listed");
@@ -891,11 +885,11 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
         }}
       >
         <option value="Recent Listed">Recently Listed</option>
-        <option value="Newest">Newest</option>
+        {/* <option value="Newest">Newest</option> */}
         <option value="Most Popular">Most Popular</option>
-        <option value="Best Match">Best Match</option>
+        {/* <option value="Best Match">Best Match</option>
         <option value="Price Low">Price Low</option>
-        <option value="Price High">Price High</option>
+        <option value="Price High">Price High</option> */}
       </select>
                 </div>
               </div>
@@ -908,11 +902,11 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
             ))}
         </div>
         {currentPage > 1 && (
-          <a href={`${url}?page=${parseInt(currentPage) - 1}`}>Prev</a>
+          <a className="next-prev-link" href={`${url}?page=${parseInt(currentPage) - 1}`}>Prev</a>
         )}
         <PaginationComponent Pages={nPages} currentPage={currentPage} url={url} />
         {currentPage < 16 && (
-          <a href={`${url}?page=${parseInt(currentPage) + 1}`}>Next</a>
+          <a className="next-prev-link" href={`${url}?page=${parseInt(currentPage) + 1}`}>Next</a>
         )}
       </div>
     </section>
