@@ -86,7 +86,7 @@ const PropertiesCategories = () => {
                 <div className="categories__thumbnail text-center">
                   <img src={category.image} alt="categories-img" />
                 </div>
-                <span className="categories__badge">{category.count}</span>
+                {/* <span className="categories__badge">{category.count}</span> */}
                 <div className="categories__content text-center">
                   <h3 className="categories__title">
                     <Link href={category.link}>{category.title}</Link>
