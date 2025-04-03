@@ -48,7 +48,7 @@ const Footer = () => {
                         <div className="footer__widget--inner">
                             <div className="footer__logo">
                                 <a className="footer__logo--link display-block" href="index.html">
-                                <picture><img className="footer__logo--img" src="assets/img/logo/nav-log2-white.png" alt="logo-img" /></picture>
+                                <picture><img className="footer__logo--img" src="/assets/img/logo/nav-log2-white.png" alt="logo-img" /></picture>
                                 </a>
                             </div>
                             <p className="footer__widget--desc">Our trusted partner in navigating the property market with ease and confidence.</p>
@@ -196,7 +196,7 @@ const Footer = () => {
             <div className="footer__bottom--inner d-flex justify-content-between align-items-center">
                 <p className="copyright__content mb-0"><span className="text__secondary">© 2025</span> Powered By <a className="copyright__content--link" target="_blank" href="#">CAL info</a> .  All Rights Reserved.</p>
                 <div className="footer__payment">
-                    <picture><img src="assets/img/icon/payment-img.png" alt="payment-img" /></picture>
+                    <picture><img src="/assets/img/icon/payment-img.png" alt="payment-img" /></picture>
                 </div>
                 <ul className="footer__bottom--menu d-flex">
                     <li><a href="admin/create-listing.html">Terms of Use</a></li>
