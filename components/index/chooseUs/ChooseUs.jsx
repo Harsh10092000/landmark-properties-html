@@ -16,25 +16,25 @@ const ChooseUs = () => {
                         </clipPath>
                         </defs>
                         </svg>
-                        Real estate agency</h3>
-                    <h2 className="section__heading--title">Looking for to buy a property?</h2>
+                        Landmark Properties</h3>
+                    <h2 className="section__heading--title">Ghar Se Zyada, Aapka Vishwas</h2>
                 </div>
                 <div className="contact__property--inner d-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                     <div className="contact__property--content">
-                        <p className="contact__property--desc">Browse our property listing and find your best With over 1 million+ homes for sale available on the website you with a house you will want to call home. and </p>
+                        <p className="contact__property--desc">Find your dream home from our wide selection of properties. We’re here to help you discover a place that truly feels like home. </p>
                         <ul className="contact__property--info">
                             <li className="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor"></path>
                                 </svg>
-                                 Living rooms are pre-wired for Surround</li>
+                                We start by understanding your needs and preferences</li>
                             <li className="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor"></path>
                                 </svg>
-                                Luxurious interior design and amenities</li>
+                                We provide a curated list of matching properties</li>
                             <li className="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor"></path>
                                 </svg>
-                                Nestled in the Buckhead</li>
+                                Finally, we guide you through viewings and paperwork</li>
                         </ul>
                         <div className="contact__property--thumb">
                         <picture> <img src="assets/img/other/contact-property-thumb2.png" alt="img" /></picture>

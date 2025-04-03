@@ -17,12 +17,11 @@ const PropertyByType = ({subData}) => {
                     </clipPath>
                     </defs>
                     </svg>
-                    Trusted Real estate Care</h3>
+                    We care for your real estate needs with trust</h3>
                 <h2 className="section__heading--title">Property By Type</h2>
             </div>
             <div className="section__heading--right">
-                <p className="section__heading--desc m-0">Our company provides a full range of services for the construction of
-                    private houses and cottages since 19
+                <p className="section__heading--desc m-0">Our company has been offering a complete range of services, including the buying, selling, and renting of residential properties, agricultural lands, and commercial spaces.
                 </p>
             </div>
         </div>

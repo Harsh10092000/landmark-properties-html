@@ -3,11 +3,12 @@ import ChooseUs from '@/components/index/chooseUs/ChooseUs'
 import CityBanner from '@/components/index/cityBanner/CityBanner'
 import Hero from '@/components/index/hero/Hero'
 import PropertyByType from '@/components/index/propertyByType/PropertyByType'
-import Reviews from '@/components/index/reviews/Reviews'
+//import Reviews from '@/components/index/reviews/Reviews'
 import Services from '@/components/index/services/Services'
 import TrendingProperties from '@/components/index/trendingProperties/TrendingProperties'
 import React from 'react'
 import pool from './libs/mysql'
+import Reviews from '@/components/common/Reviews'
 
 const getData = async () => {
   try {
@@ -58,7 +59,7 @@ const page = async () => {
       <ChooseUs />
       <PropertyByType subData={subData} />
       <CityBanner cityCount={cityCount} />
-      <Reviews />
+     <Reviews />
     </>
   )
 }

@@ -190,3 +190,11 @@
 .swiper-pagination-bullets {
   display: none;
 }
+
+.listing__hero--slider__media {
+  margin: 0 auto;
+}
+
+.swiper-button-prev svg, .swiper-button-next svg {
+  width: 16px !important;
+}

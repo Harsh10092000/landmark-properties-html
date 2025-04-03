@@ -58,9 +58,11 @@
   --color-foreground: #26232A;
   --color-foreground-sub: #5E5F63;
   --color-border: #D9D9D9;
-  --color-hover: #FA4A4A;
+  --color-hover: #16A34A; 
   --color-white: #fff;
 }
+
+/* --color-hover: #FA4A4A; */
 
 .color-offwhite {
   --color-foreground: #B4B4B4;

@@ -51,7 +51,7 @@ const Reviews = () => {
         >
           <h2 className="section__heading--title">What our customers are saying</h2>
           <p className="section__heading--desc">
-            We make sure you have a fine distance with the <br /> sickness. We make you never lose hope.
+          We guide you through every step of the property journey, ensuring you never lose sight of your <br /> goals, whether it’s a home, land, or investment.
           </p>
         </div>
         <div className="testimonial__container position-relative" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">

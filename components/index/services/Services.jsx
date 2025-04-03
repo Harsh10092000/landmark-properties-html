@@ -5,9 +5,14 @@ const Services = () => {
 <section class="categories__section section--padding">
             <div class="container">
                 <div class="section__heading text-center mb-50 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="50">
-                    <h2 class="section__heading--title">Services Offered</h2>
-                    <p class="section__heading--desc">We offer a variety of real estate services, including buying, selling, renting, and property management. As the best property dealer in town, our experts guide you through the market and help you reach your goals. </p>
+                    <h2 class="section__heading--title">Our Services</h2>
+                    <p class="section__heading--desc">At Landmark Properties, we offer a comprehensive range of services to meet all your real estate needs. Whether you're looking to buy, sell, or rent, we are here to make the process seamless and stress-free.
+                    </p>
                 </div>
+
+
+
+
                 <div class="categories__inner color-accent-2 row mb--n30">
                     <div class="col-lg-4 col-md-6 col-sm-6 mb-30 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
                         <div class="commercia__categories--box">
@@ -17,8 +22,8 @@ const Services = () => {
                                 </svg>                                    
                             </span>
                             <div class="commercia__categories--content text-center">
-                                <h3 class="commercia__categories--title">Buyer Guides</h3>
-                                <p class="commercia__categories--desc">Nurture valuable leads into customers, and turn one time.</p>
+                                <h3 class="commercia__categories--title">Expert Guidance</h3>
+                                <p class="commercia__categories--desc">We help you find the perfect home, whether it's your first purchase or your next investment.</p>
                             </div>
                         </div>
                     </div>
@@ -31,8 +36,8 @@ const Services = () => {
                                                                        
                             </span>
                             <div class="commercia__categories--content text-center">
-                                <h3 class="commercia__categories--title">Renter Guides</h3>
-                                <p class="commercia__categories--desc">Build brand awareness on the top social media networks.</p>
+                                <h3 class="commercia__categories--title">Wide Selection</h3>
+                                <p class="commercia__categories--desc">A diverse range of properties to suit your needs and preferences, from luxurious homes to affordable options.</p>
                             </div>
                         </div>
                     </div>
@@ -51,8 +56,8 @@ const Services = () => {
                                 </svg>                                                                       
                             </span>
                             <div class="commercia__categories--content text-center">
-                                <h3 class="commercia__categories--title">Seller Guides</h3>
-                                <p class="commercia__categories--desc">Get professionally-written content that attracts qualified.</p>
+                                <h3 class="commercia__categories--title">Reliable Services</h3>
+                                <p class="commercia__categories--desc">Our experienced team ensures your property is always in top condition, minimizing any issues.</p>
                             </div>
                         </div>
                     </div>

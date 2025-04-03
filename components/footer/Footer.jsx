@@ -51,8 +51,7 @@ const Footer = () => {
                                 <picture><img className="footer__logo--img" src="assets/img/logo/nav-log2-white.png" alt="logo-img" /></picture>
                                 </a>
                             </div>
-                            <p className="footer__widget--desc">The world’s first and largest digital market 
-                                for crypto collectibles and non-fungible (NFTs). Buy</p>
+                            <p className="footer__widget--desc">Our trusted partner in navigating the property market with ease and confidence.</p>
                             <ul className="footer__widget--info">
                                 <li className="footer__widget--info_list">
                                     <svg className="footer__widget--info__icon" width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">

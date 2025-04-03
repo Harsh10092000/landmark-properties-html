@@ -7,12 +7,16 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions}) => {
                 <div className="hero__section--inner__style4">
                     <div className="hero__section--wrapper" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
                         <div className="hero__content text-center">
-                            <p className="hero__content--desc">More than <span className="color-hover">1000+</span> house avaiable for sell & rent in country</p>
+                            <p className="hero__content--desc">Where Homes Are, There’s a Landmark <span className="color-hover">Landmark</span></p>
                         <h2 className="hero__content--title h1">Find Your <span className="color-hover">Dream</span> Home</h2>
                         </div>
                         
                         <div className="advance__search--filter">
                             <ul className="nav advance__tab--btn justify-content-center">
+                            <li className="nav-item advance__tab--btn__list">
+                                    <button className="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#rent" type="button">
+                                        Sell</button>
+                                </li>
                                 <li className="nav-item advance__tab--btn__list">
                                     <button className="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
                                     </button>
@@ -21,6 +25,7 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions}) => {
                                     <button className="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#rent" type="button">
                                         Rent</button>
                                 </li>
+                               
                             </ul>
                             <div className="tab-content">
                                 <div className="tab-pane fade show active" id="buy">

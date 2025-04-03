@@ -36,14 +36,14 @@ const Header = () => {
                     <picture>
                     <img
                       className="main__logo--img sticky__none"
-                      src="assets/img/logo/nav-log3.png"
+                      src="/assets/img/logo/nav-log3.png"
                       alt="logo-img"
                     />
                     </picture>
                     <picture>
                     <img
                       className="main__logo--img sticky__block"
-                      src="assets/img/logo/nav-log2.png"
+                      src="/assets/img/logo/nav-log2.png"
                       alt="logo-img"
                     />
                     </picture>
@@ -54,7 +54,7 @@ const Header = () => {
                 <nav className="main__menu--navigation">
                   <ul className="main__menu--wrapper d-flex">
                     <li className="main__menu--items">
-                      <a className="main__menu--link" href="index.html">
+                      <a className="main__menu--link" href="/">
                         <svg
                           width="11"
                           height="11"
@@ -75,24 +75,16 @@ const Header = () => {
                       Listing
                       </a>
                     </li>
-                    <li className="main__menu--items">
-                      <a
-                        className="main__menu--link"
-                        href="admin/my-properties.html"
-                      >
-                        {" "}
-                        Properties{" "}
-                      </a>
-                    </li>
+                   
                   
                     <li className="main__menu--items">
-                      <a className="main__menu--link" href="blog.html">
+                      <a className="main__menu--link" href="aboutus">
                       About Us
                       </a>
                     </li>
                  
                     <li className="main__menu--items">
-                      <a className="main__menu--link" href="blog.html">
+                      <a className="main__menu--link" href="contactus">
                       Contact Us
                       </a>
                     </li>
@@ -118,7 +110,7 @@ const Header = () => {
                     <li className="header__author--list">
                     <picture>
                       <img
-                        src="assets/img/other/header-author1.png"
+                        src="/assets/img/other/header-author1.png"
                         alt="img"
                       />
                       </picture>
@@ -126,7 +118,7 @@ const Header = () => {
                     <li className="header__author--list">
                     <picture>
                       <img
-                        src="assets/img/other/header-author2.png"
+                        src="/assets/img/other/header-author2.png"
                         alt="img"
                       />
                      </picture>
@@ -134,7 +126,7 @@ const Header = () => {
                     <li className="header__author--list">
                     <picture>
                       <img
-                        src="assets/img/other/header-author3.png"
+                        src="/assets/img/other/header-author3.png"
                         alt="img"
                       />
                      </picture>
@@ -230,7 +222,7 @@ const Header = () => {
             <div className="offcanvas__logo">
                 <a className="offcanvas__logo_link" href="index.html">
                 <picture>
-                    <img src="assets/img/logo/nav-log2.png" alt="Logo-img" width="158" height="36" />
+                    <img src="/assets/img/logo/nav-log2.png" alt="Logo-img" width="158" height="36" />
                     </picture>
                 </a>
                 <button className="offcanvas__close--btn" data-offcanvas>close</button>
