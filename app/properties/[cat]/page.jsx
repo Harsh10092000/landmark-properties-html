@@ -35,7 +35,7 @@ const page = async ({ params, searchParams }) => {
 
   const currentUser = "";
 
-  let currentPage = searchParams["page"] || 1;
+  let currentPage = await searchParams["page"] || 1;
   const res = await getData(currentPage);
   const data = res.row;
   const recordsPerPage = 12;

@@ -35,6 +35,8 @@
 /*
     1. Base CSS
 */
+
+
 :root {
   --font-body-family: "Nunito", sans-serif;
   --font-heading-family: "Inter", sans-serif;
@@ -9951,7 +9953,7 @@ input[type=range]::-moz-range-thumb {
   height: 4.5rem;
   line-height: 4.5rem;
   padding: 0 2rem;
-  background: rgba(250, 74, 74, 0.1);
+  background: #16a34a26;
   color: var(--color-hover);
   border-radius: 0.5rem;
 }

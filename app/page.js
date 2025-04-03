@@ -9,6 +9,7 @@ import TrendingProperties from '@/components/index/trendingProperties/TrendingPr
 import React from 'react'
 import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
+import PropertiesCategories from '@/components/about/PropertiesCategories'
 
 const getData = async () => {
   try {
@@ -56,6 +57,7 @@ const page = async () => {
       <About />
       <TrendingProperties data={data}  />
       <Services />
+      <PropertiesCategories />
       <ChooseUs />
       <PropertyByType subData={subData} />
       <CityBanner cityCount={cityCount} />
