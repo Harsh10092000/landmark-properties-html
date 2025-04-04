@@ -57,12 +57,13 @@ const FeaturedProperties = async () => {
       <Link href={data.pro_url}>
         <div className="widget__featured--properties__thumbnail position-relative">
            
-        <img
+        <Image
                                         src={
                                           data.img_link
                                             ? `${process.env.webURL}/propertyImages/watermark/${data.img_link}`
                                             : "/images/default4.webp"
                                         }
+                                        //src={"https://api.propertyease.in/propertyImages/watermark/1742089191304-sector%2034%20map.jpg"}
                                         alt={`${data.pro_type.split(",")[0]} in ${
                                           data.pro_city
                                         }`}

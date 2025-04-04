@@ -1,13 +1,13 @@
 import Link from "next/link";
 import React from "react";
-
+import Image from "next/image";
 const PropertiesCategories = () => {
   // Array of category data
   const categories = [
     {
       id: 1,
       title: "Land Properties",
-      image: "assets/img/other/categories1.png",
+      image: "/assets/img/other/categories1.png",
       count: 13,
       description:
         "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
@@ -17,7 +17,7 @@ const PropertiesCategories = () => {
     {
       id: 2,
       title: "Residential Properties",
-      image: "assets/img/other/categories2.png",
+      image: "/assets/img/other/categories2.png",
       count: 24,
       description:
         "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
@@ -27,7 +27,7 @@ const PropertiesCategories = () => {
     {
       id: 3,
       title: "Commercial Properties",
-      image: "assets/img/other/categories3.png",
+      image: "/assets/img/other/categories3.png",
       count: 43,
       description:
         "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
@@ -84,7 +84,9 @@ const PropertiesCategories = () => {
             >
               <div className="categories__box">
                 <div className="categories__thumbnail text-center">
-                  <img src={category.image} alt="categories-img" />
+                  <Image src={category.image}  alt="categories-img" width={200}
+                          height={165}
+                          loading="lazy" />
                 </div>
                 {/* <span className="categories__badge">{category.count}</span> */}
                 <div className="categories__content text-center">
