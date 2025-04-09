@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin
+Disallow: /api
+Disallow: /assets
+Disallow: /images
+Disallow: /.next
+Disallow: /user
+Disallow: /property-profile
+Sitemap: https://landmark-properties-html.vercel.app/sitemap.xml
+Allow: /mapImages/
