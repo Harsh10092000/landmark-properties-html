@@ -53,7 +53,7 @@ const page = async () => {
   const { data, subData, cityCount } = await getData();
   return (
     <>
-      <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions}/>
+      <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions} data={data}  />
       <About />
       <TrendingProperties data={data}  />
       <Services />

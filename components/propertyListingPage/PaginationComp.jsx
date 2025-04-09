@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import { Pagination } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
+import { AppProgressBar } from "next-nprogress-bar";
 
 const PaginationComp = (props) => {
   const router = useRouter();
@@ -46,6 +47,12 @@ const PaginationComp = (props) => {
       {/* <span>
         <Link href={prevPage}>Prev</Link>
       </span> */}
+      <AppProgressBar
+        height="4px"
+        color="red"
+        options={{ showSpinner: false }}
+        shallowRouting={false}
+      />
     <Pagination
       count={parseInt(props.Pages)}
       size="large"

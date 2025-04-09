@@ -1,4 +1,3 @@
-
 import React from "react";
 import pool from "@/app/libs/mysql";
 import Page2 from "./page2";
@@ -25,17 +24,51 @@ const page = async ({ params, searchParams }) => {
     return <div>Invalid Property ID</div>;
   }
 
-  
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
-  
-  const arrproId = cat.split("-");
-  const catType = capitalizeFirstLetter(arrproId[0]);
+  //const arrproId = cat.split("-");
+  let arrproId = [];
+  let location = "";
+  let adType = "All Properties";
+  let location_len = "";
+  let catType = "";
+ 
+  if (
+    cat === "commercial-properties" ||
+    cat === "land-properties" ||
+    cat === "residential-properties"
+  ) {
+    arrproId = cat.split("-");
+    catType = capitalizeFirstLetter(arrproId[0]);
+  } else if (cat.startsWith("properties-for-sale-in")) {
+    location_len = cat.substring("properties-for-sale-in-".length);
+
+    adType = "Sale";
+    if (location_len.includes("-")) {
+      location = location_len
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    } else {
+      location = location_len.charAt(0).toUpperCase() + location_len.slice(1);
+    }
+  } else if (cat.startsWith("properties-for-rent-in")) {
+    adType = "Rent";
+    location_len = cat.substring("properties-for-rent-in-".length);
+    if (location_len.includes("-")) {
+      location = location_len
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    } else {
+      location = location_len.charAt(0).toUpperCase() + location_len.slice(1);
+    }
+  }
 
   const currentUser = "";
 
-  let currentPage = await searchParams["page"] || 1;
+  let currentPage = (await searchParams["page"]) || 1;
   const res = await getData(currentPage);
   const data = res.row;
   const recordsPerPage = 12;
@@ -61,7 +94,16 @@ const page = async ({ params, searchParams }) => {
         ))}
       </div>
 
-      <Page2 data={data}  currentUser={currentUser} recordsPerPage={recordsPerPage} currentPage={currentPage} catType={catType} cat={cat}/>
+      <Page2
+        data={data}
+        currentUser={currentUser}
+        recordsPerPage={recordsPerPage}
+        currentPage={currentPage}
+        catType={catType}
+        cat={cat}
+        adType={adType}
+        location={location}
+      />
     </div>
   );
 };

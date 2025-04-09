@@ -4,32 +4,24 @@ import PropertyCard from "@/components/propertyListingPage/PropertyCard";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Switch } from "@mui/material";
 import { IconSquareCheckFilled, IconSquare, IconX } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
-  // const searchParams = useSearchParams();
-  // const a = searchParams.get("page");
-  // console.log("a : " , a);
+  const searchParams = useSearchParams();
+  const searchVal = searchParams.get("search") || null;
+  const proadtype = searchParams.get("proadtype") || null;
+  const procat = searchParams.get("procat") || null;
 
-  const [tempCurrPage, setTempCurrPage] = useState(currentPage);
-  // useEffect(() => {
-  //   setTempCurrPage(currentPage);
-  // }, [currentPage]);
 
-  //const [data , setData] = useState([]);
   const [openSortByOptions, setOpenSortByOptions] = useState(false);
   const [sortBy, setSortBy] = useState("Recent Listed");
-  //const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue1, setSearchValue1] = useState("");
-  const [openPropertyAdTypeOptions, setOpenPropertyAdTypeOptions] =
-    useState(false);
+  const [openPropertyAdTypeOptions, setOpenPropertyAdTypeOptions] = useState(false);
   const [change, setChange] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState();
   const [openSuggestions, setOpenSuggestions] = useState(false);
   const [sortedUsers, setSortedUsers] = useState([]);
-  //const [nPages , setNPages] = useState("");
-  //const [currentPage, setCurrentPage] = useState(1);
   const [results, setResults] = useState("");
   const icon = <IconSquare fontSize="small" height={20} width={20} />;
   const checkedIcon = (
@@ -46,6 +38,14 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
   //   console.log(val)
   //   router.push(`/rental/${val}`)
   // }
+
+  useEffect(() =>{
+    if(searchVal != null) {
+      setSearchValue(searchVal);
+      setProCategoryFilter([procat]); 
+      setPropertyAdTypeFilter(proadtype);
+    }
+  },[searchVal, proadtype, procat])
 
   useEffect(() => {
     setResults(data);
@@ -502,9 +502,8 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
                   />
                 </svg>
               </button>
-            </div>
-          </div>
-          {openSuggestions && (
+
+              {openSuggestions && (
             <div className=" search-suggestions-2 pt-2 shadow pb-2">
               {suggestions.map((item, index) => (
                 <div
@@ -519,6 +518,9 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
               ))}
             </div>
           )}
+            </div>
+          </div>
+          
           <div class="listing__widget--inner">
             <div class="widget__list mb-30">
               <div
@@ -532,6 +534,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
                 <div>Purchase Type</div>
                 <span className="selected">{propertyAdTypeFilter}</span>
               </div>
+            
               {openPropertyAdTypeOptions &&
                 propertyAdTypeOptions.map((item, index) => (
                   <div

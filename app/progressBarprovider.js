@@ -8,10 +8,8 @@ const Providers = ({ children }) => {
         height="4px"
         color="red"
         options={{ showSpinner: false }}
-         shallowRouting
+        shallowRouting={false}
       />
-      
-
       {children}
     </>
   );

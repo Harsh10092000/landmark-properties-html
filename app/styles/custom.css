@@ -243,3 +243,27 @@
 .listing__details--action__btn-new svg {
   margin-left: 7px;
 }
+
+
+.suggesion-item-2 {
+  padding: 6px 25px;
+  cursor: pointer;
+}
+
+.search-suggestions-2 {
+  position: absolute;
+  display: inline-block;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20px 0;
+  border-radius: .5rem;
+  box-shadow: 0 0 20px #1373ea1a;
+  -webkit-box-shadow: 0 0 20px 0 rgb(19 115 234 / 10%);
+  background-color: #fff;
+  box-sizing: border-box;
+  z-index: 1;
+  overflow-y: scroll;
+  max-height: 210px;
+}

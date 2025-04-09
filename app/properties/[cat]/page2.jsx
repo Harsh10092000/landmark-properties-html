@@ -1,125 +1,78 @@
 "use client";
 import PropertyCard from "@/components/propertyListingPage/PropertyCard";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Checkbox, Switch } from "@mui/material";
 import { IconSquareCheckFilled, IconSquare, IconX } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import PaginationComponent from "@/components/common/PaginationComponent";
 import Link from "next/link";
 
-
-const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat }) => {
-  // const searchParams = useSearchParams();
-  // const a = searchParams.get("page");
-  // console.log("a : " , a);
+const Page2 = ({
+  data,
+  currentUser,
+  recordsPerPage,
+  currentPage,
+  catType,
+  cat,
+  adType,
+  location,
+}) => {
+  // let url = "";
+  // if (catType !== "") {
+  //   url = `/properties/${cat}`;
+  // } else if (adType == "Sale") {
+  //   url = `/properties/${cat}`;
+  // }
+  console.log("location : ", location);
   const url = `/properties/${cat}`;
-  //const [data , setData] = useState([]);
   const [openSortByOptions, setOpenSortByOptions] = useState(false);
   const [sortBy, setSortBy] = useState("Recent Listed");
-  //const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValue1, setSearchValue1] = useState("");
+  const [searchValue1, setSearchValue1] = useState(location);
   const [openPropertyAdTypeOptions, setOpenPropertyAdTypeOptions] =
     useState(false);
   const [change, setChange] = useState(1);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(location);
   const [suggestions, setSuggestions] = useState();
   const [openSuggestions, setOpenSuggestions] = useState(false);
   const [sortedUsers, setSortedUsers] = useState([]);
-  //const [nPages , setNPages] = useState("");
-  //const [currentPage, setCurrentPage] = useState(1);
   const [results, setResults] = useState("");
   const icon = <IconSquare fontSize="small" height={20} width={20} />;
   const checkedIcon = (
     <IconSquareCheckFilled fontSize="small" height={20} width={20} />
   );
 
-
   const moreProLinks = [
     {
-        name: "View Residential Properties",
-        link: "/properties/residential-properties"
+      name: "View Residential Properties",
+      link: "/properties/residential-properties",
     },
     {
-        name: "View Commercial Properties",
-        link: "/properties/commercial-properties"
+      name: "View Commercial Properties",
+      link: "/properties/commercial-properties",
     },
     {
-        name: "View Land/Plots Properties",
-        link: "/properties/land-properties"
+      name: "View Land/Plots Properties",
+      link: "/properties/land-properties",
     },
     {
-        name: "View All Properties",
-        link: "/allproperties"
-    }
-    
-];
+      name: "View All Properties",
+      link: "/allproperties",
+    },
+  ];
 
-   const router = useRouter();
-  // const handleForSale = (val) => {
-  //   console.log(val)
-  //   router.push(`/${val}`)
-  // }
-
-  // const handleForRent = (val) => {
-  //   console.log(val)
-  //   router.push(`/rental/${val}`)
-  // }
+  const router = useRouter();
 
   useEffect(() => {
     setResults(data);
   }, []);
 
-
-  // useEffect(() => {
-  //   //console.log("currentPage : " , currentPage);
-  //   router.push(`/allproperties?page=1`)
-  // }, [tempCurrPage]);
-
-  
-  // useEffect(() => {
-  //     axios
-  //       .get(process.env.webURL + "/api/pro/fetchPropertyData")
-  //       .then((res) => {
-  //         setData(res.data);
-  //         setResults(res.data);
-  //       });
-  //     }, []);
-
-  //useEffect(() => {
-  // setCurrentPage(searchParams["page"] || 1);
-  // const {page} = useParams();
-
-  //  const {page} = searchParams;
-  //  console.log("page : " , page);
-  //setCurrentPage(searchParams.get("page") || 1);
-
-  //   const ab = searchParams.get("page");
-  //   setCurrentPage(ab || 1)
-  // }, [searchParams]);
-
-  //const currentUser = "";
-  //const result = await getData();
-  //const records = result.row;
-
-  //const currentPage = searchParams["page"] || 1;
-
-  //const recordsPerPage = 12;
-
-  //   useEffect(() => {
-  //     setNPages( Math.ceil(data.length/ recordsPerPage));
-  //     setCurrentPage( searchParams["page"] || 1);
-  //   }, [data])
-
-    //const recordsPerPage = 12;
-
-      const lastIndex = currentPage * recordsPerPage;
-      let firstIndex = lastIndex - recordsPerPage;
-      const records = results?.slice(firstIndex, lastIndex);
-      const nPages = Math.ceil(results?.length / recordsPerPage);
-
+  const lastIndex = currentPage * recordsPerPage;
+  let firstIndex = lastIndex - recordsPerPage;
+  const records = results?.slice(firstIndex, lastIndex);
+  const nPages = Math.ceil(results?.length / recordsPerPage);
 
   const [propertyAdTypeFilter, setPropertyAdTypeFilter] =
-    useState("All Properties");
+    useState(adType);
 
   const propertyAdTypeOptions = [
     { type: "All Properties" },
@@ -128,6 +81,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   ];
 
   const [furnishingStatusFilter, setFurnishingStatusFilter] = useState([]);
+
   const [openFurnishingOptions, setOpenFurnishingOptions] = useState(false);
   const furnishingStatusOptions = [
     { type: "Fully Furnished" },
@@ -156,8 +110,10 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
     { type: "Other" },
   ];
 
-  const [proCategoryFilter, setProCategoryFilter] = useState([catType]);
-
+  const [proCategoryFilter, setProCategoryFilter] = useState([]);
+  if (catType !== "") {
+    () => setProCategoryFilter([catType]);
+  }
   const [openProCategoryOptions, setOpenProCategoryOptions] = useState(false);
   const proCategoryOptions = [
     { type: "Residential" },
@@ -195,7 +151,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   const handleProSubTypeToggle = (type) => {
     //console.log(type);
     //props.handleCurrentPage(1);
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     if (selectedSubTypeFilter.includes(type)) {
       setSelectedSubTypeFilter(
@@ -207,7 +163,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   };
 
   const handleAllSubTypes = () => {
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     setSelectedSubTypeFilter((prevSelectedTypes) => {
       const updatedTypes = propertySubTypeOptions
@@ -219,7 +175,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
 
   const handleToggleFurnishing = (type) => {
     //props.handleCurrentPage(1);
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     if (furnishingStatusFilter.includes(type)) {
       setFurnishingStatusFilter(
@@ -232,7 +188,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
 
   const handleToggleAuthority = (type) => {
     //props.handleCurrentPage(1);
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     if (authorityApprovedFilter.includes(type)) {
       setAuthorityApprovedFilter(
@@ -245,7 +201,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
 
   const handleTogglePossession = (type) => {
     //props.handleCurrentPage(1);
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     if (possessionAvailableFilter.includes(type)) {
       setPossessionAvailableFilter(
@@ -258,7 +214,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
 
   const handleToggleProCategory = (type) => {
     //props.handleCurrentPage(1);
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
     if (proCategoryFilter.includes(type)) {
       setProCategoryFilter(proCategoryFilter.filter((item) => item !== type));
@@ -268,10 +224,9 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   };
   //let sortedUsers = [...data];
 
-
-  
   useEffect(() => {
     setSortedUsers(data);
+    
     if (sortBy === "Recent Listed") {
       sortedUsers.sort((a, b) => b.pro_id - a.pro_id);
       console.log("sortedUsers : ", sortedUsers);
@@ -285,9 +240,9 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
     let searchWords = searchValue?.toLowerCase().split(",");
     setSearchValue1(searchValue);
 
-    currentPage= 1;
+    currentPage = 1;
     router.push(`${url}?page=1`);
-    
+
     const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
       (item) => {
         const itemValues =
@@ -307,7 +262,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
       }
     );
 
-   // console.log("filteredData : " , filteredData);
+    // console.log("filteredData : " , filteredData);
     setResults(filteredData);
     //setCurrentPage(1);
   };
@@ -369,9 +324,8 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
     setSuggestions(unique);
   }, [searchValue]);
 
-
-
   useEffect(() => {
+    console.log("useEffect execute")
     let searchWords = searchValue1?.toLowerCase().split(",");
     console.log(sortedUsers, searchWords);
     const filteredData = sortedUsers
@@ -466,7 +420,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
     //currentPage = 1;
     //setTempCurrPage(1);
     //router.push(`/allproperties?page=${tempCurrPage}`)
-    console.log("currentPage : " , currentPage);
+    console.log("currentPage : ", currentPage);
     setResults(filteredData);
     //setTempCurrPage(1);
   }, [
@@ -490,7 +444,75 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
   // }, [tempCurrPage, currentPage]);
 
 
-  console.log("results : " , results, records);
+
+//   const filteredData = useMemo(() => {
+//     console.log("useEffect execute");
+    
+//     const searchWords = searchValue1?.toLowerCase().split(",").filter(Boolean) || [];
+    
+//     return sortedUsers.filter(item => {
+//         // Photos filter
+//         if (proWithPhotos === true && !item.img_id) return false;
+//         if (proWithPhotos === false && item.img_id) return false;
+
+//         // Parking filter
+//         if (proWithParking === true && item.pro_parking <= 0) return false;
+
+//         // Property ad type filter
+//         if (propertyAdTypeFilter === "Sale" && item.pro_ad_type !== "Sale") return false;
+//         if (propertyAdTypeFilter === "Rent" && item.pro_ad_type !== "Rent") return false;
+
+//         // Furnishing status filter
+//         if (furnishingStatusFilter.length > 0 && 
+//             !furnishingStatusFilter.includes(item.pro_furnishing)) return false;
+
+//         // Property category filter
+//         const [, proCategory] = item.pro_type.split(",");
+//         if (proCategoryFilter.length > 0 && 
+//             !proCategoryFilter.includes(proCategory)) return false;
+
+//         // Subtype filter
+//         const [proSubType] = item.pro_type.split(",");
+//         if (selectedSubTypeFilter.length > 0 && 
+//             !selectedSubTypeFilter.includes(proSubType)) return false;
+
+//         // Authority approval filter
+//         if (authorityApprovedFilter.length > 0 && 
+//             !authorityApprovedFilter.includes(item.pro_approval)) return false;
+
+//         // Possession filter
+//         if (possessionAvailableFilter.length > 0 && 
+//             !possessionAvailableFilter.includes(item.pro_possession)) return false;
+
+//         // Search filter
+//         if (searchWords.length > 0) {
+//             const itemValues = `${item.pro_locality} ${item.pro_city} ${item.pro_sub_district} ${item.pro_street} ${item.pro_state}`
+//                 .toLowerCase();
+//             return searchWords.every(word => itemValues.includes(word));
+//         }
+
+//         return true;
+//     });
+// }, [
+//     sortedUsers,
+//     sortBy,
+//     searchValue1,
+//     propertyAdTypeFilter,
+//     furnishingStatusFilter,
+//     proCategoryFilter,
+//     selectedSubTypeFilter,
+//     possessionAvailableFilter,
+//     authorityApprovedFilter,
+//     proWithPhotos,
+//     proWithParking,
+// ]);
+
+// useEffect(() => {
+//     console.log("currentPage : ", currentPage);
+//     setResults(filteredData);
+// }, [filteredData, currentPage]);
+
+  console.log("results : ", results, records);
   return (
     <section class="listing__page--section section--padding">
       <div className="row">
@@ -538,26 +560,38 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
             </div>
           )}
 
-<div class="services__widget">
-                            <div class="services__widget--step">
-                                <ul class="services__widget--categories">
-                                    {moreProLinks.map((item, index) => (
-                                        <li class="services__categories--items mb-4">
-                                        <Link class="services__categories--link d-flex align-items-center justify-content-between" href={item.link}>
-                                            <span class="services__categories--text services__categories--text-new">{item.name}</span>
-                                            <span class="services__categories--arrow__icon services__categories--arrow__icon-new"><svg width="23" height="12" viewBox="0 0 23 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M22.6963 4.93435C22.696 4.93408 22.6958 4.93377 22.6955 4.9335L18.146 0.261622C17.8052 -0.0883642 17.2539 -0.0870618 16.9146 0.264676C16.5754 0.61637 16.5767 1.18522 16.9176 1.53525L19.9721 4.67187H1.5328C1.05192 4.67187 0.662109 5.0741 0.662109 5.57031C0.662109 6.06652 1.05192 6.46875 1.5328 6.46875H19.9721L16.9176 9.60537C16.5768 9.9554 16.5755 10.5242 16.9147 10.8759C17.254 11.2277 17.8053 11.2289 18.1461 10.879L22.6956 6.20712C22.6958 6.20685 22.696 6.20654 22.6964 6.20627C23.0374 5.85507 23.0363 5.28438 22.6963 4.93435Z" fill="currentColor"/>
-                                                </svg>
-                                            </span>
-                                        </Link>
-                                    </li>
-                                    ))}
-                                    
-                                  
-                                </ul>
-                            </div>
-                           
-                        </div>
+          <div class="services__widget">
+            <div class="services__widget--step">
+              <ul class="services__widget--categories">
+                {moreProLinks.map((item, index) => (
+                  <li class="services__categories--items mb-4">
+                    <Link
+                      class="services__categories--link d-flex align-items-center justify-content-between"
+                      href={item.link}
+                    >
+                      <span class="services__categories--text services__categories--text-new">
+                        {item.name}
+                      </span>
+                      <span class="services__categories--arrow__icon services__categories--arrow__icon-new">
+                        <svg
+                          width="23"
+                          height="12"
+                          viewBox="0 0 23 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M22.6963 4.93435C22.696 4.93408 22.6958 4.93377 22.6955 4.9335L18.146 0.261622C17.8052 -0.0883642 17.2539 -0.0870618 16.9146 0.264676C16.5754 0.61637 16.5767 1.18522 16.9176 1.53525L19.9721 4.67187H1.5328C1.05192 4.67187 0.662109 5.0741 0.662109 5.57031C0.662109 6.06652 1.05192 6.46875 1.5328 6.46875H19.9721L16.9176 9.60537C16.5768 9.9554 16.5755 10.5242 16.9147 10.8759C17.254 11.2277 17.8053 11.2289 18.1461 10.879L22.6956 6.20712C22.6958 6.20685 22.696 6.20654 22.6964 6.20627C23.0374 5.85507 23.0363 5.28438 22.6963 4.93435Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
           <div class="listing__widget--inner">
             <div class="widget__list mb-30">
@@ -593,12 +627,11 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
               {/* ########### filter 2 ########### */}
               <div
                 className={`property-type-filter pointer position-relative border-top 
-                  
-                  `
-              }
-                // onClick={() =>
-                //   setOpenProCategoryOptions(!openProCategoryOptions)
-                // }
+                  ${openProCategoryOptions ? "arrow-up" : "arrow-down"}
+                  `}
+                onClick={() =>
+                  setOpenProCategoryOptions(!openProCategoryOptions)
+                }
               >
                 <div>Property Types</div>
 
@@ -623,7 +656,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
                         ? "selected-check-box-option pointer"
                         : "check-box-options pointer"
                     }`}
-                    //onClick={() => handleToggleProCategory(item.type)}
+                    onClick={() => handleToggleProCategory(item.type)}
                   >
                     <Checkbox
                       icon={icon}
@@ -901,7 +934,7 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
           <div class="listing__header d-flex justify-content-between align-items-center">
             <div class="listing__header--left">
               <p class="results__cout--text">
-                Showing {records.length} of {data.length} Results
+                Showing {records.length} of {results.length} Results
               </p>
             </div>
             <div class="listing__header--right d-flex align-items-center">
@@ -923,20 +956,20 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
                   </svg>
                 </span>
                 <div class="select">
-                <select
-        value={sortBy}
-        onChange={(e) => {
-          setSortBy(e.target.value);
-          setOpenSortByOptions(false);
-        }}
-      >
-        <option value="Recent Listed">Recently Listed</option>
-        {/* <option value="Newest">Newest</option> */}
-        <option value="Most Popular">Most Popular</option>
-        {/* <option value="Best Match">Best Match</option>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => {
+                      setSortBy(e.target.value);
+                      setOpenSortByOptions(false);
+                    }}
+                  >
+                    <option value="Recent Listed">Recently Listed</option>
+                    {/* <option value="Newest">Newest</option> */}
+                    <option value="Most Popular">Most Popular</option>
+                    {/* <option value="Best Match">Best Match</option>
         <option value="Price Low">Price Low</option>
         <option value="Price High">Price High</option> */}
-      </select>
+                  </select>
                 </div>
               </div>
             </div>
@@ -948,11 +981,25 @@ const Page2 = ({ data, currentUser, recordsPerPage, currentPage, catType, cat })
             ))}
         </div>
         {currentPage > 1 && (
-          <a className="next-prev-link" href={`${url}?page=${parseInt(currentPage) - 1}`}>Prev</a>
+          <a
+            className="next-prev-link"
+            href={`${url}?page=${parseInt(currentPage) - 1}`}
+          >
+            Prev
+          </a>
         )}
-        <PaginationComponent Pages={nPages} currentPage={currentPage} url={url} />
+        <PaginationComponent
+          Pages={nPages}
+          currentPage={currentPage}
+          url={url}
+        />
         {currentPage < 16 && (
-          <a className="next-prev-link" href={`${url}?page=${parseInt(currentPage) + 1}`}>Next</a>
+          <a
+            className="next-prev-link"
+            href={`${url}?page=${parseInt(currentPage) + 1}`}
+          >
+            Next
+          </a>
         )}
       </div>
     </section>
