@@ -32,7 +32,7 @@ const page = async ({ params , searchParams }) => {
   const records = totalPosts > 0 ? posts.slice(firstIndex, lastIndex) : [];
   const nPages = totalPosts > 0 ? Math.ceil(totalPosts / recordsPerPage) : 1;
 
-  const url = "/blog/";
+  const url = `/blog/category/${params.slug}`;
 
   console.log("nPages , currentPage : ", nPages, currentPage);
 
