@@ -166,6 +166,60 @@ export async function fetchSinglePost(slug) {
   }
 }
 
+
+
+export async function fetchPostByCat(slug) {
+  const query = `
+   query PostsByCategory($slug: String!) {
+    posts(first: 200, where: { categoryName: $slug }) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          date
+          author {
+            node {
+              id
+              name
+            }
+          }
+          slug
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          categories {
+            edges {
+              node {
+                name
+                slug
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+
+  const variables = { slug };
+
+  // Log variables to make sure they are correct
+  //console.log("variables: ", variables);
+
+  try {
+    // Make the GraphQL request with the correct query and variables
+    const data = await client.request(query, variables);
+    //console.log("data: ", data);
+    return data.posts.edges; // Corrected from data.postBy to data.post
+  } catch (error) {
+    //console.error("GraphQL request error: ", error);
+    throw error;
+  }
+}
+
 // export async function getPostBySlug(slug) {
 //     const data = await fetchAPI(
 //       `query GetPost($id: ID = "") {

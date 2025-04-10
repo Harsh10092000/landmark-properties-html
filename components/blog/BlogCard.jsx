@@ -1,12 +1,12 @@
 import React from 'react'
-import { GetDay, GetMonth } from '../helperFunctions/DateFun'
+import { DateFormatter, GetDay, GetMonth } from '../helperFunctions/DateFun'
 import Link from 'next/link'
 
 const BlogCard = ( {item} ) => {
   return (
     <article class="blog__items mb-40" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
     <div class="blog__thumbnail position-relative">
-        <a href="blog-details.html"><img class="blog__thumbnail--media" src="assets/img/blog/blog-page3.png" alt="blog-img" /></a>
+        <Link href={`/blog/category/${item.node.slug}`}><img class="blog__thumbnail--media" src={item.node.featuredImage.node.sourceUrl} alt="blog-img" /></Link>
         <span class="blog__date--badge">
         {GetDay({ date: item.node.date })} 
             <br />
@@ -45,14 +45,16 @@ const BlogCard = ( {item} ) => {
                 <path d="M7.17773 0.96875C10.9238 0.96875 13.959 4.00391 13.959 7.75C13.959 11.4961 10.9238 14.5312 7.17773 14.5312C3.43164 14.5312 0.396484 11.4961 0.396484 7.75C0.396484 4.00391 3.43164 0.96875 7.17773 0.96875ZM7.17773 13.2188C10.1855 13.2188 12.6465 10.7852 12.6465 7.75C12.6465 4.74219 10.1855 2.28125 7.17773 2.28125C4.14258 2.28125 1.70898 4.74219 1.70898 7.75C1.70898 10.7852 4.14258 13.2188 7.17773 13.2188ZM8.8457 10.375L6.52148 8.67969C6.43945 8.625 6.41211 8.51562 6.41211 8.43359V3.92188C6.41211 3.75781 6.54883 3.59375 6.74023 3.59375H7.61523C7.7793 3.59375 7.94336 3.75781 7.94336 3.92188V7.80469L9.74805 9.14453C9.91211 9.25391 9.93945 9.44531 9.83008 9.60938L9.31055 10.293C9.20117 10.457 9.00977 10.4844 8.8457 10.375Z" fill="currentColor"/>
                 </svg>                                            
               </span>
-              <span class="blog__meta--text">3 min Read</span>
+              <span class="blog__meta--text"> {DateFormatter({ date: item.node.date })}</span>
               
             </li>
         </ul>
         <h3 class="blog__content--title "><Link href={`/blog/${item.node.slug}`}>{item.node.title} </Link></h3>
-        <p class="blog__desc">There are many variations of passages of Lorem Ipsum available, but majority have suffered
-            teration in some form, by injected humour, or randomised words which don't look even slight
-            believable. If you are going to use a passage of Lorem Ipsum.</p>
+        {/* <p class="blog__desc">{item.node.excerpt}</p> */}
+        <p
+                      className="blog__desc"
+                      dangerouslySetInnerHTML={{ __html: item.node.excerpt }}
+                    />
         <Link class="blog__link--btn" href={`/blog/${item.node.slug}`}>Read More <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_1_2454)">
             <path d="M9.94799 0C8.0102 0 6.15183 0.758842 4.78163 2.10963C3.41138 3.46032 2.6416 5.2924 2.6416 7.20262C2.6416 9.11285 3.41138 10.9449 4.78163 12.2956C6.15178 13.6464 8.01025 14.4052 9.94799 14.4052C11.2305 14.4052 12.4904 14.0724 13.6012 13.4403C14.7119 12.8081 15.6342 11.8989 16.2755 10.8039C16.9168 9.70896 17.2544 8.46688 17.2544 7.20262C17.2544 5.29235 16.4846 3.46037 15.1144 2.10963C13.7442 0.758842 11.8857 0 9.94799 0ZM13.6012 7.21698C13.6036 7.37353 13.5414 7.52435 13.4287 7.63478L11.0235 9.99863C10.8749 10.1453 10.6583 10.2027 10.4552 10.1493C10.2522 10.0958 10.0934 9.93955 10.0387 9.73948C9.98418 9.53932 10.0421 9.3257 10.1906 9.17899L11.5992 7.78892H6.87935C6.6706 7.78892 6.47764 7.6791 6.37318 7.50085C6.26881 7.32249 6.26881 7.10283 6.37318 6.92459C6.47766 6.74633 6.6706 6.63651 6.87935 6.63651H11.6126L10.1907 5.23489C10.0419 5.08819 9.98383 4.87446 10.0383 4.6741C10.0928 4.47373 10.2515 4.31718 10.4547 4.26352C10.658 4.20987 10.8749 4.26714 11.0236 4.41385L13.4289 6.7777C13.5398 6.88633 13.6018 7.03414 13.6013 7.18828V7.21711L13.6012 7.21698Z" fill="currentColor"/>

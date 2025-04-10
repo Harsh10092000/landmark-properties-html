@@ -2,11 +2,12 @@ import BlogCard from "@/components/blog/BlogCard";
 import BreadcrumbSection from "@/components/common/BreadcrumbSection";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
 import PaginationComponent from "@/components/common/PaginationComponent";
-import { fetchGraphPosts } from "../libs/graphapi";
-import Providers from "../progressBarprovider";
-const getData = async () => {
+import { fetchPostByCat } from "@/app/libs/graphapi";
+import Providers from "@/app/progressBarprovider";
+
+const getData = async (params) => {
   try {
-    const res = await fetchGraphPosts();
+    const res = await fetchPostByCat(params.slug);
     return res || []; // Return empty array if res is falsy
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -14,8 +15,9 @@ const getData = async () => {
   }
 };
 
-const page = async ({ searchParams }) => {
-  const posts = await getData();
+const page = async ({ params , searchParams }) => {
+  //const posts = await getData();
+  const posts = await getData(params);
 
   // Ensure currentPage is a number, default to 1 if invalid
   const currentPage = parseInt(searchParams?.page || "1", 10);
