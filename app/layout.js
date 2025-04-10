@@ -14,6 +14,7 @@ import Header from "@/components/header/Header";
 import Head from "next/head";
 import Footer from "@/components/footer/Footer";
 import Providers from "./progressBarprovider";
+import SocialMediaFooter from "@/components/common/SocialMediaFooter";
 
 export const metadata = {
   title: "Create Next App",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Header />
           {children}
+          <SocialMediaFooter />
           <Footer />
         </Providers>
       </body>
