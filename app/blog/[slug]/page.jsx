@@ -187,16 +187,7 @@ const page = async ({ params }) => {
                       </li>
                     </ul>
                     <h3 class="blog__content--title ">{post.title}</h3>
-                    {/* <p class="blog__details--content__desc">he whimsically named Egg Canvas is the brainchild of Erica Choi, a design director and photo
-                                    grapher based in York. Why the name “Egg Canvas Erica was inspired by her Korean childhood
-                                     nickname, which means egg, while “canvas” medium with wh art is created. “Egg Canvas
-                                    therefore, is her life—creating beautiful things each day
-                                    a blank canvas.</p>
-                                <p class="blog__details--content__desc">We have covered many special events such as fireworks, fairs, parades, races, walks, awards ceremonies, fashion shows, sporting events, and even a memorial service.
-                                </p>
-                                <p class="blog__details--content__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate vestibulum rhon
-                                    cus, dolor eget viverra pretium, dolor tellus aliquet nunc, vitae ultricies erat elit eu lacus. Vestibulum non justo fun consectetur, cursus ante, tincidunt sapien. Nulla quis diam sit amet turpis interd enim. Vivamus fauc ex sed nibh egestas elementum. Mauris et bibendum
-                                </p> */}
+                   
                   </div>
 
                   <div className="pbmit-entry-content">
