@@ -16,6 +16,7 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "graphql-request": "^7.1.2",
+    "gray-matter": "^4.0.3",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "mappls-web-maps": "^3.5.8",

@@ -7411,7 +7411,7 @@ body.overlay__active::before,
   }
 }
 
-.blockquote__content blockquote {
+.markdown .blockquote__content blockquote {
   margin: 0;
   padding: 2.5rem;
   background: var(--color-background-3);
