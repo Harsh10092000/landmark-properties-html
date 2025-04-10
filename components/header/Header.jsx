@@ -9,8 +9,8 @@ const Header = () => {
     { id: 2, label: "All Properties", href: "/allproperties" },
     { id: 3, label: "About Us", href: "/aboutus" },
     { id: 4, label: "Contact Us", href: "/contactus" },
-    { id: 5, label: "Buy", href: "/blog" },
-    { id: 6, label: "Rent", href: "/blog" },
+    { id: 5, label: "Buy", href: "/properties/properties-for-sale" },
+    { id: 6, label: "Rent", href: "/properties/properties-for-rent" },
     { id: 8, label: "Blog", href: "/blog" },
   ];
 
@@ -20,8 +20,8 @@ const Header = () => {
     { id: 3, label: "Properties", href: "/allproperties" },
     { id: 4, label: "About Us", href: "/aboutus" },
     { id: 5, label: "Contact Us", href: "/contactus" },
-    { id: 6, label: "Buy", href: "/blog" },
-    { id: 7, label: "Rent", href: "/blog" },
+    { id: 6, label: "Buy", href: "/properties/properties-for-sale" },
+    { id: 7, label: "Rent", href: "/properties/properties-for-rent" },
     { id: 8, label: "Blog", href: "/blog" },
   ];
 

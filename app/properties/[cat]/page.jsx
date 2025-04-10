@@ -64,6 +64,10 @@ const page = async ({ params, searchParams }) => {
     } else {
       location = location_len.charAt(0).toUpperCase() + location_len.slice(1);
     }
+  } else if (cat.startsWith("properties-for-sale")) {
+    adType = "Sale";
+  } else if (cat.startsWith("properties-for-rent")) {
+    adType = "Rent";
   }
 
   const currentUser = "";
