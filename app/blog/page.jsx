@@ -3,7 +3,7 @@ import BreadcrumbSection from "@/components/common/BreadcrumbSection";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
 import PaginationComponent from "@/components/common/PaginationComponent";
 import { fetchGraphPosts } from "../libs/graphapi";
-import Providers from "../progressBarprovider";
+
 const getData = async () => {
   try {
     const res = await fetchGraphPosts();
@@ -35,7 +35,7 @@ const page = async ({ searchParams }) => {
   console.log("nPages , currentPage : ", nPages, currentPage);
 
   return (
-    <Providers>
+
     <main className="main__content_wrapper">
       <BreadcrumbSection val1="Blog" />
 
@@ -63,7 +63,7 @@ const page = async ({ searchParams }) => {
         </div>
       </section>
     </main>
-    </Providers>
+
   );
 };
 
