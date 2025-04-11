@@ -1,13 +1,18 @@
 import BreadcrumbSection from "@/components/common/BreadcrumbSection";
 import React from "react";
 import {
-  DateFormatter
+  DateFormatter,
+  GetDay,
+  GetMonth,
 } from "@/components/helperFunctions/DateFun";
 import {
-  fetchSinglePost
+  fetchGraphCategories,
+  fetchGraphRecentPosts,
+  fetchSinglePost,
 } from "@/app/libs/graphapi";
 import "./markdownstyling.css";
 import Link from "next/link";
+import Image from "next/image";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
 
 export async function generateMetadata({ params }, parent) {
