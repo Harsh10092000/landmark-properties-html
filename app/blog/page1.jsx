@@ -7,14 +7,14 @@ import { fetchGraphPosts } from "../libs/graphapi";
 const getData = async () => {
   try {
     const res = await fetchGraphPosts();
-    return res || [];
+    return res || []; // Return empty array if res is falsy
   } catch (error) {
     console.error("Error fetching posts:", error);
-    return [];
+    return []; // Return empty array on error
   }
 };
 
-const page = async ({ searchParams }) => {
+const page1 = async ({ searchParams }) => {
   const posts = await getData();
 
   // Ensure currentPage is a number, default to 1 if invalid
@@ -67,4 +67,4 @@ const page = async ({ searchParams }) => {
   );
 };
 
-export default page;
+export default page1;
