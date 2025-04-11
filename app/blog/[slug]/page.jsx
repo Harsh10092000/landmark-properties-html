@@ -10,76 +10,76 @@ import "./markdownstyling.css";
 import Link from "next/link";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
 
-// export async function generateMetadata({ params }) {
-//   // Fetch the post data using the slug from params
-//   const res = await fetchSinglePost(params.slug);
+export async function generateMetadata({ params }) {
+  // Fetch the post data using the slug from params
+  const res = await fetchSinglePost(params.slug);
 
-//   // Function to generate JSON-LD for product
-//   function addProductJsonLd(post) {
-//     return {
-//       __html: JSON.stringify({
-//         "@context": "https://schema.org/",
-//         "@type": "Product",
-//         name: post.title,
-//         image: [
-//           "https://example.com/photos/1x1/photo.jpg",
-//           "https://example.com/photos/4x3/photo.jpg",
-//           "https://example.com/photos/16x9/photo.jpg",
-//         ],
-//         description:
-//           "Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height.",
-//         sku: "0446310786",
-//         mpn: "925872",
-//         brand: {
-//           "@type": "Brand",
-//           name: "ACME",
-//         },
-//         review: {
-//           "@type": "Review",
-//           reviewRating: {
-//             "@type": "Rating",
-//             ratingValue: "4",
-//             bestRating: "5",
-//           },
-//           author: {
-//             "@type": "Person",
-//             name: "Fred Benson",
-//           },
-//         },
-//         aggregateRating: {
-//           "@type": "AggregateRating",
-//           ratingValue: "4.4",
-//           reviewCount: "89",
-//         },
-//         offers: {
-//           "@type": "Offer",
-//           url: `https://box-and-move.vercel.app/blog/${post.slug}`, // Use a full URL
-//           priceCurrency: "USD",
-//           price: "119.99",
-//           priceValidUntil: "2020-11-20",
-//           itemCondition: "https://schema.org/UsedCondition",
-//           availability: "https://schema.org/InStock",
-//         },
-//       }),
-//     };
-//   }
+  // Function to generate JSON-LD for product
+  function addProductJsonLd(post) {
+    return {
+      __html: JSON.stringify({
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        name: post.title,
+        image: [
+          "https://example.com/photos/1x1/photo.jpg",
+          "https://example.com/photos/4x3/photo.jpg",
+          "https://example.com/photos/16x9/photo.jpg",
+        ],
+        description:
+          "Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height.",
+        sku: "0446310786",
+        mpn: "925872",
+        brand: {
+          "@type": "Brand",
+          name: "ACME",
+        },
+        review: {
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: "4",
+            bestRating: "5",
+          },
+          author: {
+            "@type": "Person",
+            name: "Fred Benson",
+          },
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.4",
+          reviewCount: "89",
+        },
+        offers: {
+          "@type": "Offer",
+          url: `https://box-and-move.vercel.app/blog/${post.slug}`, // Use a full URL
+          priceCurrency: "USD",
+          price: "119.99",
+          priceValidUntil: "2020-11-20",
+          itemCondition: "https://schema.org/UsedCondition",
+          availability: "https://schema.org/InStock",
+        },
+      }),
+    };
+  }
 
-//   // Return metadata for the page
-//   return {
-//     title: res.title,
-//     description: res.excerpt || "Default description for the page.", // Fallback description if excerpt is not available
-//     openGraph: {
-//       title: res.title,
-//       description: res.excerpt || "Description for the Open Graph",
-//       images: [
-//         res.featuredImage ? res.featuredImage.sourceUrl : "/default-image.jpg",
-//       ], // Full URL to image
-//     },
-//     jsonLd: {
-//       __html: addProductJsonLd(res).__html,
-//     },
-//   };
-// }
+  // Return metadata for the page
+  return {
+    title: res.title,
+    description: res.excerpt || "Default description for the page.", // Fallback description if excerpt is not available
+    openGraph: {
+      title: res.title,
+      description: res.excerpt || "Description for the Open Graph",
+      images: [
+        res.featuredImage ? res.featuredImage.sourceUrl : "/default-image.jpg",
+      ], // Full URL to image
+    },
+    jsonLd: {
+      __html: addProductJsonLd(res).__html,
+    },
+  };
+}
 
 const getData = async (params) => {
   try {
