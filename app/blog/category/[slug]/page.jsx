@@ -34,7 +34,7 @@ const page = async ({ params , searchParams }) => {
 
   const url = `/blog/category/${params.slug}`;
 
-  console.log("nPages , currentPage : ", nPages, currentPage);
+  //console.log("nPages , currentPage : ", nPages, currentPage);
 
   return (
     <Providers>

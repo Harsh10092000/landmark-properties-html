@@ -256,7 +256,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
     setSortedUsers(data);
     if (sortBy === "Recent Listed") {
       sortedUsers.sort((a, b) => b.pro_id - a.pro_id);
-      console.log("sortedUsers : ", sortedUsers);
+      //console.log("sortedUsers : ", sortedUsers);
     } else if (sortBy === "Most Popular") {
       sortedUsers.sort((a, b) => b.pro_views - a.pro_views);
     }
@@ -355,7 +355,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
 
   useEffect(() => {
     let searchWords = searchValue1?.toLowerCase().split(",");
-    console.log(sortedUsers, searchWords);
+    //console.log(sortedUsers, searchWords);
     const filteredData = sortedUsers
       .filter((code) => {
         if (proWithPhotos === true) {
@@ -448,7 +448,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
     //currentPage = 1;
     //setTempCurrPage(1);
     //router.push(`/allproperties?page=${tempCurrPage}`)
-    console.log("currentPage : " , currentPage);
+    //console.log("currentPage : " , currentPage);
     setResults(filteredData);
     //setTempCurrPage(1);
   }, [
@@ -472,7 +472,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
   // }, [tempCurrPage, currentPage]);
 
 
-  console.log("results : " , results, records);
+  //console.log("results : " , results, records);
   return (
     <section class="listing__page--section section--padding">
       <div className="row">

@@ -32,7 +32,7 @@ const page1 = async ({ searchParams }) => {
 
   const url = "/blog/";
 
-  console.log("nPages , currentPage : ", nPages, currentPage);
+  //console.log("nPages , currentPage : ", nPages, currentPage);
 
   return (
 

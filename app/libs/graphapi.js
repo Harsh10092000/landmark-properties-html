@@ -64,7 +64,7 @@ query NewQuery {
 }
 `
 const data = await client.request(query);
-console.log(data.categories.edges)
+//console.log(data.categories.edges)
   return data.categories.edges;
 }
 
@@ -90,7 +90,7 @@ export async function fetchGraphRecentPosts() {
   }
 `
 const data = await client.request(query);
-console.log(data.posts)
+//console.log(data.posts)
   return data.posts;
 }
 
