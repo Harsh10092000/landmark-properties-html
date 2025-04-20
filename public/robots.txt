@@ -5,6 +5,7 @@ Disallow: /assets
 Disallow: /images
 Disallow: /_next
 Disallow: /user
+Disallow: /blog
 Disallow: /property-profile
 Sitemap: https://landmark-properties-html.vercel.app/sitemap.xml
 Allow: /mapImages/
