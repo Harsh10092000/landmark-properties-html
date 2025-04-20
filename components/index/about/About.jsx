@@ -79,7 +79,7 @@ const About = () => {
                             </div>
                         </div>
                         <div className="about__content--footer">
-                            <a className="solid__btn" href="about.html">Learn More</a>
+                            <a className="solid__btn" href="aboutus">Learn More</a>
                         </div>
                     </div>
                     

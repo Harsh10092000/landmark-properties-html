@@ -164,9 +164,9 @@ const TrendingProperties = ({data}) => {
                   <div className="featured__content">
                     <div className="featured__content--top d-flex align-items-center justify-content-between">
                       <h3 className="featured__card--title">
-                        <a href="listing-details.html">
+                        <Link href="#">
                           {item.pro_type.split(",")[0]}
-                        </a>
+                        </Link>
                       </h3>
                       <span className="featured__card--price">
                         {/* ₹ {item.pro_amt} {item.pro_amt_unit} */}
@@ -347,8 +347,8 @@ const TrendingProperties = ({data}) => {
                         <span className="featured__author--name">
                           {currentUser &&
                           item.pro_user_id == currentUser[0].login_id
-                            ? "Me "
-                            : item.agent_name +
+                            ? "Listed By Me "
+                            : (item.agent_name !== null ? item.agent_name : "Listed By" ) +
                               " (" +
                               item.pro_user_type +
                               ")" +
@@ -381,9 +381,9 @@ const TrendingProperties = ({data}) => {
                           
                         </li>
                         <li className="featured__share--btn__list">
-                          <a
+                          <Link
                             className="featured__share--btn"
-                            href="listing.html"
+                            href="#"
                           >
                             <svg
                               width="16"
@@ -402,7 +402,7 @@ const TrendingProperties = ({data}) => {
                               ></path>
                             </svg>
                             <span className="visually-hidden">listing</span>
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>

@@ -11,6 +11,42 @@ import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
 import PropertiesCategories from '@/components/about/PropertiesCategories'
 
+export async function generateMetadata({ params }, parent) {
+
+
+
+
+  //const proId1 = arrproId[arrproId.length - 1];
+  //const { row : propertyData} = await getData(slug, proId1);
+
+  const desc = `Discover your dream property with LandmarkPlots.com, a premier platform offering exclusive land and real estate opportunities. Explore a curated selection of prime plots, residential, and commercial properties tailored to your needs.`;
+
+  
+
+
+  return {
+    title: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
+    description: desc,
+    openGraph: {
+      type: 'website',  
+      url: `https://landmarkplots.com/`,
+      title: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
+      description: desc,
+      images: [{
+        url: 'https://landmarkplots.com/images/property-banner-img.jpg',
+        width: 1200,
+        height: 630,
+        alt: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today"
+      }]
+    },
+    metadataBase: new URL('https://landmarkplots.com'),
+    alternates: {
+      canonical: `https://landmarkplots.com/`
+    },
+    
+  };
+}
+
 const getData = async () => {
   try {
     const db = await pool;

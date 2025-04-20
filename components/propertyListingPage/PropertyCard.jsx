@@ -83,7 +83,7 @@ const PropertyCard = ({ item, index }) => {
                     </h3>
                     <ul class="featured__list--action d-flex">
                       <li class="featured__share--btn__list">
-                        <a class="featured__share--btn" href="listing.html">
+                        <a class="featured__share--btn" href="#">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -104,7 +104,7 @@ const PropertyCard = ({ item, index }) => {
                         {console.log("process.env.queryOnWhatsapp : " , process.env.queryOnWhatsapp)}
                         <Link
                           class="featured__share--btn"         
-                          // href={`https://wa.me/${process.env.whatsappNumber}?text=https://www.propertyease.in/${item.pro_url}`}
+                          
                           href={`${process.env.queryOnWhatsapp}${item.pro_url}`}
                           // aria-label="share button"
                           // aria-expanded="false"
@@ -128,7 +128,7 @@ const PropertyCard = ({ item, index }) => {
                         </Link>
                       </li>
                       <li class="featured__share--btn__list">
-                        <a class="featured__share--btn" href="listing.html">
+                        <Link class="featured__share--btn" href="#">
                           <svg
                             width="16"
                             height="16"
@@ -146,7 +146,7 @@ const PropertyCard = ({ item, index }) => {
                             ></path>
                           </svg>
                           <span class="visually-hidden">listing</span>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

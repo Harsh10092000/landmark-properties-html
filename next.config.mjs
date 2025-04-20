@@ -6,8 +6,8 @@ const nextConfig = {
         secondNumber: "919050048884",
         contactEmail: "propertieslandmark07@gmail.com",
         //webURL: "http://localhost:8010/",
-        queryOnWhatsapp: "https://wa.me/919996716787?text=https://www.propertyease.in",
-        shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://propertyease.in"
+        queryOnWhatsapp: "https://wa.me/919996716787?text=https://landmarkplots.com/",
+        shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://landmarkplots.com/"
       },
       images: {
         // remotePatterns: [

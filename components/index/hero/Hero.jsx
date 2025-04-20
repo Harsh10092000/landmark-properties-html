@@ -8,7 +8,7 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions, data}) => {
       const [suggestions, setSuggestions] = useState();
       const [openSuggestions, setOpenSuggestions] = useState(false);
       const [propertyAdTypeFilter, setPropertyAdTypeFilter] =
-        useState("All Properties");
+        useState("Sale");
         const [propertyTypeFilter, setPropertyTypeFilter] =
         useState("All Properties ");
 

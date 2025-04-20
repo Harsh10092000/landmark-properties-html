@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Link from 'next/link'
 const PropertyByType = ({subData}) => {
   return (
     <section className="property__type--section section--padding color-accent-2">
@@ -44,7 +44,7 @@ const PropertyByType = ({subData}) => {
                     <span className="property__type--badge">{subData[0].pro_sub_cat_number}</span>
                 </div>
                 <div className="property__type--content">
-                    <h3 className="property__type--title"><a href="listing.html">{subData[0].pro_type.split(",")[0]}</a></h3>
+                    <h3 className="property__type--title"><Link href="#">{subData[0].pro_type.split(",")[0]}</Link></h3>
                     <span className="property__type--subtitle">{subData[0].pro_sub_cat_number} Properties</span>
                 </div>
             </div>
@@ -58,7 +58,7 @@ const PropertyByType = ({subData}) => {
                     <span className="property__type--badge">{subData[1].pro_sub_cat_number}</span>
                 </div>
                 <div className="property__type--content">
-                    <h3 className="property__type--title"><a href="listing.html">{subData[1].pro_type.split(",")[0]}</a></h3>
+                    <h3 className="property__type--title"><Link href="#">{subData[1].pro_type.split(",")[0]}</Link></h3>
                     <span className="property__type--subtitle">{subData[1].pro_sub_cat_number} Properties</span>
                 </div>
             </div>
@@ -86,7 +86,7 @@ const PropertyByType = ({subData}) => {
                     <span className="property__type--badge">{subData[2].pro_sub_cat_number}</span>
                 </div>
                 <div className="property__type--content">
-                    <h3 className="property__type--title"><a href="listing.html">{subData[2].pro_type.split(",")[0]}</a></h3>
+                    <h3 className="property__type--title"><Link href="#">{subData[2].pro_type.split(",")[0]}</Link></h3>
                     <span className="property__type--subtitle">{subData[2].pro_sub_cat_number} Properties</span>
                 </div>
             </div>
@@ -104,7 +104,7 @@ const PropertyByType = ({subData}) => {
                     <span className="property__type--badge">{subData[3].pro_sub_cat_number}</span>
                 </div>
                 <div className="property__type--content">
-                    <h3 className="property__type--title"><a href="listing.html">{subData[3].pro_type.split(",")[0]}</a></h3>
+                    <h3 className="property__type--title"><Link href="#">{subData[3].pro_type.split(",")[0]}</Link></h3>
                     <span className="property__type--subtitle">{subData[3].pro_sub_cat_number} Properties</span>
                 </div>
             </div>

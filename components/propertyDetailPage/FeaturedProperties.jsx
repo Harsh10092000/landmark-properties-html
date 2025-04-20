@@ -63,7 +63,7 @@ const FeaturedProperties = async () => {
                                             ? `${process.env.webURL}/propertyImages/watermark/${data.img_link}`
                                             : "/images/default4.webp"
                                         }
-                                        //src={"https://api.propertyease.in/propertyImages/watermark/1742089191304-sector%2034%20map.jpg"}
+                                        
                                         alt={`${data.pro_type.split(",")[0]} in ${
                                           data.pro_city
                                         }`}

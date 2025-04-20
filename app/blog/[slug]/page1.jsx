@@ -102,7 +102,7 @@ const getData = async (params) => {
   }
 };
 
-const page = async ({ params }) => {
+const page1 = async ({ params }) => {
   const post = await getData(params);
   
   return (
@@ -207,4 +207,4 @@ const page = async ({ params }) => {
   );
 };
 
-export default page;
+export default page1;

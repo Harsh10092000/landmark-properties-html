@@ -40,10 +40,26 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
   // }
 
   useEffect(() =>{
+    console.log("searchVal : ", searchVal );
+    console.log("procat : ", procat );
+    
     if(searchVal != null) {
       setSearchValue(searchVal);
-      setProCategoryFilter([procat]); 
+      if(procat === "All Properties") {
+        setProCategoryFilter(["Residential", "Commercial", "Land"]);
+      } else {
+        setProCategoryFilter([procat]);
+      }
       setPropertyAdTypeFilter(proadtype);
+    } else {
+      if(procat === "All Properties") {
+        setProCategoryFilter(["Residential", "Commercial", "Land"]);
+        setPropertyAdTypeFilter(proadtype);
+      } else if (procat === "Sale" && procat === "Rent") {
+        setProCategoryFilter([procat]);
+        setPropertyAdTypeFilter(proadtype);
+      }
+      
     }
   },[searchVal, proadtype, procat])
 
@@ -295,6 +311,32 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
   };
 
   useEffect(() => {
+    if(searchVal != null) {
+    let searchWords = searchVal?.toLowerCase().split(",");
+    setSearchValue1(searchVal);
+    const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
+      (item) => {
+        const itemValues =
+          item.pro_locality +
+          " " +
+          item.pro_city +
+          " " +
+          item.pro_sub_district +
+          " " +
+          item.pro_street +
+          " " +
+          item.pro_state
+        return searchWords.every((word) =>
+          itemValues.toLowerCase().includes(word)
+        );
+      }
+    );
+    setResults(filteredData);
+  }
+  }, [searchVal])
+
+
+  useEffect(() => {
     const unique1 = Array.from(
       new Set(data?.slice(0, 60).map((item) => item.pro_city.trim()))
     );
@@ -354,6 +396,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
 
 
   useEffect(() => {
+    console.log("search value : " , searchValue);
     let searchWords = searchValue1?.toLowerCase().split(",");
     //console.log(sortedUsers, searchWords);
     const filteredData = sortedUsers

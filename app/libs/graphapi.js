@@ -94,12 +94,6 @@ const data = await client.request(query);
   return data.posts;
 }
 
-
-
-
-
-
-
 export async function fetchSinglePost(slug) {
   const query = `
     query PostBySlug($slug: ID!) {
