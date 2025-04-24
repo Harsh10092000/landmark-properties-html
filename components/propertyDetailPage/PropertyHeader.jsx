@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import Link from 'next/link'
 const PropertyHeader = ({propertyData}) => {
   return (
     <div className='property-detail-header mb-25'>

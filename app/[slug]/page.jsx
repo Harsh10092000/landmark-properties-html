@@ -28,7 +28,7 @@ export async function generateMetadata({ params }, parent) {
   const q1 = "SELECT * from property_module_images WHERE img_cnct_id = ?";
   const [images] = await db.query(q1, proId);
  // console.log("images : " , images[0].img_link);
-  //const updatedImages = [...images, { img_link: "default.webp" }];
+
 
 
   //const proId1 = arrproId[arrproId.length - 1];
