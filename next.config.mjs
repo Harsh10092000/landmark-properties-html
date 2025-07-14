@@ -7,7 +7,11 @@ const nextConfig = {
         contactEmail: "propertieslandmark07@gmail.com",
         //webURL: "http://localhost:8010/",
         queryOnWhatsapp: "https://wa.me/919996716787?text=https://landmarkplots.com/",
-        shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://landmarkplots.com/"
+        shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://landmarkplots.com/",
+
+        default_image: "default.jpg",
+
+        googleMapsApiKey: "AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc"
       },
       images: {
         // remotePatterns: [

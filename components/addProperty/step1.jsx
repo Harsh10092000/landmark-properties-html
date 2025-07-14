@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const adTypes = [
   { label: "Sale", icon: "🟢" },
@@ -43,16 +43,43 @@ const proCommercialSubTypes = [
   { value: "Cold Store,Commercial", item: "Cold Store" },
 ];
 
-export default function Step1({handleStepChange}) {
-  const [adType, setAdType] = useState("Sale");
-  const [userType, setUserType] = useState("Broker");
-  const [propertyType, setPropertyType] = useState("Residential");
-  const [propertySubType, setPropertySubType] = useState("");
+export default function Step1({handleStepChange, onSubmit, loading, initialData}) {
+  const [adType, setAdType] = useState(initialData.adType || "Sale");
+  const [userType, setUserType] = useState(initialData.userType || "Broker");
+  const [propertyType, setPropertyType] = useState(initialData.propertyType || "Residential");
+  const [propertySubType, setPropertySubType] = useState(initialData.propertySubType || "");
+  const [formSubmit, setFormSubmit] = useState(false);
+
+  // Load initial data when component mounts
+  useEffect(() => {
+    if (initialData) {
+      setAdType(initialData.adType || "Sale");
+      setUserType(initialData.userType || "Broker");
+      setPropertyType(initialData.propertyType || "Residential");
+      setPropertySubType(initialData.propertySubType || "");
+    }
+  }, [initialData]);
 
   let subTypes = [];
   if (propertyType === "Residential") subTypes = proResSubTypes;
   else if (propertyType === "Land") subTypes = proLandSubTypes;
   else if (propertyType === "Commercial") subTypes = proCommercialSubTypes;
+
+  const handleSaveAndNext = async () => {
+    setFormSubmit(true);
+    if (!adType || !userType || !propertyType || !propertySubType) {
+      return;
+    }
+
+    const formData = {
+      adType,
+      userType,
+      propertyType,
+      propertySubType
+    };
+
+    await onSubmit(1, formData);
+  };
 
   return (
     <div className="step1-form">
@@ -67,7 +94,7 @@ export default function Step1({handleStepChange}) {
               </div>
             </div>
             <div className="col-md-12">
-              <div className="step1-label">📢 Ad Type</div>
+              <div className="step1-label">📢 Ad Type <span style={{color:'#ec161e'}}>*</span></div>
               <div className="step1-pill-group">
                 {adTypes.map((type) => (
                   <button
@@ -80,9 +107,10 @@ export default function Step1({handleStepChange}) {
                   </button>
                 ))}
               </div>
+              {formSubmit && !adType && <div className="step-error-msg">Ad Type is required</div>}
             </div>
             <div className="col-md-12">
-              <div className="step1-label">👤 Are you a...?</div>
+              <div className="step1-label">👤 Are you a...? <span style={{color:'#ec161e'}}>*</span></div>
               <div className="step1-pill-group">
                 {userTypes.map((type) => (
                   <button
@@ -95,9 +123,10 @@ export default function Step1({handleStepChange}) {
                   </button>
                 ))}
               </div>
+              {formSubmit && !userType && <div className="step-error-msg">User Type is required</div>}
             </div>
             <div className="step1-section col-md-12">
-              <div className="step1-label">🏠 Property Type</div>
+              <div className="step1-label">🏠 Property Type <span style={{color:'#ec161e'}}>*</span></div>
               <div className="step1-pill-group">
                 {proTypes.map((type) => (
                   <button
@@ -113,9 +142,10 @@ export default function Step1({handleStepChange}) {
                   </button>
                 ))}
               </div>
+              {formSubmit && !propertyType && <div className="step-error-msg">Property Type is required</div>}
             </div>
             <div className="step1-section col-md-12">
-              <div className="step1-label">🏷️ Property Sub Type</div>
+              <div className="step1-label">🏷️ Property Sub Type <span style={{color:'#ec161e'}}>*</span></div>
               <div className="step1-pill-group step1-pill-group-wrap">
                 {subTypes.map((type) => (
                   <button
@@ -128,13 +158,20 @@ export default function Step1({handleStepChange}) {
                   </button>
                 ))}
               </div>
+              {formSubmit && !propertySubType && <div className="step-error-msg">Property Sub Type is required</div>}
             </div>
           </div>
         </div>
       </div>
       <div className="step1-footer">
-        <button className="step1-skip-btn" onClick={() => handleStepChange(2)}>Skip</button>
-        <button className="step1-next-btn">Save & Next</button>
+        {/* <button className="step1-skip-btn" onClick={() => handleStepChange(2)}>Skip</button> */}
+        <button 
+          className="step1-next-btn" 
+          onClick={handleSaveAndNext}
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save & Next"}
+        </button>
       </div>
      
     </div>

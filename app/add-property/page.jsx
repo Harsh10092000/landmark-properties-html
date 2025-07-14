@@ -8,6 +8,7 @@ import "@/components/addProperty/step-form.css";
 import Step3 from "@/components/addProperty/step3";
 import Step4 from "@/components/addProperty/step4";
 import Step5 from "@/components/addProperty/step5";
+import Step6 from "@/components/addProperty/step6";
 import { LoadScript } from "@react-google-maps/api";
 
 const GREEN = "#1dbf73";
@@ -25,13 +26,74 @@ const STEPS = [
 
 ];
 const libraries = ["places"];
+
 export default function StepperCardOnly() {
-  // Simulate current step (0-based)
-  //const step = 1;
   const [step, setStep] = useState(1);
+  const [propertyId, setPropertyId] = useState(null);
+  const [listingId, setListingId] = useState(null);
+  const [formData, setFormData] = useState({
+    step1: {},
+    step2: {},
+    step3: {},
+    step4: {},
+    step5: {}
+  });
+  const [loading, setLoading] = useState(false);
 
   const handleStepChange = (idx) => {
     setStep(idx);
+  };
+
+  const saveStepData = async (stepNumber, data) => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/property/save-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          step: stepNumber,
+          data: data,
+          propertyId: propertyId
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormData(prev => ({
+          ...prev,
+          [`step${stepNumber}`]: data
+        }));
+        if (stepNumber === 1 && result.propertyId) {
+          setPropertyId(result.propertyId);
+        }
+        if (stepNumber === 1 && result.listingId) {
+          setListingId(result.listingId);
+        }
+        return { success: true, propertyId: result.propertyId, listingId: result.listingId };
+      } else {
+        throw new Error(result.error || 'Failed to save data');
+      }
+    } catch (error) {
+      console.error('Error saving step data:', error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStepSubmit = async (stepNumber, data) => {
+    const result = await saveStepData(stepNumber, data);
+    if (result.success) {
+      if (stepNumber === 1 && result.listingId) {
+        setListingId(result.listingId);
+      }
+      handleStepChange(stepNumber + 1);
+    } else {
+      alert(`Error: ${result.error}`);
+    }
   };
 
   return (
@@ -50,11 +112,11 @@ export default function StepperCardOnly() {
             {STEPS.map((s, idx) => (
               <li key={s.label} className="stepper-list-item">
                 <div className="stepper-icon-wrap">
-                  {idx < step ? (
+                  {idx < step - 1? (
                     <span className="stepper-icon stepper-completed">
                       <svg width="18" height="18" fill="none" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill={GREEN}/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     </span>
-                  ) : idx === step ? (
+                  ) : idx === step - 1  ? (
                     <span className="stepper-icon stepper-current">
                       <svg width="18" height="18" fill="#fff" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="4"/></svg>
                     </span>
@@ -64,7 +126,7 @@ export default function StepperCardOnly() {
                     </span>
                   )}
                   {idx < STEPS.length - 1 && (
-                    <span className="stepper-line" data-status={idx < step ? 'completed' : idx === step ? 'current' : 'upcoming'}></span>
+                    <span className="stepper-line" data-status={idx < step - 1 ? 'completed' : idx === step - 1 ? 'current' : 'upcoming'}></span>
                   )}
                 </div>
                 <div className="stepper-label">
@@ -95,24 +157,55 @@ export default function StepperCardOnly() {
         <div className="col-md-8">
             <div className="row">
                 <div className="col-md-12">
-                  {step === 1 && <Step1 handleStepChange={handleStepChange} />}
+                  {step === 1 && (
+                    <Step1 
+                      handleStepChange={handleStepChange} 
+                      onSubmit={handleStepSubmit}
+                      loading={loading}
+                      initialData={formData.step1}
+                    />
+                  )}
                   <LoadScript
-                   googleMapsApiKey="AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc"
+                   
                    libraries={libraries}
                >
                   {step === 2 &&  
                  
-                  <Step2 handleStepChange={handleStepChange} />
-                  
-                  }</LoadScript>
-                  {step === 3 && <Step3 handleStepChange={handleStepChange} />}
-                  {step === 4 && <Step4 handleStepChange={handleStepChange} />}
-                  {step === 5 && <Step5 handleStepChange={handleStepChange} />}
-                    {/* <Step1 />
-                    <Step2 />
-                    <Step3 />
-                    <Step4 />
-                    <Step5 /> */}
+                  <Step2 
+                    handleStepChange={handleStepChange} 
+                    onSubmit={handleStepSubmit}
+                    loading={loading}
+                    initialData={formData.step2}
+                  />
+                  }
+                  </LoadScript>
+                  {step === 3 && (
+                    <Step3 
+                      handleStepChange={handleStepChange} 
+                      onSubmit={handleStepSubmit}
+                      loading={loading}
+                      initialData={formData.step3}
+                    />
+                  )}
+                  {step === 4 && (
+                    <Step4 
+                      handleStepChange={handleStepChange} 
+                      onSubmit={handleStepSubmit}
+                      loading={loading}
+                      initialData={formData.step4}
+                    />
+                  )}
+                  {step === 5 && (
+                    <Step5 
+                      handleStepChange={handleStepChange} 
+                      onSubmit={handleStepSubmit}
+                      loading={loading}
+                      initialData={formData.step5}
+                    />
+                  )}
+                  {step === 6 && (
+                    <Step6 listingId={listingId} />
+                  )}
                 </div>
             </div>
         </div>
