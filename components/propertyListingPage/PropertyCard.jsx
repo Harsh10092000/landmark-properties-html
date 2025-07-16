@@ -17,9 +17,9 @@ const PropertyCard = ({ item, index }) => {
                       class="featured__thumbnail--link"
                       href={`/${item.pro_url}`}
                     >
-                      {item.img_link ? (
+                      {item.pro_cover_image ? (
                         <img
-                          src={`${process.env.webURL}/propertyImages/watermark/${item.img_link}`}
+                          src={`${process.env.webURL}/uploads/${item.pro_cover_image}`}
                           alt={`Property For ${
                             item.pro_ad_type === "Rent" ? "Rent" : "Sale"
                           } in ${

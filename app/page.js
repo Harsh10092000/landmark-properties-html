@@ -50,9 +50,12 @@ export async function generateMetadata({ params }, parent) {
 const getData = async () => {
   try {
     const db = await pool;
-    const q = `SELECT DISTINCT property_module_images.* , property_module.* , agent_data.agent_type as user_type, agent_data.agent_name , agent_data.agent_sub_district, agent_data.agent_city, agent_data.agent_state FROM property_module left join property_module_images on 
-      property_module.pro_id = property_module_images.img_cnct_id left join (SELECT agent_type,user_cnct_id,agent_name ,agent_sub_district, agent_city, agent_state, agent_image FROM agent_module) as agent_data on 
-      property_module.pro_user_id = agent_data.user_cnct_id where pro_listed = 1 group by pro_id ORDER BY pro_id DESC limit 6`;
+    // const q = `SELECT DISTINCT property_module_images.* , property_module.* , agent_data.agent_type as user_type, agent_data.agent_name , agent_data.agent_sub_district, agent_data.agent_city, agent_data.agent_state FROM property_module left join property_module_images on 
+    //   property_module.pro_id = property_module_images.img_cnct_id left join (SELECT agent_type,user_cnct_id,agent_name ,agent_sub_district, agent_city, agent_state, agent_image FROM agent_module) as agent_data on 
+    //   property_module.pro_user_id = agent_data.user_cnct_id where pro_listed = 1 group by pro_id ORDER BY pro_id DESC limit 6`;
+
+
+    const q = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size , pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image FROM property_module where pro_listed = 1 ORDER BY pro_id DESC limit 6`;
 
       const q1 =
       "SELECT COUNT(pro_type) AS pro_sub_cat_number, pro_type FROM property_module WHERE pro_listed = 1 GROUP BY pro_type ORDER BY COUNT(pro_type) DESC;";
@@ -87,6 +90,7 @@ const propertyAdTypeOptions = [
 
 const page = async () => {
   const { data, subData, cityCount } = await getData();
+  console.log("subData : ", subData);
   return (
     <>
       <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions} data={data}  />
@@ -95,7 +99,9 @@ const page = async () => {
       <Services />
       <PropertiesCategories />
       <ChooseUs />
+      {subData[0] &&
       <PropertyByType subData={subData} />
+      }
       <CityBanner cityCount={cityCount} />
      <Reviews />
     </>

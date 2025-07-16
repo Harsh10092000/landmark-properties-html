@@ -1,7 +1,7 @@
 'use client';
 import { AppProgressBar } from "next-nprogress-bar";
 const Providers = ({ children }) => {
-  console.log("ProgressBar");
+  // console.log("ProgressBar");
   return (
     <>
       <AppProgressBar

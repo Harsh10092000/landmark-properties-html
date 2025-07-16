@@ -149,7 +149,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
             if (coverImage && coverImage.uploadedName) coverImageName = coverImage.uploadedName;
             if (otherImages.map(img => img.uploadedName).filter(Boolean).length > 0) {
                 otherImageNames = otherImages.map(img => img.uploadedName).filter(Boolean);
-            }
+        }
         }
 
         const submitData = {
@@ -252,18 +252,18 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
             </div>
             <div className="step1-footer d-flex justify-content-between">
                 <div>
-                    <button className="step1-back-btn" onClick={() => handleStepChange(3)}>Back</button>
+                <button className="step1-back-btn" onClick={() => handleStepChange(3)}>Back</button>
                 </div>
                 <div>
-                    <button className="step1-skip-btn" onClick={() => handleStepChange(5)}>Skip</button>
-                    <button
-                        className="step1-next-btn"
-                        type="button"
+                <button className="step1-skip-btn" onClick={() => handleStepChange(5)}>Skip</button>
+                <button
+                    className="step1-next-btn"
+                    type="button"
                         disabled={loading || (coverImage && coverImage.error) || otherImages.some(img => img.error)}
                         onClick={handleSaveAndNext}
                     >
                         {loading ? "Saving..." : "Save & Next"}
-                    </button>
+                </button>
                 </div>
             </div>
         </div>

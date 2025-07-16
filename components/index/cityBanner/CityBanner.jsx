@@ -23,9 +23,12 @@ const CityBanner = ({cityCount}) => {
 
     <section className="banner__section mb--n30">
     <div className="banner__step d-flex">
+        {cityCount[1] &&
+        <>
         <CityBannerCard city_name={cityCount[0].pro_city} city_number={cityCount[0].pro_city_number} delay={"50"} banner_img={"banner1.png"} />
         <CityBannerCard city_name={cityCount[1].pro_city} city_number={cityCount[1].pro_city_number} delay={"100"} banner_img={"banner2.png"} />
-       
+        </>
+}
         {/* <div className="banner__items mb-25" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="50">
             <div className="banner__thumbnail position-relative">
                  <Link className="banner__thumbnail--link pointer" href={`/properties/properties-for-sale-in-${cityCount[0].pro_city}`}>
@@ -50,8 +53,12 @@ const CityBanner = ({cityCount}) => {
         </div> */}
     </div>
     <div className="banner__step d-flex">
+        {cityCount[3] &&
+        <>
     <CityBannerCard city_name={cityCount[2].pro_city} city_number={cityCount[2].pro_city_number} delay={"150"} banner_img={"banner3.png"} />
     <CityBannerCard city_name={cityCount[3].pro_city} city_number={cityCount[3].pro_city_number} delay={"200"} banner_img={"banner4.png"} />
+    </>
+        }
         {/* <div className="banner__items mb-25" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
             <div className="banner__thumbnail position-relative">
                 <Link className="banner__thumbnail--link pointer" href={`/properties/properties-for-sale-in-${cityCount[2].pro_city}`}> 

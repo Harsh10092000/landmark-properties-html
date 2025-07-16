@@ -31,6 +31,13 @@ export default function StepperCardOnly() {
   const [step, setStep] = useState(1);
   const [propertyId, setPropertyId] = useState(null);
   const [listingId, setListingId] = useState(null);
+  const [proAdType, setProAdType] = useState(null);
+  const [proType, setProType] = useState(null);
+  const [proArea, setProArea] = useState(null);
+  const [proAreaUnit, setProAreaUnit] = useState(null);
+  const [proCity, setProCity] = useState(null);
+  const [proSubDistrict, setProSubDistrict] = useState(null);
+
   const [formData, setFormData] = useState({
     step1: {},
     step2: {},
@@ -45,6 +52,11 @@ export default function StepperCardOnly() {
   };
 
   const saveStepData = async (stepNumber, data) => {
+
+
+
+
+
     setLoading(true);
     try {
       const response = await fetch('/api/property/save-step', {
@@ -72,6 +84,7 @@ export default function StepperCardOnly() {
         if (stepNumber === 1 && result.listingId) {
           setListingId(result.listingId);
         }
+
         return { success: true, propertyId: result.propertyId, listingId: result.listingId };
       } else {
         throw new Error(result.error || 'Failed to save data');
@@ -85,11 +98,59 @@ export default function StepperCardOnly() {
   };
 
   const handleStepSubmit = async (stepNumber, data) => {
+    console.log("stepNumber : ", stepNumber);
+    if (stepNumber == 1) {
+      setListingId(data.listingId);
+      setProAdType(data.adType);
+      setProType(data.propertySubType.split(",")[0]);
+      console.log("proType : ", proType, listingId, proAdType, data.adType);
+    }
+
+    if (stepNumber == 2) {
+      setProCity(data.city);
+      setProSubDistrict(data.subDistrict);
+    }
+    console.log("stepNumber : ", stepNumber);
+
+    if (stepNumber == 3) {
+      setProArea(data.areaSize);
+      setProAreaUnit(data.areaUnit);
+    }
     const result = await saveStepData(stepNumber, data);
     if (result.success) {
       if (stepNumber === 1 && result.listingId) {
         setListingId(result.listingId);
       }
+      if (stepNumber == 5) {
+        const sanitize = (input) => input.toLowerCase().replace(/[\s.,]+/g, "-");
+        const url =
+        sanitize(proArea) +
+          "-" +
+          sanitize(proAreaUnit) +
+          "-" +
+          sanitize(proType) +
+          "-for-" +
+          sanitize(proAdType) +
+          "-in-" +
+          sanitize(proCity) +
+          "-" +
+          listingId;
+
+        // Update the property URL in the database
+        console.log("propertyId : ", propertyId);
+        console.log("url : ", url);
+        if (propertyId && url) {
+
+          await fetch('/api/property/update-url', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ propertyId, url })
+          });
+        }
+      }
+
+
+
       handleStepChange(stepNumber + 1);
     } else {
       alert(`Error: ${result.error}`);
@@ -100,115 +161,114 @@ export default function StepperCardOnly() {
     <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0 }}>
       <div className="container h-100">
         <div className="row h-100">
-            <div className="col-md-4 h-100">
-        <div className="stepper-card p-4" >
-          {/* Top Icon */}
-          <div className="top-icon">
-            {/* Placeholder for app icon */}
-            <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/></svg>
+          <div className="col-md-4 h-100">
+            <div className="stepper-card p-4" >
+              {/* Top Icon */}
+              <div className="top-icon">
+                {/* Placeholder for app icon */}
+                <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" /></svg>
+              </div>
+              {/* Stepper */}
+              <ul className="custom-stepper">
+                {STEPS.map((s, idx) => (
+                  <li key={s.label} className="stepper-list-item">
+                    <div className="stepper-icon-wrap">
+                      {idx < step - 1 ? (
+                        <span className="stepper-icon stepper-completed">
+                          <svg width="18" height="18" fill="none" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill={GREEN} /><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </span>
+                      ) : idx === step - 1 ? (
+                        <span className="stepper-icon stepper-current">
+                          <svg width="18" height="18" fill="#fff" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="4" /></svg>
+                        </span>
+                      ) : (
+                        <span className="stepper-icon stepper-upcoming">
+                          {idx === 3 ? 'S' : idx + 1}
+                        </span>
+                      )}
+                      {idx < STEPS.length - 1 && (
+                        <span className="stepper-line" data-status={idx < step - 1 ? 'completed' : idx === step - 1 ? 'current' : 'upcoming'}></span>
+                      )}
+                    </div>
+                    <div className="stepper-label">
+                      <div className="stepper-step">STEP {idx + 1}</div>
+                      <div className="stepper-title">{s.label}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {/* Bottom Card: Help */}
+              <div className="stepper-footer">
+                <span className="stepper-footer-icon">
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#eaf1fa" /><text x="12" y="17" textAnchor="middle" fontSize="16" fill={BLUE} fontWeight="bold">?</text></svg>
+                </span>
+                <span className="stepper-footer-text">Having troubles?</span>
+                <a href="#" className="stepper-footer-link">Contact us</a>
+              </div>
+              {/* Bottom right: geometric/abstract image placeholder */}
+              <div style={{ position: 'absolute', right: 0, bottom: 0, width: 90, height: 70, zIndex: 0 }}>
+                <svg width="90" height="70" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="0,70 90,0 90,70" fill="#eaf1fa" />
+                  <polygon points="60,70 90,40 90,70" fill="#d0e3fa" />
+                </svg>
+              </div>
+            </div>
           </div>
-          {/* Stepper */}
-          <ul className="custom-stepper">
-            {STEPS.map((s, idx) => (
-              <li key={s.label} className="stepper-list-item">
-                <div className="stepper-icon-wrap">
-                  {idx < step - 1? (
-                    <span className="stepper-icon stepper-completed">
-                      <svg width="18" height="18" fill="none" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill={GREEN}/><path d="M6 10.5l2.5 2.5L14 7.5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </span>
-                  ) : idx === step - 1  ? (
-                    <span className="stepper-icon stepper-current">
-                      <svg width="18" height="18" fill="#fff" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="4"/></svg>
-                    </span>
-                  ) : (
-                    <span className="stepper-icon stepper-upcoming">
-                      {idx === 3 ? 'S' : idx + 1}
-                    </span>
-                  )}
-                  {idx < STEPS.length - 1 && (
-                    <span className="stepper-line" data-status={idx < step - 1 ? 'completed' : idx === step - 1 ? 'current' : 'upcoming'}></span>
-                  )}
-                </div>
-                <div className="stepper-label">
-                  <div className="stepper-step">STEP {idx + 1}</div>
-                  <div className="stepper-title">{s.label}</div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {/* Bottom Card: Help */}
-          <div className="stepper-footer">
-            <span className="stepper-footer-icon">
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#eaf1fa"/><text x="12" y="17" textAnchor="middle" fontSize="16" fill={BLUE} fontWeight="bold">?</text></svg>
-            </span>
-            <span className="stepper-footer-text">Having troubles?</span>
-            <a href="#" className="stepper-footer-link">Contact us</a>
-          </div>
-          {/* Bottom right: geometric/abstract image placeholder */}
-          <div style={{ position: 'absolute', right: 0, bottom: 0, width: 90, height: 70, zIndex: 0 }}>
-            <svg width="90" height="70" viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="0,70 90,0 90,70" fill="#eaf1fa" />
-              <polygon points="60,70 90,40 90,70" fill="#d0e3fa" />
-            </svg>
-          </div>
-        </div>
-        </div>
-        
-        <div className="col-md-8">
+
+          <div className="col-md-8">
             <div className="row">
-                <div className="col-md-12">
-                  {step === 1 && (
-                    <Step1 
-                      handleStepChange={handleStepChange} 
-                      onSubmit={handleStepSubmit}
-                      loading={loading}
-                      initialData={formData.step1}
-                    />
-                  )}
-                  <LoadScript
-                   
-                   libraries={libraries}
-               >
-                  {step === 2 &&  
-                 
-                  <Step2 
-                    handleStepChange={handleStepChange} 
+              <div className="col-md-12">
+                {step === 1 && (
+                  <Step1
+                    handleStepChange={handleStepChange}
                     onSubmit={handleStepSubmit}
                     loading={loading}
-                    initialData={formData.step2}
+                    initialData={formData.step1}
                   />
+                )}
+                <LoadScript
+                  googleMapsApiKey="AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc"
+                  libraries={libraries}
+                >
+                  {step === 2 &&
+                    <Step2
+                      handleStepChange={handleStepChange}
+                      onSubmit={handleStepSubmit}
+                      loading={loading}
+                      initialData={formData.step2}
+                    />
                   }
-                  </LoadScript>
-                  {step === 3 && (
-                    <Step3 
-                      handleStepChange={handleStepChange} 
-                      onSubmit={handleStepSubmit}
-                      loading={loading}
-                      initialData={formData.step3}
-                    />
-                  )}
-                  {step === 4 && (
-                    <Step4 
-                      handleStepChange={handleStepChange} 
-                      onSubmit={handleStepSubmit}
-                      loading={loading}
-                      initialData={formData.step4}
-                    />
-                  )}
-                  {step === 5 && (
-                    <Step5 
-                      handleStepChange={handleStepChange} 
-                      onSubmit={handleStepSubmit}
-                      loading={loading}
-                      initialData={formData.step5}
-                    />
-                  )}
-                  {step === 6 && (
-                    <Step6 listingId={listingId} />
-                  )}
-                </div>
+                </LoadScript>
+                {step === 3 && (
+                  <Step3
+                    handleStepChange={handleStepChange}
+                    onSubmit={handleStepSubmit}
+                    loading={loading}
+                    initialData={formData.step3}
+                  />
+                )}
+                {step === 4 && (
+                  <Step4
+                    handleStepChange={handleStepChange}
+                    onSubmit={handleStepSubmit}
+                    loading={loading}
+                    initialData={formData.step4}
+                  />
+                )}
+                {step === 5 && (
+                  <Step5
+                    handleStepChange={handleStepChange}
+                    onSubmit={handleStepSubmit}
+                    loading={loading}
+                    initialData={formData.step5}
+                  />
+                )}
+                {step === 6 && (
+                  <Step6 listingId={listingId} />
+                )}
+              </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
       <style jsx>{`
@@ -327,16 +387,16 @@ export default function StepperCardOnly() {
         .stepper-list-item .stepper-title {
           color:rgb(0, 0, 0);
         }
-        .stepper-list-item:nth-child(-n+${step+1}) .stepper-step {
+        .stepper-list-item:nth-child(-n+${step + 1}) .stepper-step {
           color: #1dbf73;
         }
-        .stepper-list-item:nth-child(${step+1}) .stepper-step {
+        .stepper-list-item:nth-child(${step + 1}) .stepper-step {
           color: #ec161e;
         }
-        .stepper-list-item:nth-child(-n+${step+1}) .stepper-title {
+        .stepper-list-item:nth-child(-n+${step + 1}) .stepper-title {
           color: #222;
         }
-        .stepper-list-item:nth-child(${step+1}) .stepper-title {
+        .stepper-list-item:nth-child(${step + 1}) .stepper-title {
           color: #ec161e;
         }
         .stepper-footer {
@@ -387,4 +447,3 @@ export default function StepperCardOnly() {
     </div>
   );
 }
-  

@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        webURL: "https://api.propertyease.in",
+        //webURL: "https://api.propertyease.in",
         whatsappNumber: "919996716787",
         secondNumber: "919050048884",
         contactEmail: "propertieslandmark07@gmail.com",
-        //webURL: "http://localhost:8010/",
+        webURL: "http://localhost:3000/",
         queryOnWhatsapp: "https://wa.me/919996716787?text=https://landmarkplots.com/",
         shareOnWhatsapp: "https://api.whatsapp.com/send?text=https://landmarkplots.com/",
 
@@ -32,6 +32,9 @@ const nextConfig = {
         ],
       },
 
+      sassOptions: {
+        quietDeps: true,
+      },
       
 };
 

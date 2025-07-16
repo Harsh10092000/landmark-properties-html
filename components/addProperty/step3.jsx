@@ -104,7 +104,6 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
   const [roadWidthUnit, setRoadWidthUnit] = useState(initialData?.roadWidthUnit || "Feet");
   const [plotWidth, setPlotWidth] = useState(initialData?.plotWidth || "");
   const [plotLength, setPlotLength] = useState(initialData?.plotLength || "");
-  const [formSubmit, setFormSubmit] = useState(false);
 
   // Load initial data when component mounts
   useEffect(() => {
@@ -129,10 +128,6 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
   }, [initialData]);
 
   const handleSaveAndNext = async () => {
-    setFormSubmit(true);
-    if (!plotSize) {
-      return; // Stop if plot size is empty
-    }
     const formData = {
       age,
       bedrooms,
@@ -180,9 +175,6 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                     onChange={(e) => setPlotSize(e.target.value)}
                     required
                   />
-                  {formSubmit && !plotSize && (
-                    <div className="step-error-msg">Required</div>
-                  )}
                 </div>
                 <div className="col-md-2 remove-padding-left-with-dropdown">
                   <select
