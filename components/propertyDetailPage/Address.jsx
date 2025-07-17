@@ -1,7 +1,10 @@
 import React from 'react'
 import Map3 from '../googleMap/GoogleMap'
+import Map from './Map'
 
 const Address = ({ mapdata }) => {
+    // const formatted_address = `${mapdata.pro_locality}, ${mapdata.pro_city}, ${mapdata.pro_state}, India`;
+    const formatted_address = mapdata.pro_street;
   return (
     <div className="listing__details--content__step mb-80">
                                     <div className="listing__details--location__header d-flex justify-content-between mb-40">
@@ -16,32 +19,32 @@ const Address = ({ mapdata }) => {
                                         </div> */}
                                     </div>
                                     <div className='google-map'>
-                                    <Map3 data={mapdata} />
+                                    {/* <Map3 data={mapdata} /> */}
+                                    <Map formatted_address={formatted_address} />
                                     </div>
                                     <div className="location__google--maps__info d-flex">
                                         <ul className="location__google--maps__info--step">
-                                            <li className="location__google--maps__info--list d-flex">
-                                                <span className="location__google--maps__info--title">Address:</span>
-                                                <span className="location__google--maps__info--subtitle">289 Foxhall Ave, Kingston</span>
-                                            </li>
+                                           
                                             <li className="location__google--maps__info--list d-flex">
                                                 <span className="location__google--maps__info--title">Country: </span>
-                                                <span className="location__google--maps__info--subtitle">United States</span>
+                                                <span className="location__google--maps__info--subtitle">India</span>
                                             </li>
                                             <li className="location__google--maps__info--list d-flex">
                                                 <span className="location__google--maps__info--title">Province/State: </span>
-                                                <span className="location__google--maps__info--subtitle">New Work</span>
+                                                <span className="location__google--maps__info--subtitle">{mapdata.pro_state}</span>
                                             </li>
                                         </ul>
                                         <ul className="location__google--maps__info--step">
                                             <li className="location__google--maps__info--list d-flex">
                                                 <span className="location__google--maps__info--title">City/Town:</span>
-                                                <span className="location__google--maps__info--subtitle">United States</span>
+                                                <span className="location__google--maps__info--subtitle">{mapdata.pro_city}</span>
                                             </li>
+
                                             <li className="location__google--maps__info--list d-flex">
-                                                <span className="location__google--maps__info--title">Neighborhood:  </span>
-                                                <span className="location__google--maps__info--subtitle">United States</span>
+                                                <span className="location__google--maps__info--title">Pin Code:</span>
+                                                <span className="location__google--maps__info--subtitle">{mapdata.pro_pincode}</span>
                                             </li>
+                                            
                                         </ul>
                                     </div>
                                 </div>

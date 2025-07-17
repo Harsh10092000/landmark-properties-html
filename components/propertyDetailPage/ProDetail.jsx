@@ -8,7 +8,7 @@ const ProDetail = ({ propertyData, proSlug }) => {
    
     <div className="listing__details--content__step">
         <h2 className="listing__details--title mb-25">{proSlug
-                                .slice(0, proSlug.length - 1)
+                                .slice(0, proSlug.length - 2)
                                 .map((item, index) => (
                                   <span className="pro-slug-space pl-1" key={index}>
                                     {item[0].toUpperCase() + item.slice(1)}

@@ -1,16 +1,16 @@
 import React from 'react'
 
-const DynmaicDesc = ({ data }) => {
-    console.log(data)
-    const propertyType1 = data !== undefined && [
+const DynmaicDesc = ({propertyData}) => {
+    console.log("propertyData : ", propertyData)
+    const propertyType1 = propertyData !== undefined && [
         {
           type: "Apartment",
-          description: `${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+          description: `${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } is available. The open floor plan is 
           bright and airy, with huge windows that let in tons of natural light. The kitchen is a chef's dream - gorgeous countertops and 
           enough space to cook for a crowd comfortably. 
@@ -19,13 +19,13 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Independent House",
-          description: `This stunning ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
-          }${data.pro_city} is a total 
+          description: `This stunning ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
+          }${propertyData.pro_city} is a total 
           showstopper when you pull up. Its open layout is perfect for entertaining, with huge windows that flood the place with natural 
           light. 
           The kitchen will make you want to quit your job and become a chef. It has premium appliances and a gorgeous island just for 
@@ -37,12 +37,12 @@ const DynmaicDesc = ({ data }) => {
     
         {
           type: "Builder Floor",
-          description: `This ${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+          description: `This ${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } is lovely. It's a blank slate ready for you to work your magic and make it 
         completely yours. The open layout is perfect for getting that creativity flowing - will you go modern and sleek or 
         have more of a cozy vibe? And with those oversized windows, you'll have natural light for days. 
@@ -53,14 +53,14 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Farm HouseRaw House",
-          description: `Checkout the ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
+          description: `Checkout the ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
           }${
-            data.pro_city
+            propertyData.pro_city
           }, it is an absolute blank canvas ready for your creativity! It 
         needs some TLC, but that's the fun part. Imagine stripping it down and making it exactly how you want - a concept kitchen with a 
         sweet island for all your hosting needs, a cozy living room with amazing built-ins, and maybe even an extra bedroom for your 
@@ -74,14 +74,14 @@ const DynmaicDesc = ({ data }) => {
         {
           type: "Retirement Community",
           description: `Discover a vibrant community designed exclusively for those seeking an active and 
-        enriching retirement lifestyle. This ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
+        enriching retirement lifestyle. This ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
           }${
-            data.pro_city
+            propertyData.pro_city
           } offers an array of amenities tailored to promote well-being and social connections. 
     
         Enjoy a maintenance-free lifestyle in beautifully appointed homes while enjoying access to the best recreational facilities. 
@@ -94,24 +94,24 @@ const DynmaicDesc = ({ data }) => {
         living room, kitchen area, and separate bathroom. It's designed to maximize functionality in a limited space, offering individuals 
         or couples a convenient and often affordable housing option.
     
-        This ${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+        This ${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } will meet all your expectations and requirements. If you are interested, Contact us now.
         `,
         },
         {
           type: "Residential Land",
-          description: `Check-out ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
-          }${data.pro_city}.
+          description: `Check-out ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
+          }${propertyData.pro_city}.
          Its neighborhood is great for a dream home. Located near the supermarket. A lovely backyard was recently renovated, with a 
          patio ideal for entertaining guests. Good schools, parks, and shops are nearby. Whether you are moving in tomorrow or today, 
          this house is ready to be occupied. If you want a residential property at a key location, contact us now!
@@ -119,12 +119,12 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Commercial Land",
-          description: `Great ${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+          description: `Great ${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } in a 
         convenient spot. Lots of parking spaces. Easy to see from the road. Flexible open spaces inside. Secure entry. Close to highways 
         and shopping areas. Perfect place for your executing your commercial goals 
@@ -134,13 +134,13 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Industrial Land",
-          description: `Check out the ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
-          }${data.pro_city} set 
+          description: `Check out the ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
+          }${propertyData.pro_city} set 
         aside for factories, warehouses, and other large workplaces. It is located in areas with good roads, power, and water for big 
         buildings and machinery. The lots are big enough to fit the manufacturing plants and storage facilities. 
     
@@ -151,13 +151,13 @@ const DynmaicDesc = ({ data }) => {
         {
           type: "Agricultural Land",
           description: `When we refer to agricultural land, we mean areas where people grow crops, raise livestock, and 
-          do other farming activities. Get the ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
-          }${data.pro_city} in 
+          do other farming activities. Get the ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
+          }${propertyData.pro_city} in 
           rural or semi-rural settings. These lands have ample space for seedbeds and pasturing. 
           Zoning laws prevent non-agricultural uses on these lands to maintain the purpose and the continuation of food production 
           in an agricultural economy. If you are interested in this land, contact us now. 
@@ -165,12 +165,12 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Farm House Land",
-          description: `${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+          description: `${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } is perfect for a farmhouse that combines residential living with agricultural 
         activities. These properties often feature a primary dwelling, such as a traditional farmhouse or a modern home, surrounded by 
         ample acreage suitable for farming operations. 
@@ -183,12 +183,12 @@ const DynmaicDesc = ({ data }) => {
           description: `A retail showroom is a dedicated space where products or merchandise are displayed and 
         showcased to potential customers. It is a physical location for retailers to present their offerings, allowing customers to
          view, inspect, and experience the products in person. 
-        Check this amazing place ${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+        Check this amazing place ${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           }, for a perfect 
         start to your business. Contact us for more details.
         `,
@@ -196,13 +196,13 @@ const DynmaicDesc = ({ data }) => {
         {
           type: "Commercial Building",
           description: `Rare opportunity to own a well-maintained ${
-            data.pro_area_size
-          } ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+            propertyData.pro_area_size
+          } ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           }. This versatile building features spacious open floor plans and ample natural 
           lighting, making it suitable for various businesses. 
         With its strategic location, high visibility, and convenient access to major transportation routes, this property offers 
@@ -212,14 +212,14 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Office Complex",
-          description: `Check this prime ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
+          description: `Check this prime ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
           }${
-            data.pro_city
+            propertyData.pro_city
           }, It is a real gem in the city's heart. Its sleek, modern design 
         and floor-to-ceiling windows make it a bright and inspiring workplace. The open layouts encourage collaboration, while 
         the private offices provide plenty of space for heads-down focus. 
@@ -229,13 +229,13 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Software Technology Park",
-          description: `This innovative ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
-          }${data.pro_city} is home to some of the brightest minds in tech. 
+          description: `This innovative ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
+          }${propertyData.pro_city} is home to some of the brightest minds in tech. 
         The vibe is amazing, with startups and established companies collaborating under one roof. The spaces are designed for productivity. 
         Whether you're a coding guru or the next Zuckerberg, this park has everything you need to improve your software game. 
         For more details, please contact us. 
@@ -243,12 +243,12 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Warehouse",
-          description: `This ${data.pro_area_size} ${data.pro_area_size_unit} ${
-            data.pro_type ? data.pro_type.split(",")[0] : ""
-          } for ${data.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
-            data.pro_locality ? data.pro_locality + ", " : ""
-          }${data.pro_sub_district ? data.pro_sub_district + ", " : ""}${
-            data.pro_city
+          description: `This ${propertyData.pro_area_size} ${propertyData.pro_area_size_unit} ${
+            propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""
+          } for ${propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in ${
+            propertyData.pro_locality ? propertyData.pro_locality + ", " : ""
+          }${propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""}${
+            propertyData.pro_city
           } warehouse means business. With its prime location right off the highway, you 
         have straight shipping and receiving connectivity. 
         It's not just massive—it's smart, too. It has top-notch security systems and climate-controlled areas to protect your goods. 
@@ -258,14 +258,14 @@ const DynmaicDesc = ({ data }) => {
         },
         {
           type: "Industrial Estate",
-          description: `Checkout this ${data.pro_area_size} ${
-            data.pro_area_size_unit
-          } ${data.pro_type ? data.pro_type.split(",")[0] : ""} for ${
-            data.pro_ad_type === "Rent" ? "Rent" : "Sale"
-          } in ${data.pro_locality ? data.pro_locality + ", " : ""}${
-            data.pro_sub_district ? data.pro_sub_district + ", " : ""
+          description: `Checkout this ${propertyData.pro_area_size} ${
+            propertyData.pro_area_size_unit
+          } ${propertyData.pro_sub_cat ? propertyData.pro_sub_cat.split(",")[0] : ""} for ${
+            propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"
+          } in ${propertyData.pro_locality ? propertyData.pro_locality + ", " : ""}${
+            propertyData.pro_sub_district ? propertyData.pro_sub_district + ", " : ""
           }${
-            data.pro_city
+            propertyData.pro_city
           }, made for hard-working contractors like you. Its location is 
         prime real estate with easy access to all the major roads and highways. The utilities include heavy-duty power, water, and 
         sewage. You name it—this place can handle it all. 
@@ -277,10 +277,10 @@ const DynmaicDesc = ({ data }) => {
       return (
         <>
           <h3 className="listing__details--content__title">More About this Property</h3>
-          {data.pro_type && (
+          {propertyData.pro_sub_cat && (
             <div className="listing__details--content__desc">
               {propertyType1.map((item) =>
-                data.pro_type.split(",")[0] === item.type ? (
+                propertyData.pro_sub_cat.split(",")[0] === item.type ? (
                   <p key={item.type}>{item.description}</p>
                 ) : null
               )}

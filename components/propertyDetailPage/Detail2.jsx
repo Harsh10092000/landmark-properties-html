@@ -2,9 +2,10 @@ import React from 'react'
 //import DynmaicDesc from './DynmaicDesc'
 
 const Detail2 = ({propertyData}) => {
-    
+  
   return (
     <>
+    
        <div className="listing__details--content__step mt-30">
                                 
                                     
@@ -27,8 +28,8 @@ const Detail2 = ({propertyData}) => {
                                             <div className="apartment__info--list">
                                                 <span className="apartment__info--icon"><img src="assets/img/icon/set-square.png" alt="img" /></span>
                                                 <p>
-                                                    <span className="apartment__info--count">3</span>
-                                                    <span className="apartment__info--title">1249 Sqft</span>
+                                                    <span className="apartment__info--count">{propertyData.pro_floor}</span>
+                                                    <span className="apartment__info--title">Floors</span>
                                                 </p>
                                             </div>
                                         </div>

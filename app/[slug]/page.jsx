@@ -12,6 +12,8 @@ import DynmaicDesc from "@/components/propertyDetailPage/DynmaicDesc";
 import PropertiesAmenities from "@/components/propertyDetailPage/PropertiesAmenities";
 import PropertiesDetails from "@/components/propertyDetailPage/PropertiesDetails";
 import PropertyHeader from "@/components/propertyDetailPage/PropertyHeader";
+import PropertiesDetails2 from "@/components/propertyDetailPage/PropertiesDetails2";
+
 
 
 // export async function generateMetadata({ params }, parent) {
@@ -160,11 +162,19 @@ const page = async ({ params }) => {
 
   const {
     row: propertyData,
-    images,
     latestProperty: latestProperty,
     // agentData: agentData,
     // userType: userType,
   } = await getData(slug, proId1);
+
+
+  const handleNullString = ((value) => {
+    if(value === null || value === undefined || value === ""){
+      return "-";
+    }
+    return value;
+  })
+
 
   return (
     <>
@@ -176,12 +186,14 @@ const page = async ({ params }) => {
             </div>
             <div className="col-lg-6">
               <ProHero propertyData={propertyData} />
+              
+              
             </div>
             <div className="col-lg-6">
               <ProDetail propertyData={propertyData} proSlug={arrproId} />
               <Detail2 propertyData={propertyData} />
               <div className="property-details-wrapper">
-                <PropertiesDetails />
+                <PropertiesDetails propertyData={propertyData} handleNullString={handleNullString} />
               </div>
             </div>
           </div>
@@ -194,13 +206,17 @@ const page = async ({ params }) => {
                   {/* <ProDetail propertyData={propertyData} proSlug={arrproId} /> */}
                   <div className="listing__details--main__content">
                     <div className="listing__details--content__step mb-80">
-                      <DynmaicDesc data={propertyData} />
+
+
+                    {propertyData !== null && ( <DynmaicDesc propertyData={propertyData} /> )}
+                    
                     </div>
 
                     {propertyData !== null && (
                       <>
                        
-                        <PropertiesDetails />
+                       
+                        <PropertiesDetails2 propertyData={propertyData} handleNullString={handleNullString}/>
                         <PropertiesAmenities />
                         <Address mapdata={propertyData} />
                       </>
