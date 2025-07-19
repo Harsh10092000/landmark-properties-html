@@ -1,8 +1,11 @@
 "use client"
 import Link from "next/link";
 import React, { useState } from "react";
-
+import { useSession } from "next-auth/react";
 const Header = () => {
+  const { data: session, status } = useSession();
+
+  console.log("data : ", session);
   // Main menu items array
   const mainMenuItems = [
     { id: 1, label: "Home", href: "/", icon: <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#16A34A"/></svg> },
@@ -80,16 +83,23 @@ const Header = () => {
                   
                   <ul className="header__account--icon d-flex">
                     <li className="header__account--icon__list">
+                    {status === "authenticated" ? (
+                      <a className="header__account--icon__link" href="http://localhost:5173/dashboard" target="_blank">
+                        <span className="header__account--icon__link__text">Dashboard</span>
+                      </a>
+                    ) : (
                       <Link className="header__account--icon__link" href="/login">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-users">
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-users">
                           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                           <circle cx="9" cy="7" r="4"></circle>
                           <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                           <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        <span className="visually-hidden">My Account</span>
+                        </svg> */}
+                        <span className="header__account--icon__link__text">Login</span>
                       </Link>
-                    </li>
+                   
+                        )}
+                        </li>
                    
                   </ul>
                 </div>
