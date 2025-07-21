@@ -1,8 +1,17 @@
 "use client"
 import Link from "next/link";
 import React, { useState } from "react";
+import { SessionProvider } from "next-auth/react";
 import { useSession } from "next-auth/react";
 const Header = () => {
+  return (
+    <SessionProvider>
+      <HeaderContent />
+    </SessionProvider>
+  );
+};
+
+const HeaderContent = () => {
   const { data: session, status } = useSession();
 
   console.log("data : ", session);
@@ -41,6 +50,7 @@ const Header = () => {
 
   return (
     <>
+    <SessionProvider>
       <header className="header__section header__transparent color-accent-2">
         <div className="header__sticky">
           <div className="container max-w-1430">
@@ -158,6 +168,7 @@ const Header = () => {
         </div>
       </div>
 }
+</SessionProvider>
     </>
   );
 };
