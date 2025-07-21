@@ -402,7 +402,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
     const filteredData = sortedUsers
       .filter((code) => {
         if (proWithPhotos === true) {
-          return code.img_id !== null;
+          return code.pro_cover_image !== "" || code.pro_cover_image !== "";
         } else if (proWithPhotos === false) {
           return true;
         }

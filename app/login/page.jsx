@@ -11,6 +11,8 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   
+  console.log("callbackUrl : ", callbackUrl);
+
   const [isNewUser, setIsNewUser] = useState(false);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');

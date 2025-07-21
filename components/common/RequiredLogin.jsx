@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function RequiredLogin() {
+    const pathname = usePathname();
     return (
         <>
             <div className="modal-backdrop">
@@ -15,7 +17,7 @@ export default function RequiredLogin() {
                     <div className="modal-content">
                         <h2 className="modal-title">You need to log in to continue</h2>
                         <div className="modal-subtext">Please log in to add a property.</div>
-                        <Link href="/login">
+                        <Link href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}>
                             <button className="modal-btn">LOG IN</button>
                         </Link>
                     </div>

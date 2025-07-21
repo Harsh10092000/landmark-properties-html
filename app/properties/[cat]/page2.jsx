@@ -24,6 +24,7 @@ const Page2 = ({
   //   url = `/properties/${cat}`;
   // }
   console.log("location : ", location);
+  console.log("data : ", data);
   const url = `/properties/${cat}`;
   const [openSortByOptions, setOpenSortByOptions] = useState(false);
   const [sortBy, setSortBy] = useState("Recent Listed");
@@ -331,7 +332,7 @@ const Page2 = ({
     const filteredData = sortedUsers
       .filter((code) => {
         if (proWithPhotos === true) {
-          return code.img_id !== null;
+          return code.pro_cover_image !== "" || code.pro_cover_image !== "";
         } else if (proWithPhotos === false) {
           return true;
         }
