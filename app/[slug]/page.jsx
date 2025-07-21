@@ -217,7 +217,7 @@ const page = async ({ params }) => {
                        
                        
                         <PropertiesDetails2 propertyData={propertyData} handleNullString={handleNullString}/>
-                        <PropertiesAmenities />
+                        <PropertiesAmenities data={propertyData} />
                         <Address mapdata={propertyData} />
                       </>
                     )}

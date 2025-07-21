@@ -22,7 +22,7 @@ const Address = ({ mapdata }) => {
                                     {/* <Map3 data={mapdata} /> */}
                                     <Map formatted_address={formatted_address} />
                                     </div>
-                                    <div className="location__google--maps__info d-flex">
+                                    <div className="location__google--maps__info d-flex pt-5">
                                         <ul className="location__google--maps__info--step">
                                            
                                             <li className="location__google--maps__info--list d-flex">
