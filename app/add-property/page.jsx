@@ -10,6 +10,12 @@ import Step4 from "@/components/addProperty/step4";
 import Step5 from "@/components/addProperty/step5";
 import Step6 from "@/components/addProperty/step6";
 import { LoadScript } from "@react-google-maps/api";
+import { SessionProvider, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import Link from "next/link";
+import RequiredLogin from "@/components/common/RequiredLogin";
+import Loading from "@/components/common/Loading";
+import Error from "@/components/common/Error";
 
 const GREEN = "#1dbf73";
 const BLUE = "#ec161e";
@@ -28,6 +34,25 @@ const STEPS = [
 const libraries = ["places"];
 
 export default function StepperCardOnly() {
+  return (
+    <SessionProvider>
+      <StepperCardContent />
+    </SessionProvider>
+  );
+}
+
+function StepperCardContent() {
+  // All hooks must be called unconditionally at the top
+  let sessionError = null;
+  let sessionStatus;
+  try {
+    const { status } = useSession();
+    sessionStatus = status;
+  } catch (err) {
+    sessionError = err;
+  }
+  //const [showLoginModal, setShowLoginModal] = useState(false);
+
   const [step, setStep] = useState(1);
   const [propertyId, setPropertyId] = useState(null);
   const [listingId, setListingId] = useState(null);
@@ -37,7 +62,6 @@ export default function StepperCardOnly() {
   const [proAreaUnit, setProAreaUnit] = useState(null);
   const [proCity, setProCity] = useState(null);
   const [proSubDistrict, setProSubDistrict] = useState(null);
-
   const [formData, setFormData] = useState({
     step1: {},
     step2: {},
@@ -47,16 +71,32 @@ export default function StepperCardOnly() {
   });
   const [loading, setLoading] = useState(false);
 
+  // useEffect(() => {
+  //   if (sessionStatus === "unauthenticated") {
+  //     setShowLoginModal(true);
+  //   } else {
+  //     setShowLoginModal(false);
+  //   }
+  // }, [sessionStatus]);
+
+  if (sessionError) {
+    return <Error message={sessionError.message || "Session error. Please try again."} />;
+  }
+  if (sessionStatus === "loading" || !sessionStatus) {
+    return <Loading />;
+  }
+  if (sessionStatus === "error") {
+    return <Error message="Authentication error. Please try again." />;
+  }
+
+  // Show login modal if not authenticated
+ 
+
   const handleStepChange = (idx) => {
     setStep(idx);
   };
 
   const saveStepData = async (stepNumber, data) => {
-
-
-
-
-
     setLoading(true);
     try {
       const response = await fetch('/api/property/save-step', {
@@ -158,7 +198,9 @@ export default function StepperCardOnly() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0 }}>
+  <>
+    {sessionStatus === "unauthenticated" && <RequiredLogin />}
+    <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0, filter: sessionStatus === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', pointerEvents: sessionStatus === "unauthenticated" === "unauthenticated" ? 'none' : 'auto', opacity: sessionStatus === "unauthenticated" ? 0.5 : 1, transition: 'filter 0.2s, opacity 0.2s' }}>
       <div className="container h-100">
         <div className="row h-100">
           <div className="col-md-4 h-100">
@@ -445,5 +487,6 @@ export default function StepperCardOnly() {
         }
       `}</style>
     </div>
+  </>
   );
 }

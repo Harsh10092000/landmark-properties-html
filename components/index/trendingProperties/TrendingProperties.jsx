@@ -315,7 +315,7 @@ const TrendingProperties = ({data}) => {
                             />
                           </svg>
                         </span>
-                        <span className="featured__info--text">Square Ft</span>
+                        <span className="featured__info--text">Area Size</span>
                       </li>
                     </ul>
                     <div className="featured__content--footer d-flex align-items-center justify-content-between">
@@ -344,7 +344,7 @@ const TrendingProperties = ({data}) => {
                             loading="lazy"
                           />
                         </span>
-                        <span className="featured__author--name">
+                        {/* <span className="featured__author--name">
                           {currentUser &&
                           item.pro_user_id == currentUser[0].login_id
                             ? "Listed By Me "
@@ -353,6 +353,11 @@ const TrendingProperties = ({data}) => {
                               item.pro_user_type +
                               ")" +
                               " "}
+                        </span> */}
+                        <span className="featured__author--name">
+                        <span className="featured__info--text" style={{fontSize: "13px"}}> Listed By </span>
+                          {item.pro_user_type}
+                              
                         </span>
                       </div>
 
