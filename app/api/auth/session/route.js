@@ -7,11 +7,11 @@ export async function GET(request) {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      console.log('No session found in livetutors');
+      console.log('No session found in Landmark Plots');
       return Response.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    console.log('Session found in livetutors:', session);
+    console.log('Session found in Landmark Plots:', session);
 
     // Get the latest valid session token from database for this user
     const [sessionRows] = await pool.query(

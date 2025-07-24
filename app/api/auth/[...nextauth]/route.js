@@ -154,7 +154,19 @@ export const authOptions = {
     signIn: '/login'
   },
   secret: process.env.NEXTAUTH_SECRET || 'your-secret-key-change-this',
-  debug: true
+  debug: true,
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'none', // for cross-domain
+        path: '/',
+        secure: true, // only over HTTPS
+        domain: '.landmarkplots.com', // allow all subdomains
+      },
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

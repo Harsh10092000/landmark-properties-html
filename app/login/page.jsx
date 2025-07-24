@@ -9,8 +9,8 @@ import { Suspense } from 'react';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/';
-  
+  // const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const callbackUrl = "/";
   console.log("callbackUrl : ", callbackUrl);
 
   const [isNewUser, setIsNewUser] = useState(false);
