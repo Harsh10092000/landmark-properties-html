@@ -37,8 +37,12 @@ const ProHero = ({ propertyData }) => {
       otherImages = propertyData.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
     }
   }
-  const allImages = [coverImage, ...otherImages, "default.jpg"];
-  console.log('allImages:', allImages);
+  //const allImages = [coverImage, ...otherImages, "default.jpg"];
+  //console.log('allImages:', allImages, typeof allImages);
+
+  // Always add default.jpg, but filter out empty/falsey values
+const allImages = [coverImage, ...otherImages, "default.jpg"].filter(Boolean);
+console.log('allImages:', allImages, typeof allImages);
 
   const renderMainContent = () => {
     if (allImages.length > 1) {
@@ -108,7 +112,7 @@ const ProHero = ({ propertyData }) => {
             src={
               process.env.webURL +
               "/uploads/" +
-              coverImage
+              "default.jpg"
             }
           // alt={mainImages[0].alt} 
           />
@@ -174,10 +178,8 @@ const ProHero = ({ propertyData }) => {
       <div className="listing__hero--section__inner position-relative">
         <div className="listing__hero--slider">
           {renderMainContent()}
+         
         </div>
-
-
-
         {allImages.length > 1 && renderThumbnailContent()}
       </div>
     </section>
