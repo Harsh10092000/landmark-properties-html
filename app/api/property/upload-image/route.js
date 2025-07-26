@@ -2,12 +2,25 @@ import { NextResponse } from "next/server";
 import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
 
+// Helper function to get allowed origin
+function getAllowedOrigin(origin) {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://user.landmarkplots.com'
+  ];
+  return allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+}
+
 // Handle OPTIONS preflight requests
 export async function OPTIONS(req) {
+  const origin = req.headers.get('origin') || 'http://localhost:5173';
+  const allowedOrigin = getAllowedOrigin(origin);
+  
   return new NextResponse(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': 'https://user.landmarkplots.com',
+      'Access-Control-Allow-Origin': allowedOrigin,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Max-Age': '86400',
@@ -54,12 +67,16 @@ export async function POST(req) {
     filenames.push(fname);
   }
 
+  // Get the origin from the request and set appropriate CORS headers
+  const origin = req.headers.get('origin') || 'http://localhost:5173';
+  const allowedOrigin = getAllowedOrigin(origin);
+
   // Return response with CORS headers
   return NextResponse.json(
     { success: true, filenames },
     {
       headers: {
-        'Access-Control-Allow-Origin': 'https://user.landmarkplots.com',
+        'Access-Control-Allow-Origin': allowedOrigin,
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
       },
