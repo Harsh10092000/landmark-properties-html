@@ -16,96 +16,96 @@ import PropertiesDetails2 from "@/components/propertyDetailPage/PropertiesDetail
 
 
 
-// export async function generateMetadata({ params }, parent) {
+export async function generateMetadata({ params }, parent) {
   
 
-//   const { slug } = params;
-//   if (!slug) {
-//     return <div>Invalid Property ID</div>;
-//   }
-//   const arrproId = slug.split("-");
-//   const proId = arrproId[arrproId.length - 1];
-
-//   const db = await pool;
-//   const q1 = "SELECT * from property_module_images WHERE img_cnct_id = ?";
-//   const [images] = await db.query(q1, proId);
-//  // console.log("images : " , images[0].img_link);
-
-
-
-//   //const proId1 = arrproId[arrproId.length - 1];
-//   //const { row : propertyData} = await getData(slug, proId1);
-
-//   const desc = `Check out this ${
-//     arrproId[0] + " " + arrproId[1] + " " + arrproId[2] + " "
-//   }${arrproId[3] !== "for" ? arrproId[3] : ""}
-// for ${
-//     arrproId[3] === "for" ? arrproId[4] : arrproId[5]
-//   }. It is an ideal investment opportunity in a prime${
-//     arrproId[3] !== "for"
-//       ? " " + arrproId[2] + " " + arrproId[3]
-//       : " " + arrproId[2] + ""
-//   } area with verified property assurance.`;
-
-//   const capitalizedName1 = arrproId
-//     .slice(0, arrproId.length - 1)
-//     .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
-//     .join(" ");
+  const { slug } = params;
+  if (!slug) {
+    return <div>Invalid Property ID</div>;
+  }
+  const arrproId = slug.split("-");
+  const proId = arrproId[arrproId.length - 1];
+  const listingId = "LM-" + proId;
+  const db = await pool;
+  const q1 = "SELECT pro_cover_image from property_module WHERE listing_id = ?";
+  const [images] = await db.query(q1, listingId);
+ // console.log("images : " , images[0].img_link);
 
 
-//     const [propertyData] = await db.query(
-//       "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type FROM property_module WHERE pro_id = ?",
-//       proId
-//     );
-//     const data = propertyData[0] || {}; 
+
+  //const proId1 = arrproId[arrproId.length - 1];
+  //const { row : propertyData} = await getData(slug, proId1);
+
+  const desc = `Check out this ${
+    arrproId[0] + " " + arrproId[1] + " " + arrproId[2] + " "
+  }${arrproId[3] !== "for" ? arrproId[3] : ""}
+for ${
+    arrproId[3] === "for" ? arrproId[4] : arrproId[5]
+  }. It is an ideal investment opportunity in a prime${
+    arrproId[3] !== "for"
+      ? " " + arrproId[2] + " " + arrproId[3]
+      : " " + arrproId[2] + ""
+  } area with verified property assurance.`;
+
+  const capitalizedName1 = arrproId
+    .slice(0, arrproId.length - 2)
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(2))
+    .join(" ");
+
+
+    const [propertyData] = await db.query(
+      "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type FROM property_module WHERE listing_id = ?",
+      listingId
+    );
+    const data = propertyData[0] || {}; 
   
-//     const schema = {
-//       "@context": "https://schema.org",
-//       "@type": "RealEstateListing",
-//       "name": capitalizedName1, 
-//       "url": data.pro_url || `https://landmarkplots.com/${slug}`, 
-//       "datePosted": data.pro_creation_date || new Date().toISOString().split('T')[0], 
-//       "author": {
-//         "@type": "Person",
-//         "name": data.pro_ad_type || "Unknown" 
-//       },
-//       "description": desc,
-//       "relatedLink": [
-//         `https://landmarkplots.com/properties/residential-properties`
-//       ].filter(Boolean), 
-//       "significantLink": [
-//         "https://landmarkplots.com/allproperties",
-//         "https://landmarkplots.com/contactus",
-//         "https://landmarkplots.com/aboutus",
-//         "https://landmarkplots.com/properties/properties-for-sale",
-//         "https://landmarkplots.com/properties/properties-for-rent",
-//       ]
-//     };
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "name": capitalizedName1, 
+      "url": data.pro_url || `https://landmarkplots.com/${slug}`, 
+      "datePosted": data.pro_creation_date || new Date().toISOString().split('T')[0], 
+      "author": {
+        "@type": "Person",
+        "name": data.pro_ad_type || "Unknown" 
+      },
+      "description": desc,
+      "relatedLink": [
+        `https://landmarkplots.com/properties/residential-properties`
+      ].filter(Boolean), 
+      "significantLink": [
+        "https://landmarkplots.com/allproperties",
+        "https://landmarkplots.com/contactus",
+        "https://landmarkplots.com/aboutus",
+        "https://landmarkplots.com/properties/properties-for-sale",
+        "https://landmarkplots.com/properties/properties-for-rent",
+      ]
+    };
 
-//   return {
-//     title: capitalizedName1,
-//     description: desc,
-//     openGraph: {
-//       type: 'website',  
-//       url: `https://landmarkplots.com/${slug}`,
-//       title: capitalizedName1,
-//       description: desc,
-//       images: [{
-//         url: images[0] !== undefined ? `https://api.propertyease.in//propertyImages/watermark/${images[0].img_link}` : 'https://landmarkplots.com/images/property-banner-img.jpg',
-//         width: 1200,
-//         height: 630,
-//         alt: capitalizedName1
-//       }]
-//     },
-//     metadataBase: new URL('https://landmarkplots.com'),
-//     alternates: {
-//       canonical: `https://landmarkplots.com/${slug}`
-//     },
-//     other: {
-//       'schema.org': JSON.stringify(schema)
-//     }
-//   };
-// }
+  return {
+    title: capitalizedName1,
+    description: desc,
+    openGraph: {
+      type: 'website',  
+      url: `https://landmarkplots.com/${slug}`,
+      title: capitalizedName1,
+      description: desc,
+      images: [{
+        url: images[0] !== undefined ? `https://landmarkplots.com/uploads/${images[0].pro_cover_image}` : 'https://landmarkplots.com/uploads/default.jpg',
+        width: 1200,
+        height: 630,
+        alt: capitalizedName1
+      }]
+    },
+    metadataBase: new URL('https://landmarkplots.com'),
+    alternates: {
+      canonical: `https://landmarkplots.com/${slug}`
+    },
+    other: {
+      'schema.org': JSON.stringify(schema)
+    }
+  };
+}
 
 const getData = async (slug, proId) => {
   try {
