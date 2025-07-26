@@ -49,7 +49,7 @@ for ${
 
   const capitalizedName1 = arrproId
     .slice(0, arrproId.length - 2)
-    .map((item) => item.charAt(0).toUpperCase() + item.slice(2))
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
     .join(" ");
 
 
