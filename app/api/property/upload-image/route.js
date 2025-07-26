@@ -2,6 +2,19 @@ import { NextResponse } from "next/server";
 import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
 
+// Handle OPTIONS preflight requests
+export async function OPTIONS(req) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': 'https://user.landmarkplots.com',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
 export async function POST(req) {
   const data = await req.formData();
   const files = [];
@@ -41,5 +54,15 @@ export async function POST(req) {
     filenames.push(fname);
   }
 
-  return NextResponse.json({ success: true, filenames });
+  // Return response with CORS headers
+  return NextResponse.json(
+    { success: true, filenames },
+    {
+      headers: {
+        'Access-Control-Allow-Origin': 'https://user.landmarkplots.com',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    }
+  );
 }
