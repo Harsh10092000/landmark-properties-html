@@ -5,13 +5,10 @@ import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-// Separate component to handle useSearchParams
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const callbackUrl = searchParams.get('callbackUrl') || '/';
   const callbackUrl = "/";
-  console.log("callbackUrl : ", callbackUrl);
 
   const [isNewUser, setIsNewUser] = useState(false);
   const [email, setEmail] = useState('');
@@ -27,29 +24,22 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
-      // First check if user exists
       const checkUser = await fetch('/api/auth/check-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
-
       const userData = await checkUser.json();
       setUserExists(userData.exists);
       setIsNewUser(!userData.exists);
-
-      // Then send OTP
       const res = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
-      
       setOtpSent(true);
     } catch (err) {
       setError(err.message);
@@ -62,13 +52,10 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
-      // Validate required fields for new users
       if (!userExists && (!name || !phone)) {
         throw new Error('Name and phone number are required for new users');
       }
-
       const result = await signIn('credentials', {
         email,
         phone: !userExists ? phone : undefined,
@@ -77,11 +64,9 @@ function LoginForm() {
         isNewUser: !userExists,
         redirect: false
       });
-
       if (result?.error) {
         throw new Error(result.error);
       }
-
       router.push(callbackUrl);
     } catch (err) {
       setError(err.message);
@@ -91,174 +76,244 @@ function LoginForm() {
   };
 
   return (
-    <div
-      className="tu-main-login"
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'var(--color-offwhite, #f8f9fa)', // fallback if variable not set
-        padding: '2rem 0',
-      }}
-    >
-      <div
-        className="tu-login-left"
-        style={{
-          background: 'linear-gradient(135deg, var(--color-accent-2, #4e54c8) 0%, var(--color-accent-2, #8f94fb) 100%)',
-          color: '#fff',
-          borderRadius: '1.5rem 0 0 1.5rem',
-          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-          padding: '3rem 2.5rem',
-          minWidth: 340,
-          maxWidth: 400,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <figure style={{ marginBottom: 24 }}>
-          <img
-            src="/images/login-img.png"
-            alt="Login"
-            style={{ width: 180, height: 'auto', borderRadius: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
-          />
-        </figure>
-        <div className="tu-login-left_title" style={{ textAlign: 'center' }}>
-          <h2 style={{ fontWeight: 700, fontSize: 28, marginBottom: 8 }}>Welcome to <span style={{ color: 'var(--color-accent-2, #8f94fb)' }}>Landmark Properties</span></h2>
-          <span style={{ fontSize: 16, opacity: 0.95 }}>Find your perfect property and start your journey today!</span>
+    <div className="login-theme-container">
+      <div className="login-theme-card">
+        <div className="login-theme-header">
+          <img src="https://user.landmarkplots.com/favicon.png" alt="Landmark Properties" className="login-theme-logo" />
+          <h1 className="login-theme-title">Landmark Properties</h1>
+          <p className="login-theme-subtitle">Sign in to continue</p>
         </div>
-      </div>
-      <div
-        className="tu-login-right"
-        style={{
-          background: '#fff',
-          borderRadius: '0 1.5rem 1.5rem 0',
-          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.10)',
-          padding: '3rem 2.5rem',
-          minWidth: 340,
-          maxWidth: 400,
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <div className="tu-login-right_title" style={{ marginBottom: 24, textAlign: 'center' }}>
-          <h2 style={{ fontWeight: 700, fontSize: 24, marginBottom: 4 }}>{!userExists ? 'Create Account' : 'Login'}</h2>
-          {!otpSent && (
-            <p style={{ color: 'var(--color-accent-2, #4e54c8)', fontWeight: 500, fontSize: 15, margin: 0 }}>Enter your email to continue</p>
-          )}
-        </div>
-
         {error && (
-          <div className="tu-alert tu-alert-danger" style={{ marginBottom: 16, borderRadius: 8, background: '#ffeaea', color: '#d32f2f', padding: '0.75rem 1rem', fontWeight: 500, fontSize: 15 }}>
-            <p style={{ margin: 0 }}>{error}</p>
+          <div className="login-theme-error">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="12" fill="#fee2e2"/>
+              <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#e53e3e" strokeWidth="1.5"/>
+            </svg>
+            <span>{error}</span>
           </div>
         )}
-
-        <form onSubmit={otpSent ? handleSubmit : handleSendOTP}>
-          <div className="tu-login-form">
-            <div className="form-group" style={{ marginBottom: 18 }}>
-              <label style={{ fontWeight: 600, marginBottom: 6, display: 'block' }}>Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={otpSent}
-                style={{ borderRadius: 8, border: '1px solid #e0e0e0', padding: '0.75rem 1rem', fontSize: 15 }}
-              />
-            </div>
-
-            {otpSent && !userExists && (
-              <>
-                <div className="form-group" style={{ marginBottom: 18 }}>
-                  <label style={{ fontWeight: 600, marginBottom: 6, display: 'block' }}>Full name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter your full name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    style={{ borderRadius: 8, border: '1px solid #e0e0e0', padding: '0.75rem 1rem', fontSize: 15 }}
-                  />
-                </div>
-                <div className="form-group" style={{ marginBottom: 18 }}>
-                  <label style={{ fontWeight: 600, marginBottom: 6, display: 'block' }}>Phone number</label>
-                  <input
-                    type="tel"
-                    className="form-control"
-                    placeholder="Enter phone number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                    style={{ borderRadius: 8, border: '1px solid #e0e0e0', padding: '0.75rem 1rem', fontSize: 15 }}
-                  />
-                </div>
-              </>
-            )}
-
-            {otpSent && (
-              <div className="form-group" style={{ marginBottom: 18 }}>
-                <label style={{ fontWeight: 600, marginBottom: 6, display: 'block' }}>Enter OTP</label>
+        <form onSubmit={otpSent ? handleSubmit : handleSendOTP} className="login-theme-form">
+          <div className="login-theme-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={otpSent}
+              className="login-theme-input"
+            />
+          </div>
+          {otpSent && !userExists && (
+            <>
+              <div className="login-theme-group">
+                <label>Full Name</label>
                 <input
                   type="text"
-                  className="form-control"
-                  placeholder="Enter OTP sent to your email"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
-                  style={{ borderRadius: 8, border: '1px solid #e0e0e0', padding: '0.75rem 1rem', fontSize: 15, letterSpacing: 2, textAlign: 'center' }}
+                  className="login-theme-input"
                 />
               </div>
-            )}
-
-            <button
-              type="submit"
-              className="tu-primbtn-lg"
-              disabled={loading}
-              style={{
-                width: '100%',
-                background: 'linear-gradient(90deg, var(--color-accent-2, #4e54c8) 0%, var(--color-accent-2, #8f94fb) 100%)',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: 17,
-                border: 'none',
-                borderRadius: 8,
-                padding: '0.85rem 0',
-                marginTop: 8,
-                marginBottom: 10,
-                boxShadow: '0 2px 8px rgba(78,84,200,0.10)',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'background 0.2s',
-              }}
-            >
-              {loading ? 'Please wait...' : otpSent ? 'Verify OTP' : 'Continue'}
-            </button>
-
-            <div className="tu-lost-password form-group" style={{ textAlign: 'center', marginTop: 10 }}>
-              <a href="/" className="tu-password-clr_light" style={{ color: 'var(--color-accent-2, #4e54c8)', textDecoration: 'underline', fontWeight: 500 }}>Back to Home</a>
+              <div className="login-theme-group">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="login-theme-input"
+                />
+              </div>
+            </>
+          )}
+          {otpSent && (
+            <div className="login-theme-group">
+              <label>OTP Code</label>
+              <input
+                type="text"
+                placeholder="Enter 6-digit OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+                maxLength={6}
+                className="login-theme-input otp-input"
+              />
+              <div className="login-theme-otp-info">
+                <span style={{ color: '#38a169', fontWeight: 500 }}>Check your email for the OTP code</span>
+              </div>
             </div>
+          )}
+          <button
+            type="submit"
+            disabled={loading}
+            className="login-theme-btn"
+          >
+            {loading ? (
+              <span className="login-theme-spinner"></span>
+            ) : (
+              otpSent ? 'Verify & Continue' : 'Send OTP'
+            )}
+          </button>
+          <div className="login-theme-footer">
+            <a href="/" className="login-theme-link">Back to Home</a>
           </div>
         </form>
       </div>
-      {/* Responsive stacking for mobile */}
       <style jsx>{`
-        @media (max-width: 900px) {
-          .tu-main-login {
-            flex-direction: column !important;
-            padding: 1.5rem 0 !important;
-          }
-          .tu-login-left, .tu-login-right {
-            border-radius: 1.5rem !important;
-            min-width: 90vw !important;
-            max-width: 98vw !important;
-            margin-bottom: 1.5rem;
+        .login-theme-container {
+          min-height: 100vh;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem 1rem;
+        }
+        .login-theme-card {
+          background: #fff;
+          border-radius: 18px;
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+          padding: 2.5rem 2rem 2rem 2rem;
+          max-width: 370px;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .login-theme-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+        .login-theme-logo {
+          width: 54px;
+          height: 54px;
+          border-radius: 12px;
+          margin-bottom: 0.5rem;
+        }
+                 .login-theme-title {
+           font-size: 1.8rem;
+           font-weight: 800;
+           color: #111;
+           margin: 0 0 0.2rem 0;
+         }
+         .login-theme-subtitle {
+           color: #e53e3e;
+           font-size: 1.3rem;
+           font-weight: 600;
+           margin-bottom: 0.2rem;
+         }
+                 .login-theme-error {
+           display: flex;
+           align-items: center;
+           gap: 8px;
+           background: #fff5f5;
+           color: #e53e3e;
+           padding: 10px 14px;
+           border-radius: 8px;
+           margin-bottom: 1.2rem;
+           font-size: 1.1rem;
+           font-weight: 500;
+         }
+        .login-theme-form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+        .login-theme-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+                 .login-theme-group label {
+           font-weight: 700;
+           color: #222;
+           font-size: 1.1rem;
+         }
+                 .login-theme-input {
+           width: 100%;
+           padding: 12px 14px;
+           border: 2px solid #e0e0e0;
+           border-radius: 8px;
+           font-size: 1.1rem;
+           background: #fafafa;
+           color: #111;
+           font-weight: 500;
+           transition: border 0.18s;
+         }
+        .login-theme-input:focus {
+          outline: none;
+          border-color: #e53e3e;
+          background: #fff;
+        }
+                 .otp-input {
+           letter-spacing: 4px;
+           text-align: center;
+           font-size: 1.4rem;
+         }
+                 .login-theme-otp-info {
+           margin-top: 0.4rem;
+           color: #38a169;
+           font-size: 1.05rem;
+         }
+                 .login-theme-btn {
+           width: 100%;
+           background: #e53e3e;
+           color: #fff;
+           border: none;
+           border-radius: 8px;
+           padding: 13px 0;
+           font-size: 1.2rem;
+           font-weight: 700;
+           letter-spacing: 1px;
+           margin-top: 0.5rem;
+           cursor: pointer;
+           transition: background 0.18s;
+         }
+        .login-theme-btn:hover:not(:disabled) {
+          background: #b91c1c;
+        }
+        .login-theme-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+        .login-theme-spinner {
+          width: 18px;
+          height: 18px;
+          border: 2.5px solid #fff;
+          border-top: 2.5px solid #e53e3e;
+          border-radius: 50%;
+          display: inline-block;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .login-theme-footer {
+          text-align: center;
+          margin-top: 1.1rem;
+        }
+                 .login-theme-link {
+           color: #111;
+           text-decoration: underline;
+           font-weight: 600;
+           font-size: 1.1rem;
+           transition: color 0.18s;
+         }
+        .login-theme-link:hover {
+          color: #e53e3e;
+        }
+        @media (max-width: 600px) {
+          .login-theme-card {
+            padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+            max-width: 98vw;
           }
         }
       `}</style>

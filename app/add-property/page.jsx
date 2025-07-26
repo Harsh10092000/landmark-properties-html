@@ -16,7 +16,7 @@ import Link from "next/link";
 import RequiredLogin from "@/components/common/RequiredLogin";
 import Loading from "@/components/common/Loading";
 import Error from "@/components/common/Error";
-import Head from "next/head";
+
 
 const GREEN = "#1dbf73";
 const BLUE = "#ec161e";
@@ -203,7 +203,7 @@ function StepperCardContent() {
 
   return (
   <>
-  <Head>
+  
     <title>Add Property | Landmark Plots</title>
     <meta name="description" content="Add Property | Landmark Plots" />
     <meta name="canonical" content="https://landmarkplots.com/add-property" />
@@ -212,7 +212,7 @@ function StepperCardContent() {
     <meta property="og:title" content="Add Property | Landmark Plots" />
     <meta property="og:description" content="Add Property | Landmark Plots" />
     <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
-  </Head>
+ 
     {sessionStatus === "unauthenticated" && <RequiredLogin />}
     <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0, filter: sessionStatus === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', pointerEvents: sessionStatus === "unauthenticated" === "unauthenticated" ? 'none' : 'auto', opacity: sessionStatus === "unauthenticated" ? 0.5 : 1, transition: 'filter 0.2s, opacity 0.2s' }}>
       <div className="container h-100">
