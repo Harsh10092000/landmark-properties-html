@@ -94,7 +94,7 @@ const HeaderContent = () => {
                   <ul className="header__account--icon d-flex">
                     <li className="header__account--icon__list">
                     {status === "authenticated" ? (
-                      <a className="header__account--icon__link" href="http://localhost:5173/dashboard" target="_blank">
+                      <a className="header__account--icon__link" href="https://user.landmarkplots.com/dashboard" target="_blank">
                         <span className="header__account--icon__link__text">Dashboard</span>
                       </a>
                     ) : (
