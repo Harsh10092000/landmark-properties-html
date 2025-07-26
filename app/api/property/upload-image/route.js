@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { writeFile, mkdirSync, existsSync } from "fs";
 import path from "path";
+import { revalidatePath } from 'next/cache';
 
 // Helper function to get allowed origin
 function getAllowedOrigin(origin) {
@@ -70,6 +71,9 @@ export async function POST(req) {
   // Get the origin from the request and set appropriate CORS headers
   const origin = req.headers.get('origin') || 'http://localhost:5173';
   const allowedOrigin = getAllowedOrigin(origin);
+
+  // After successful upload
+  await revalidatePath('/'); // or the path where images are shown
 
   // Return response with CORS headers
   return NextResponse.json(
