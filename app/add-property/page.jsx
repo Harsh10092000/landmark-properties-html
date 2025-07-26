@@ -58,10 +58,12 @@ function StepperCardContent() {
   const [listingId, setListingId] = useState(null);
   const [proAdType, setProAdType] = useState(null);
   const [proType, setProType] = useState(null);
+  const [propertyType, setPropertyType] = useState(null);
   const [proArea, setProArea] = useState(null);
   const [proAreaUnit, setProAreaUnit] = useState(null);
   const [proCity, setProCity] = useState(null);
   const [proSubDistrict, setProSubDistrict] = useState(null);
+ 
   const [formData, setFormData] = useState({
     step1: {},
     step2: {},
@@ -143,6 +145,7 @@ function StepperCardContent() {
       setListingId(data.listingId);
       setProAdType(data.adType);
       setProType(data.propertySubType.split(",")[0]);
+      setPropertyType(data.propertySubType.split(",")[1]);
       console.log("proType : ", proType, listingId, proAdType, data.adType);
     }
 
@@ -287,6 +290,7 @@ function StepperCardContent() {
                     onSubmit={handleStepSubmit}
                     loading={loading}
                     initialData={formData.step3}
+                    propertyType={propertyType}
                   />
                 )}
                 {step === 4 && (
@@ -295,6 +299,7 @@ function StepperCardContent() {
                     onSubmit={handleStepSubmit}
                     loading={loading}
                     initialData={formData.step4}
+                    
                   />
                 )}
                 {step === 5 && (
@@ -303,6 +308,7 @@ function StepperCardContent() {
                     onSubmit={handleStepSubmit}
                     loading={loading}
                     initialData={formData.step5}
+                    propertyType={propertyType}
                   />
                 )}
                 {step === 6 && (

@@ -23,7 +23,7 @@ function priceFormat(val) {
   );
 }
 
-export default function Step5({handleStepChange, onSubmit, loading, initialData}) {
+export default function Step5({handleStepChange, onSubmit, loading, initialData, propertyType}) {
   const [ownership, setOwnership] = useState(initialData?.ownership || "");
   const [authority, setAuthority] = useState(initialData?.authority || "");
   const [otherRooms, setOtherRooms] = useState(initialData?.otherRooms || []);
@@ -128,6 +128,7 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData}
           </div>
 
           {/* Other Rooms */}
+          {propertyType !== "Land" && <>
           <div className="step1-label" style={{ marginTop: 16 }}>Other Rooms</div>
           <div className="step1-pill-group">
             {otherRoomsOptions.map((opt) => (
@@ -141,7 +142,8 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData}
               </button>
             ))}
           </div>
-
+          </>
+}
           {/* Near By Facilities */}
           <div className="step1-label" style={{ marginTop: 16 }}>Near By Facilities</div>
           <div className="step1-pill-group step1-pill-group-wrap">

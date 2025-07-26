@@ -86,7 +86,7 @@ const propertySides = [
   { value: "4" },
 ];
 
-export default function Step3({handleStepChange, onSubmit, loading, initialData}) {
+export default function Step3({handleStepChange, onSubmit, loading, initialData, propertyType}) {
   // State for each field
   const [age, setAge] = useState(initialData?.age || "");
   const [bedrooms, setBedrooms] = useState(initialData?.bedrooms || "");
@@ -128,6 +128,12 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
   }, [initialData]);
 
   const handleSaveAndNext = async () => {
+    // Validate required fields
+    if (!plotSize || plotSize.trim() === "") {
+      alert("Area Plot Size is required. Please enter the plot size.");
+      return;
+    }
+
     const formData = {
       age,
       bedrooms,
@@ -225,6 +231,10 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
               </div>
             </div>
 
+
+{propertyType !== "Land" &&
+
+<>
             <div className="col-md-12">
               <div className="step1-label">Age of Property (in year)</div>
               <div className="step1-pill-group">
@@ -300,6 +310,8 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                 ))}
               </div>
             </div>
+            </>
+}
             <div className="col-md-12 padding-bottom">
               <div className="step1-label">Property Facing</div>
               <div className="step1-pill-group">
@@ -315,6 +327,7 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                 ))}
               </div>
             </div>
+            {propertyType !== "Land" &&
             <div className="col-md-12 padding-bottom">
               <div className="step1-label">Furnishing</div>
               <div className="step1-pill-group">
@@ -330,6 +343,7 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                 ))}
               </div>
             </div>
+}
             <div className="col-md-12 padding-bottom">
               <div className="step1-label">Possession Available</div>
               <div className="step1-pill-group">
@@ -345,6 +359,7 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                 ))}
               </div>
             </div>
+            {propertyType !== "Land" &&
             <div className="col-md-6 padding-bottom">
               <div className="step1-label">Number of Floors</div>
               <div className="step1-pill-group">
@@ -360,6 +375,7 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData}
                 ))}
               </div>
             </div>
+}
             <div className="col-md-6 padding-bottom">
               <div className="step1-label">Number of Open Sides</div>
               <div className="step1-pill-group">
