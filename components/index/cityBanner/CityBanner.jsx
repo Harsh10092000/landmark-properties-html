@@ -27,8 +27,8 @@ const CityBanner = ({cityCount}) => {
     <div className="banner__step d-flex">
         {cityCount[1] &&
         <>
-        <CityBannerCard city_name={cityCount[0].pro_city} city_number={cityCount[0].pro_city_number} delay={"50"} banner_img={"banner1.png"} />
-        <CityBannerCard city_name={cityCount[1].pro_city} city_number={cityCount[1].pro_city_number} delay={"100"} banner_img={"banner2.png"} />
+        <CityBannerCard city_name={cityCount[0].pro_city} city_number={cityCount[0].pro_city_number} delay={"50"} banner_img={"banner1.webp"} />
+        <CityBannerCard city_name={cityCount[1].pro_city} city_number={cityCount[1].pro_city_number} delay={"100"} banner_img={"banner2.webp"} />
         </>
 }
    
@@ -36,8 +36,8 @@ const CityBanner = ({cityCount}) => {
     <div className="banner__step d-flex">
         {cityCount[3] &&
         <>
-    <CityBannerCard city_name={cityCount[2].pro_city} city_number={cityCount[2].pro_city_number} delay={"150"} banner_img={"banner3.png"} />
-    <CityBannerCard city_name={cityCount[3].pro_city} city_number={cityCount[3].pro_city_number} delay={"200"} banner_img={"banner4.png"} />
+    <CityBannerCard city_name={cityCount[2].pro_city} city_number={cityCount[2].pro_city_number} delay={"150"} banner_img={"banner3.webp"} />
+    <CityBannerCard city_name={cityCount[3].pro_city} city_number={cityCount[3].pro_city_number} delay={"200"} banner_img={"banner4.webp"} />
     </>
         }
        
