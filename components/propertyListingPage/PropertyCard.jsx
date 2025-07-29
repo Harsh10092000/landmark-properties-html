@@ -34,7 +34,7 @@ const PropertyCard = ({ item, index }) => {
                         />
                       ) : (
                         <Image
-                          src="/images/default4.webp"
+                          src={`/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`}
                           alt={`${item.pro_type.split(",")[0]} in ${
                             item.pro_city
                           }`}

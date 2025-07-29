@@ -634,7 +634,8 @@ hr {
 
 .header__transparent {
   /* position: absolute !important; */
-  background-color: black;
+  /* background-color: black; */
+  background-color: white;
   top: 0;
   left: 0;
   right: 0;
@@ -1700,7 +1701,7 @@ body.overlay__active::before,
   font-size: 1.6rem;
   line-height: 2rem;
   text-transform: capitalize;
-  color: var(--color-foreground);
+  color: var(--color-foreground) !important;
   position: relative;
   font-weight: 700;
   padding: 0.3rem 0;
@@ -1923,7 +1924,8 @@ body.overlay__active::before,
   gap: 1.5rem;
 }
 .header__account--icon__link {
-  color: var(--color-white);
+  color: var(--color-foreground);
+  font-weight: 700;
 }
 
 .predictive__search--title {
@@ -3387,7 +3389,22 @@ body.overlay__active::before,
     home four css
 */
 .hero__section--bg4 {
-  background: url(/assets/img/hero/home-four-hero-section-bg.png);
+  /* background: url(/assets/img/hero/home-four-hero-section-bg.png); */
+  background: url(/assets/img/hero/hero-banner.webp) no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+
+.hero__section--bg4::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.6);
+
 }
 
 .hero__section--inner__style4 {
@@ -5153,6 +5170,7 @@ body.overlay__active::before,
   display: inline-block;
   border-radius: 2rem;
   cursor: pointer;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 .badge__field.style2 {
   background: var(--color-background);

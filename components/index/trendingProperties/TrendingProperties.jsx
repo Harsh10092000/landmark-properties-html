@@ -76,7 +76,7 @@ const TrendingProperties = ({data}) => {
                           src={
                             item.img_link
                               ? `${process.env.webURL}/propertyImages/watermark/${item.img_link}`
-                              : "/images/default4.webp"
+                              :  `/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`
                           }
                           alt={`${item.pro_type.split(",")[0]} in ${
                             item.pro_city
@@ -163,18 +163,40 @@ const TrendingProperties = ({data}) => {
                   </div>
                   <div className="featured__content">
                     <div className="featured__content--top d-flex align-items-center justify-content-between">
-                      <h3 className="featured__card--title">
-                        <Link href="#">
-                          {item.pro_type.split(",")[0]}
-                        </Link>
+                      <h3 className="featured__card--title" style={{fontSize:"16px"}}>
+                        <Link href={`/${item.pro_url}`}>
+                          {/* {item.pro_type.split(",")[0]} */}
+                        {" "}
+                        {item.pro_area_size +
+                          " " +
+                          item.pro_area_size_unit +
+                          " " +
+                          item.pro_type.split(",")[0] +
+                          " "}
+                        for {item.pro_ad_type === "Rent" ? "Rent" : "Sale"} in{" "}
+                        <span className="text-capitalize">
+                          {item.pro_locality}
+                        </span>
+                        
+                        {item.pro_sub_district
+                          ? item.pro_sub_district + ", "
+                          : ""}
+                        {item.pro_city + " " + item.pro_state}
+                      </Link>
+                       
                       </h3>
-                      <span className="featured__card--price">
+                     
+                    </div>
+                    <div>
+                    <span className="featured__card--price">
                         {/* ₹ {item.pro_amt} {item.pro_amt_unit} */}
                         {item.pro_amt
                           ? ShowPrice(item.pro_ad_type, item.pro_amt)
                           : "Ask Price"}
                       </span>
                     </div>
+
+
                     <p className="featured__content--desc">
                       <svg
                         width="11"
@@ -388,7 +410,7 @@ const TrendingProperties = ({data}) => {
                         <li className="featured__share--btn__list">
                           <Link
                             className="featured__share--btn"
-                            href="#"
+                            href="/add-property"
                           >
                             <svg
                               width="16"

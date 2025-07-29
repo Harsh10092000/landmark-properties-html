@@ -67,7 +67,7 @@ const HeaderContent = () => {
                 <h1 className="main__logo--title">
                   <Link className="main__logo--link" href="/">
                     <picture>
-                      <img className="main__logo--img sticky__none" src="/assets/img/logo/nav-log3.png" alt="logo-img" />
+                      <img className="main__logo--img sticky__none" src="/assets/img/logo/nav-log2.png" alt="logo-img" />
                     </picture>
                     <picture>
                       <img className="main__logo--img sticky__block" src="/assets/img/logo/nav-log2.png" alt="logo-img" />

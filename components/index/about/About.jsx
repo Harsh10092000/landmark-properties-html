@@ -7,10 +7,10 @@ const About = () => {
                 <div className="about__inner d-flex">
                     <div className="about__thumbnail--style4 d-flex" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
                         <div className="about__thumbnail--items one">
-                        <picture> <img src="assets/img/other/about-items1.png" alt="about-thumb" /></picture>
+                        <picture> <img src="assets/img/other/about-items1.webp" alt="about-thumb" /></picture>
                         </div>
                         <div className="about__thumbnail--items two">
-                        <picture> <img src="assets/img/other/about-items2.png" alt="about-thumb" /></picture>
+                        <picture> <img src="assets/img/other/about-items2.webp" alt="about-thumb" /></picture>
                             {/* <div className="bideo__play style3">
                                 <a className="bideo__play--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
                                     <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,13 +43,13 @@ const About = () => {
                         <div className="about__content--info d-flex">
                             <div className="about__content--info__list d-flex align-items-center">
                                 <div className="about__content--info__icon">
-                                <picture><img src="assets/img/other/about-info-icon3.png" alt="icon" /></picture>
+                                <picture><img src="assets/img/other/about-info-icon3.webp" alt="icon" /></picture>
                                 </div>
                                 <h3 className="about__content--info__title">Designed for living</h3>
                             </div>
                             <div className="about__content--info__list d-flex align-items-center">
                                 <div className="about__content--info__icon">
-                                <picture><img src="assets/img/other/about-info-icon4.png" alt="icon" /></picture>
+                                <picture><img src="assets/img/other/about-info-icon4.webp" alt="icon" /></picture>
                                 </div>
                                 <h3 className="about__content--info__title">Innovative. Elegant. Timeless.</h3>
                             </div>

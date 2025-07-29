@@ -37,7 +37,7 @@ const ChooseUs = () => {
                                 Finally, we guide you through viewings and paperwork</li>
                         </ul>
                         <div className="contact__property--thumb">
-                        <picture> <img src="assets/img/other/contact-property-thumb2.png" alt="img" /></picture>
+                        <picture> <img src="assets/img/other/contact-property-thumb2.webp" alt="img" /></picture>
                         </div>
                     </div>
                     <div className="contact__property--form">
