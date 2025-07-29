@@ -84,7 +84,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-      
+      <meta name="google-site-verification" content="3PcL6iH5Cja8l2D6155wrCas1jpJh7BM9PKFupsa0ZQ" />
         <link rel="preload" href="/assets/img/hero/hero-banner.webp" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
