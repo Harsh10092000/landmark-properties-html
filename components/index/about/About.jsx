@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 const About = () => {
   return (
@@ -7,10 +8,12 @@ const About = () => {
                 <div className="about__inner d-flex">
                     <div className="about__thumbnail--style4 d-flex" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
                         <div className="about__thumbnail--items one">
-                        <picture> <img src="assets/img/other/about-items1.webp" alt="about-thumb" /></picture>
+                        {/* <picture> <img src="assets/img/other/about-items1.webp" alt="about-thumb" /></picture> */}
+                        <Image src="/assets/img/other/about-items1.webp" height={265} width={426} style={{objectFit: 'contain', height: 'auto !important'}} className='position-relative' alt="about-thumb" />
                         </div>
                         <div className="about__thumbnail--items two">
-                        <picture> <img src="assets/img/other/about-items2.webp" alt="about-thumb" /></picture>
+                        {/* <picture> <img src="assets/img/other/about-items2.webp" alt="about-thumb" /></picture> */}
+                        <Image src="/assets/img/other/about-items2.webp" height={265} width={426} style={{objectFit: 'contain', height: 'auto !important'}} className='position-relative' alt="about-thumb" />
                             {/* <div className="bideo__play style3">
                                 <a className="bideo__play--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
                                     <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
