@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: false,
+  experimental: {
+      optimizeCss: true,
+    },
+    compiler: {
+      removeConsole: process.env.NODE_ENV === 'production',
+    },
+
     env: {
         //webURL: "https://api.propertyease.in",
         whatsappNumber: "919996716787",
@@ -23,6 +33,8 @@ const nextConfig = {
         //     search: '',
         //   },
         // ],
+        formats: ['image/webp', 'image/avif'],
+        minimumCacheTTL: 60,
         remotePatterns: [
           {
             protocol: "https",
