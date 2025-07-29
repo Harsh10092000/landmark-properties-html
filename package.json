@@ -16,6 +16,7 @@
     "@tabler/icons-react": "^3.31.0",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.7",
+    "critters": "^0.0.23",
     "crypto": "^1.0.1",
     "formidable": "^3.5.4",
     "graphql-request": "^7.1.2",
