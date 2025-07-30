@@ -5,14 +5,22 @@ import Hero from '@/components/index/hero/Hero'
 import PropertyByType from '@/components/index/propertyByType/PropertyByType'
 //import Reviews from '@/components/index/reviews/Reviews'
 import Services from '@/components/index/services/Services'
-import TrendingProperties from '@/components/index/trendingProperties/TrendingProperties'
+
+import dynamic from 'next/dynamic'
+// import TrendingProperties from '@/components/index/trendingProperties/TrendingProperties'
+
 import React from 'react'
 import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
 import PropertiesCategories from '@/components/about/PropertiesCategories'
 
+const TrendingProperties = dynamic(() => import('@/components/index/trendingProperties/TrendingProperties'), {
+  loading: () => <div>Loading...</div>,
+})
+
 export async function generateMetadata({ params }, parent) {
 
+  
 
 
 
