@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Controller } from 'swiper/modules';
 import { Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
@@ -40,28 +40,34 @@ const ProHero = ({ propertyData }) => {
   //const allImages = [coverImage, ...otherImages, "default.jpg"];
   //console.log('allImages:', allImages, typeof allImages);
 
-  // Always add default.jpg, but filter out empty/falsey values
-const allImages = [coverImage, ...otherImages, "dummy.webp"].filter(Boolean);
-console.log('allImages:', allImages, typeof allImages);
+  // Always add dummy.webp, but filter out empty/falsey values
+  const allImages = [coverImage, ...otherImages, "dummy.webp"].filter(Boolean);
+  console.log('allImages:', allImages, typeof allImages);
+
+  // Swiper controller refs
+  const [mainSwiper, setMainSwiper] = useState(null);
+  const [thumbSwiper, setThumbSwiper] = useState(null);
 
   const renderMainContent = () => {
     if (allImages.length > 1) {
       return (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[Navigation, Pagination, Controller, Autoplay]}
           spaceBetween={0}
           slidesPerView={1}
           navigation={{
             prevEl: '.swiper-button-prev',
             nextEl: '.swiper-button-next',
           }}
-          loop={true}
+          //loop={true}
           autoplay={{
             delay: 300000,
             disableOnInteraction: false,
           }}
           pagination={{ clickable: true }}
           className="hero__swiper--column1"
+          controller={{ control: thumbSwiper }}
+          onSwiper={setMainSwiper}
         >
           {allImages.map((item, index) => (
             <SwiperSlide key={index}>
@@ -131,19 +137,30 @@ console.log('allImages:', allImages, typeof allImages);
           <Swiper
             modules={[Navigation]}
             spaceBetween={10}
-            slidesPerView={2}
+           slidesPerView={2}
+            loop={true}
+            // loopedSlides={allImages.length}
+            // loopAdditionalSlides={allImages.length}
             navigation={{
               prevEl: '.swiper-button-prev',
               nextEl: '.swiper-button-next',
             }}
-
+            keyboard={{
+              enabled: true,
+            }}
             className="hero__swiper--column3"
+            onSwiper={setThumbSwiper}
+            //watchSlidesProgress
+            allowTouchMove={true}
           >
             {allImages.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className="listing__small--hero__slider--items">
+                <div 
+                  className="listing__small--hero__slider--items"
+                  onClick={() => mainSwiper && mainSwiper.slideTo(index)}
+                  style={{ cursor: "pointer" }}
+                >
                   <img
-
                     src={
                       process.env.webURL +
                       "/uploads/" +
@@ -156,12 +173,12 @@ console.log('allImages:', allImages, typeof allImages);
             ))}
           </Swiper>
 
-          <div class="swiper__nav--btn swiper-button-disabled swiper-button-prev">
+          <div className="swiper__nav--btn swiper-button-prev" onClick={() => thumbSwiper && thumbSwiper.slidePrev()}>
             <svg width="16" height="13" style={{ width: "16px", height: "13px" }} viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0.223772 5.27955L5.27967 0.223543C5.42399 0.0792188 5.61635 0 5.82145 0C6.02678 0 6.21902 0.0793326 6.36335 0.223543L6.82238 0.682693C6.96659 0.82679 7.04604 1.01926 7.04604 1.22448C7.04604 1.42958 6.96659 1.62854 6.82238 1.77264L3.87285 4.72866H13.2437C13.6662 4.72866 14 5.05942 14 5.48203V6.13115C14 6.55376 13.6662 6.91788 13.2437 6.91788H3.83939L6.82227 9.8904C6.96648 10.0347 7.04593 10.222 7.04593 10.4272C7.04593 10.6322 6.96648 10.8221 6.82227 10.9663L6.36323 11.424C6.21891 11.5683 6.02667 11.647 5.82134 11.647C5.61623 11.647 5.42388 11.5673 5.27955 11.423L0.223659 6.3671C0.0789928 6.22232 -0.000566483 6.02905 1.90735e-06 5.82361C-0.000452995 5.61748 0.0789928 5.4241 0.223772 5.27955Z" fill="currentColor" />
             </svg>
           </div>
-          <div class="swiper__nav--btn swiper-button-next">
+          <div className="swiper__nav--btn swiper-button-next" onClick={() => thumbSwiper && thumbSwiper.slideNext()}>
             <svg width="16" height="13" style={{ width: "16px", height: "13px" }} viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.7762 5.27955L8.72033 0.223543C8.57601 0.0792188 8.38365 0 8.17855 0C7.97322 0 7.78098 0.0793326 7.63665 0.223543L7.17762 0.682693C7.03341 0.82679 6.95396 1.01926 6.95396 1.22448C6.95396 1.42958 7.03341 1.62854 7.17762 1.77264L10.1272 4.72866H0.756335C0.333835 4.72866 0 5.05942 0 5.48203V6.13115C0 6.55376 0.333835 6.91788 0.756335 6.91788H10.1606L7.17773 9.8904C7.03352 10.0347 6.95407 10.222 6.95407 10.4272C6.95407 10.6322 7.03352 10.8221 7.17773 10.9663L7.63677 11.424C7.78109 11.5683 7.97333 11.647 8.17866 11.647C8.38377 11.647 8.57612 11.5673 8.72045 11.423L13.7763 6.3671C13.921 6.22232 14.0006 6.02905 14 5.82361C14.0005 5.61748 13.921 5.4241 13.7762 5.27955Z" fill="currentColor" />
             </svg>
