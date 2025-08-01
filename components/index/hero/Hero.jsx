@@ -1,186 +1,280 @@
-"use client"
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-const Hero = ({propertyTypeOptions, propertyAdTypeOptions, data}) => {
-    const router = useRouter();
-      const [searchValue, setSearchValue] = useState("");
-      const [suggestions, setSuggestions] = useState();
-      const [openSuggestions, setOpenSuggestions] = useState(false);
-      const [propertyAdTypeFilter, setPropertyAdTypeFilter] =
-        useState("Sale");
-        const [propertyTypeFilter, setPropertyTypeFilter] =
-        useState("All Properties ");
+"use client";
+import React from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { IconBuilding, IconHome, IconHomeCheck, IconHomeEco, IconHomeMinus, IconHomePlus, IconHomeSearch, IconHomeStar } from "@tabler/icons-react";
+const Hero = ({ propertyTypeOptions, propertyAdTypeOptions, data }) => {
+  const router = useRouter();
+  const [searchValue, setSearchValue] = useState("");
+  const [suggestions, setSuggestions] = useState();
+  const [openSuggestions, setOpenSuggestions] = useState(false);
+  const [propertyAdTypeFilter, setPropertyAdTypeFilter] = useState("Sale");
+  const [propertyTypeFilter, setPropertyTypeFilter] =
+    useState("All Properties ");
 
+  const handleClick = () => {
+    const url = `/allproperties?search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${propertyTypeFilter}`;
+    router.push(url);
+  };
 
-          const handleClick = () => {
-            const url = `/allproperties?search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${propertyTypeFilter}`;
-            router.push(url);
-          };
+  const handleSearch = ({ data }) => {
+    setOpenSuggestions(false);
+    let searchWords = searchValue?.toLowerCase().split(",");
+    setSearchValue1(searchValue);
 
-      const handleSearch = ({ data }) => {
-        setOpenSuggestions(false);
-        let searchWords = searchValue?.toLowerCase().split(",");
-        setSearchValue1(searchValue);
-    
-        currentPage= 1;
-        router.push(`/allproperties?page=1`);
-        
-        const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
-          (item) => {
-            const itemValues =
-              item.pro_locality +
-              " " +
-              item.pro_city +
-              " " +
-              item.pro_sub_district +
-              " " +
-              item.pro_street +
-              " " +
-              item.pro_state;
-    
-            return searchWords.every((word) =>
-              itemValues.toLowerCase().includes(word)
-            );
-          }
+    currentPage = 1;
+    router.push(`/allproperties?page=1`);
+
+    const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
+      (item) => {
+        const itemValues =
+          item.pro_locality +
+          " " +
+          item.pro_city +
+          " " +
+          item.pro_sub_district +
+          " " +
+          item.pro_street +
+          " " +
+          item.pro_state;
+
+        return searchWords.every((word) =>
+          itemValues.toLowerCase().includes(word)
         );
-    
-       // console.log("filteredData : " , filteredData);
-        setResults(filteredData);
-        //setCurrentPage(1);
-      };
-    
-      useEffect(() => {
-        const unique1 = Array.from(
-          new Set(data?.slice(0, 60).map((item) => item.pro_city.trim()))
-        );
-        const uniqueState = Array.from(
-          new Set(data?.slice(0, 60).map((item) => item.pro_state.trim()))
-        );
-    
-        const unique2 = Array.from(
-          new Set(
-            data
-              ?.slice(0, 60)
-              .map(
-                (item) =>
-                  (item.pro_sub_district
-                    ? item.pro_sub_district.trim() + ", "
-                    : "") + item.pro_city.trim()
-              )
+      }
+    );
+
+    // console.log("filteredData : " , filteredData);
+    setResults(filteredData);
+    //setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    const unique1 = Array.from(
+      new Set(data?.slice(0, 60).map((item) => item.pro_city.trim()))
+    );
+    const uniqueState = Array.from(
+      new Set(data?.slice(0, 60).map((item) => item.pro_state.trim()))
+    );
+
+    const unique2 = Array.from(
+      new Set(
+        data
+          ?.slice(0, 60)
+          .map(
+            (item) =>
+              (item.pro_sub_district
+                ? item.pro_sub_district.trim() + ", "
+                : "") + item.pro_city.trim()
           )
-        );
-        const unique3 = Array.from(
-          new Set(
-            data
-              ?.slice(0, 60)
-              .map(
-                (item) =>
-                  (item.pro_locality ? item.pro_locality.trim() + ", " : "") +
-                  (item.pro_sub_district
-                    ? item.pro_sub_district.trim() + ", "
-                    : "") +
-                  item.pro_city.trim()
-              )
+      )
+    );
+    const unique3 = Array.from(
+      new Set(
+        data
+          ?.slice(0, 60)
+          .map(
+            (item) =>
+              (item.pro_locality ? item.pro_locality.trim() + ", " : "") +
+              (item.pro_sub_district
+                ? item.pro_sub_district.trim() + ", "
+                : "") +
+              item.pro_city.trim()
           )
-        );
-    
-        const arr = [
-          ...unique1,
-          ...uniqueState,
-          ...unique2,
-          ...unique3,
-          searchValue,
-        ];
-    
-        const unique4 = Array.from(
-          new Set(arr.slice(0, 200).map((item) => item.trim()))
-        );
-        const unique = unique4.filter((i) =>
-          i.toLowerCase().startsWith(searchValue.toLowerCase())
-        );
-    
-        if (searchValue === "") {
-          setOpenSuggestions(false);
-        }
-    
-        setSuggestions(unique);
-      }, [searchValue]);
-    
+      )
+    );
+
+    const arr = [
+      ...unique1,
+      ...uniqueState,
+      ...unique2,
+      ...unique3,
+      searchValue,
+    ];
+
+    const unique4 = Array.from(
+      new Set(arr.slice(0, 200).map((item) => item.trim()))
+    );
+    const unique = unique4.filter((i) =>
+      i.toLowerCase().startsWith(searchValue.toLowerCase())
+    );
+
+    if (searchValue === "") {
+      setOpenSuggestions(false);
+    }
+
+    setSuggestions(unique);
+  }, [searchValue]);
 
   return (
+    <div>
     <div className="hero__section hero__section--bg4 color-accent-2">
-            <div className="container-fluid">
-                <div className="hero__section--inner__style4">
-                    <div className="hero__section--wrapper" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
-                        <div className="hero__content text-center">
-                            <p className="hero__content--desc">Where Homes Are, There’s a Landmark <span className="color-hover">Landmark</span></p>
-                        <h2 className="hero__content--title h1">Find Your <span className="color-hover">Dream</span> Home</h2>
-                        </div>
-                        
-                        <div className="advance__search--filter">
-                            <ul className="nav advance__tab--btn justify-content-center">
-                            <li className="nav-item advance__tab--btn__list">
-                                    <button  
-                                    onClick={() => {setPropertyAdTypeFilter('All Properties')}} className="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#buy" type="button">
-                                        All</button>
-                                </li>
-                                <li className="nav-item advance__tab--btn__list">
-                                    <button onClick={() => {setPropertyAdTypeFilter('Sale')}} className="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
-                                    </button>
-                                </li>
-                                <li className="nav-item advance__tab--btn__list">
-                                    <button onClick={() => {setPropertyAdTypeFilter('Rent')}} className="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#buy" type="button">
-                                        Rent</button>
-                                </li>
-                               
-                            </ul>
-                            <div className="tab-content">
-                                <div className="tab-pane fade show active" id="buy">
-                                    <div className="advance__search--inner d-flex">
-                                        {/* <div className="advance__search--items">
+      <div className="container-fluid">
+        <div className="hero__section--inner__style4">
+          <div
+            className="hero__section--wrapper"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            data-aos-delay="100"
+          >
+            <div className="hero__content text-center">
+              <p className="hero__content--desc">
+                Where Homes Are, There’s a Landmark{" "}
+                <span className="color-hover">Landmark</span>
+              </p>
+              <h2 className="hero__content--title h1">
+                Find Your <span className="color-hover">Dream</span> Home
+              </h2>
+            </div>
+
+            <div className="advance__search--filter">
+              <ul className="nav advance__tab--btn justify-content-center">
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("All Properties");
+                    }}
+                    className="advance__tab--btn__field"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    Residential
+                  </button>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("Sale");
+                    }}
+                    className="advance__tab--btn__field active"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    {" "}
+                    Commercial
+                  </button>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("Rent");
+                    }}
+                    className="advance__tab--btn__field"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    Agricultural
+                  </button>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("Rent");
+                    }}
+                    className="advance__tab--btn__field"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    Rent
+                  </button>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("Rent");
+                    }}
+                    className="advance__tab--btn__field"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    Buy
+                  </button>
+                </li>
+
+                <li className="nav-item advance__tab--btn__list">
+                  <button
+                    onClick={() => {
+                      setPropertyAdTypeFilter("Rent");
+                    }}
+                    className="advance__tab--btn__field"
+                    data-bs-toggle="tab"
+                    data-bs-target="#buy"
+                    type="button"
+                  >
+                    Post Property
+                    <span className="badge bg-danger ms-2">Free</span>
+                  </button>
+                </li>
+              </ul>
+              <div className="tab-content">
+                <div className="tab-pane fade show active" id="buy">
+                  <div className="advance__search--inner d-flex">
+                    {/* <div className="advance__search--items">
                                             <input className="advance__search--input" placeholder="Enter Keyword..." type="text" />
                                         </div> */}
-   
-                                        <div className="advance__search--items">
-                                            <select className="advance__search--select" onClick={(e) => {
-                              setPropertyTypeFilter(e.target.value)
-                                
-                            }}>
-                                                
-                                                <option selected value="All Properties">All Properties</option>
-                                                <option value="Residential">Residential</option>
-                                                <option value="Commercial">Commercial</option>
-                                                <option value="Land">Land</option>
-                                                
-                                            </select>
-                                        </div>
-                                        <div className="advance__search--items position-relative">
-                                            <input className="advance__search--input" placeholder="Which Place?" type="text" value={searchValue}
-                    onChange={(e) => {
-                      setSearchValue(e.target.value), setOpenSuggestions(true);
-                    }} /> 
-                                            <span className="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B"/>
-                                                </svg>
-                                            </span>
 
-                                            {openSuggestions && (
-                    <div className=" search-suggestions-2 pt-2 shadow pb-2">
-                      {suggestions.map((item) => (
-                        <div
-                          className="py-2 pl-2 suggesion-item-2 pointer"
-                          onClick={() => {
-                            setSearchValue(item), setOpenSuggestions(false);
-                          }}
-                        >
-                          {item}
-                        </div>
-                      ))}
+                    <div className="advance__search--items">
+                      <select
+                        className="advance__search--select"
+                        onClick={(e) => {
+                          setPropertyTypeFilter(e.target.value);
+                        }}
+                      >
+                        <option selected value="All Properties">
+                          All Properties
+                        </option>
+                        <option value="Residential">Residential</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Land">Land</option>
+                      </select>
                     </div>
-                  )}
-                                        </div>
-                                        {/* <div className="advance__search--items price">
+                    <div className="advance__search--items position-relative">
+                      <input
+                        className="advance__search--input"
+                        placeholder="Which Place?"
+                        type="text"
+                        value={searchValue}
+                        onChange={(e) => {
+                          setSearchValue(e.target.value),
+                            setOpenSuggestions(true);
+                        }}
+                      />
+                      <span className="advance__location--icon">
+                        <svg
+                          width="11"
+                          height="17"
+                          viewBox="0 0 11 17"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z"
+                            fill="#8B8B8B"
+                          />
+                        </svg>
+                      </span>
+
+                      {openSuggestions && (
+                        <div className=" search-suggestions-2 pt-2 shadow pb-2">
+                          {suggestions.map((item) => (
+                            <div
+                              className="py-2 pl-2 suggesion-item-2 pointer"
+                              onClick={() => {
+                                setSearchValue(item), setOpenSuggestions(false);
+                              }}
+                            >
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    {/* <div className="advance__search--items price">
                                             <div className="advance__search--price d-flex align-items-center justify-content-between">
                                                 <span>Price</span>
                                                 <label><svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -189,14 +283,31 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions, data}) => {
                                                 </label>
                                             </div>
                                         </div> */}
-                                        <button onClick={handleClick} className="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white"/>
-                                            <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* <div className="tab-pane fade" id="rent">
+                    <button
+                      onClick={handleClick}
+                      className="advance__search--btn solid__btn"
+                    >
+                      <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z"
+                          fill="white"
+                        />
+                        <path
+                          d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z"
+                          fill="white"
+                        />
+                      </svg>{" "}
+                      Search Now
+                    </button>
+                  </div>
+                </div>
+                {/* <div className="tab-pane fade" id="rent">
                                     <div className="advance__search--inner d-flex">
                                         <div className="advance__search--items">
                                             <input className="advance__search--input" placeholder="Enter Keyword..." type="text" />
@@ -227,8 +338,8 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions, data}) => {
                                         </button>
                                     </div>
                                 </div> */}
-                            </div>
-                            {/* <div className="advance__wrapper position-relative text-center">
+              </div>
+              {/* <div className="advance__wrapper position-relative text-center">
                                 <button className="advance__option--btn position-relative" data-bs-toggle="modal" data-bs-target="#advanceModal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9 17.9991C13.9624 17.9991 18 13.9618 18 8.99957C18 4.03734 13.9624 0 9 0C4.03764 0 0 4.03734 0 8.99957C0 13.9618 4.03764 17.9991 9 17.9991ZM4.71946 8.51799H8.51846V4.71869C8.51846 4.45281 8.73429 4.23715 9 4.23715C9.26589 4.23715 9.48154 4.45298 9.48154 4.71869V8.51799H13.2805C13.5464 8.51799 13.7621 8.73382 13.7621 8.99953C13.7621 9.26541 13.5462 9.48107 13.2805 9.48107H9.48154V13.2802C9.48154 13.5461 9.26571 13.7617 9 13.7617C8.73412 13.7617 8.51846 13.5459 8.51846 13.2802V9.48107H4.71946C4.45358 9.48107 4.23792 9.26524 4.23792 8.99953C4.23792 8.73364 4.45342 8.51799 4.71946 8.51799Z" fill="#16A34A"/>
                                     </svg>                                    
@@ -239,14 +350,78 @@ const Hero = ({propertyTypeOptions, propertyAdTypeOptions, data}) => {
                                         </svg>
                                          
                                 </button>
-                            </div> */}
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-  )
-}
 
-export default Hero
+
+                            </div> */}
+            </div>
+
+            <div className="search-box">
+               <div className="advance__search--items position-relative">
+                      <input
+                        className="advance__search--input"
+                        placeholder="Which Place?"
+                        type="text"
+                        value={searchValue}
+                        onChange={(e) => {
+                          setSearchValue(e.target.value),
+                            setOpenSuggestions(true);
+                        }}
+                      />
+                      <span className="advance__location--icon">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                      </span>
+
+                      {openSuggestions && (
+                        <div className=" search-suggestions-2 pt-2 shadow pb-2">
+                          {suggestions.map((item) => (
+                            <div
+                              className="py-2 pl-2 suggesion-item-2 pointer"
+                              onClick={() => {
+                                setSearchValue(item), setOpenSuggestions(false);
+                              }}
+                            >
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+            </div>
+
+                    
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div className="get-started">
+      <div className="container">
+              <h3>Get started with</h3>
+              <p>Explore real estate options in top cities</p>
+
+              <ul>
+                <li><span><IconHome height={30} width={30} /></span>Residential</li>
+                <li><span><IconBuilding height={30} width={30} /></span>Commercial</li>
+                <li><span><IconHomeEco height={30} width={30}  /></span>Agricultural</li>
+                <li><span><IconHomePlus height={30} width={30} /></span>Buy</li>
+                <li><span><IconHomeMinus height={30} width={30} /></span>Rent</li>   
+                <li><span><IconHomeCheck height={30} width={30} /></span>Sell</li>
+                 <li><span><IconHomeSearch height={30} width={30} /></span>List Property</li>
+                <li><span><IconHomeStar height={30} width={30} /></span>Post Property FREE</li>
+               
+
+
+               
+
+
+              </ul>
+              </div>
+            </div> 
+    </div>
+  );
+};
+
+export default Hero;

@@ -276,6 +276,7 @@ const DynmaicDesc = ({propertyData}) => {
       ];
       return (
         <>
+        <div className='bg-box p-3'>
           <h3 className="listing__details--content__title">More About this Property</h3>
           {propertyData.pro_sub_cat && (
             <div className="listing__details--content__desc">
@@ -286,6 +287,7 @@ const DynmaicDesc = ({propertyData}) => {
               )}
             </div>
           )}
+          </div>
         </>
       );
 }

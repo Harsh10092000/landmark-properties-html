@@ -2,13 +2,13 @@ import React from 'react'
 
 const Disclaimer = () => {
   return (
-    <div className="property-disclaimer-wrapper">
+    <div className="property-disclaimer-wrapper ">
       <div class="container">
-                      <div className="row">
-                        <div className="col-md-12">
+        <div className='bg-box p-3'>                    
+                      
                           <div className="details">
                             <div className="row">
-                              <div className="col-md-12" style={{paddingTop: "50px"}}>
+                              <div className="col-md-12">
                               <h3 className="listing__details--content__title">Disclaimer</h3>
                                     <p className="listing__details--content__desc"> All images/information provided in this
                                   listing given by its owner, brokers or
@@ -31,7 +31,8 @@ const Disclaimer = () => {
                                   </div>
                             </div>
                           </div>
-                        </div>
+                       
+                     
                       </div>
                       </div>
                     </div>

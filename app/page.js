@@ -101,9 +101,9 @@ const page = async () => {
   console.log("subData : ", subData);
   return (
     <>
-      <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions} data={data}  />
-      <About />
+      <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions} data={data}  />  
       <TrendingProperties data={data}  />
+          <About />
       <Services />
       <PropertiesCategories />
       <ChooseUs />

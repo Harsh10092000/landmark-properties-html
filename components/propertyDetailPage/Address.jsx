@@ -6,7 +6,7 @@ const Address = ({ mapdata }) => {
     // const formatted_address = `${mapdata.pro_locality}, ${mapdata.pro_city}, ${mapdata.pro_state}, India`;
     const formatted_address = mapdata.pro_street;
   return (
-    <div className="listing__details--content__step mb-80">
+    <div className="listing__details--content__step mb-80 bg-box p-3">
                                     <div className="listing__details--location__header d-flex justify-content-between mb-40">
                                         <div className="listing__details--location__header--left">
                                             <h3 className="listing__details--content__title m-0">Location & Google Maps</h3>

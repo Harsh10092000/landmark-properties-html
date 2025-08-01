@@ -21,7 +21,7 @@ export default function PropertiesAmenities({ data }) {
   if (otherRooms.length === 0 && nearByFacilities.length === 0) return null;
 
   return (
-    <div className="listing__details--content__step properties__amenities mb-80">
+    <div className="listing__details--content__step properties__amenities mb-30 bg-box p-3">
       <h3 className="listing__details--content__title mb-40">Properties Amenities</h3>
       <div className="properties__amenities--wrapper d-flex" style={{ gap: 40 }}>
         {otherRooms.length > 0 && (

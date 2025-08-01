@@ -41,7 +41,7 @@ const ProHero = ({ propertyData }) => {
   //console.log('allImages:', allImages, typeof allImages);
 
   // Always add default.jpg, but filter out empty/falsey values
-const allImages = [coverImage, ...otherImages, "default.jpg"].filter(Boolean);
+const allImages = [coverImage, ...otherImages, "dummy.webp"].filter(Boolean);
 console.log('allImages:', allImages, typeof allImages);
 
   const renderMainContent = () => {
@@ -112,7 +112,7 @@ console.log('allImages:', allImages, typeof allImages);
             src={
               process.env.webURL +
               "/uploads/" +
-              "default.jpg"
+              "dummy.webp"
             }
           // alt={mainImages[0].alt} 
           />
