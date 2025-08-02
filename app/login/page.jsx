@@ -193,7 +193,7 @@ function LoginForm() {
            position: relative;
          }
                  .modern-login-left {
-           background: linear-gradient(135deg, #e53e3e 0%, #111 100%);
+           background: linear-gradient(135deg, #00a147 0%, #111 100%);
            color: #fff;
            flex: 1.1;
            display: flex;
@@ -211,7 +211,7 @@ function LoginForm() {
            left: 0;
            right: 0;
            bottom: 0;
-           background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+     
            opacity: 0.3;
          }
                  .modern-login-logo-wrap {
@@ -240,7 +240,7 @@ function LoginForm() {
            z-index: 1;
          }
                  .modern-login-brand-desc {
-           font-size: 1.18rem;
+           font-size: 13px;
            font-weight: 500;
            margin-bottom: 2.2rem;
            color: #fff;
@@ -250,7 +250,7 @@ function LoginForm() {
            z-index: 1;
          }
                  .modern-login-brand-footer {
-           font-size: 1.02rem;
+           font-size: 11px;
            color: #fff;
            opacity: 0.7;
            position: absolute;
@@ -320,7 +320,7 @@ function LoginForm() {
          }
         .modern-login-input:focus {
           outline: none;
-          border-color: #e53e3e;
+          border-color: #00a147;
           background: #fff;
           box-shadow: 0 2px 8px 0 rgba(229,62,62,0.08);
         }
@@ -336,7 +336,7 @@ function LoginForm() {
          }
                  .modern-login-btn {
            width: 100%;
-           background: linear-gradient(90deg, #e53e3e 0%, #111 100%);
+           background: linear-gradient(90deg, #00a147 0%, #111 100%);
            color: #fff;
            border: none;
            border-radius: 12px;
@@ -350,7 +350,7 @@ function LoginForm() {
            box-shadow: 0 2px 8px 0 rgba(229,62,62,0.08);
          }
         .modern-login-btn:hover:not(:disabled) {
-          background: linear-gradient(90deg, #b91c1c 0%, #111 100%);
+          background: linear-gradient(90deg, #00a147 0%, #111 100%);
         }
         .modern-login-btn:disabled {
           opacity: 0.7;
@@ -384,16 +384,22 @@ function LoginForm() {
           color: #e53e3e;
         }
         @media (max-width: 900px) {
+         .modern-login-bg {
+            height: 80vh !important;
+         }
           .modern-login-card {
+          
+          margin: 0 50px;
+        padding: 10px;
             flex-direction: column;
-            min-width: 90vw;
-            max-width: 98vw;
+            // min-width: 90vw;
+            // max-width: 98vw;
             border-radius: 1.2rem;
           }
           .modern-login-left, .modern-login-right {
             border-radius: 1.2rem;
-            min-width: 90vw;
-            max-width: 98vw;
+            // min-width: 90vw;
+            // max-width: 98vw;
             margin-bottom: 1.5rem;
             padding: 2rem 1.2rem 1.5rem 1.2rem;
           }
@@ -404,14 +410,14 @@ function LoginForm() {
         }
         @media (max-width: 600px) {
           .modern-login-card {
-            padding: 0;
-            min-width: 98vw;
-            max-width: 100vw;
+            // padding: 0;
+            // min-width: 98vw;
+            // max-width: 100vw;
           }
           .modern-login-left, .modern-login-right {
             padding: 1.2rem 0.5rem 1.2rem 0.5rem;
-            min-width: 98vw;
-            max-width: 100vw;
+            // min-width: 98vw;
+            // max-width: 100vw;
           }
         }
       `}</style>
