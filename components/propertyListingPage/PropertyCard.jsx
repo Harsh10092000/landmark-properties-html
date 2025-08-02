@@ -292,7 +292,7 @@ const PropertyCard = ({ item, index }) => {
                       </span>
                     </li>
                   </ul>
-                  <div class="featured__content--list__footer d-flex justify-content-between">
+                  <div class="featured__content--list__footer d-flex justify-content-between align-items-center">
                     <p class="featured__content--desc listing__style m-0">
                       <svg
                         width="11"

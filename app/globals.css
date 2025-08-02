@@ -10132,13 +10132,13 @@ input[type=range]::-moz-range-thumb {
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .featured__content--list__footer {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1.5rem;
   }
 }
 @media only screen and (max-width: 479px) {
   .featured__content--list__footer {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1.5rem;
   }
 }
@@ -10269,6 +10269,12 @@ input[type=range]::-moz-range-thumb {
     flex-direction: column;
     gap: 1.5rem;
     margin-bottom: 2rem;
+  }
+  .listing__featured--thumbnail {
+    width: 100%;
+  }
+  .featured__thumbnail--img {
+    height: auto;
   }
 }
 
