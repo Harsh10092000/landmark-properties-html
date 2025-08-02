@@ -282,11 +282,7 @@ const FooterContent = () => {
                       </Link>
                     </li>
                    
-                    <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="/disclaimer">
-                      Disclaimer
-                      </Link>
-                    </li>
+                    
                     
                   </ul>
                 </div>
@@ -315,7 +311,7 @@ const FooterContent = () => {
                   </h2>
                   <ul className="footer__widget--menu footer__widget--inner">
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
+                      <Link className="footer__widget--menu__text" href="/faq">
                         Help/FAQ
                       </Link>
                     </li>
@@ -330,14 +326,13 @@ const FooterContent = () => {
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="/DC-Rates-2024-25.pdf">
+                      <a target="_blank" className="footer__widget--menu__text" href="/DC-Rates-2024-25.pdf">
                       DC Rates 2024-25
-                      </Link>
+                      </a>
                     </li>
-                    <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="/terms-and-conditions">
-                      Terms & Conditions
-                    
+                   <li className="footer__widget--menu__list">
+                      <Link className="footer__widget--menu__text" href="/disclaimer">
+                      Disclaimer
                       </Link>
                     </li>
                   </ul>
@@ -430,7 +425,7 @@ const FooterContent = () => {
               </div>
               <ul className="footer__bottom--menu d-flex">
                 <li>
-                  <Link href="#">Terms of Use</Link>
+                  <Link href="/terms-and-conditions"> Terms & Conditions</Link>
                 </li>
                 <li>
                   <Link href="#">Privacy Policy</Link>
