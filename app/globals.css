@@ -2634,6 +2634,9 @@ scrollbar-color: #fff #fff;
   transition: 0.3s;
   opacity: 0;
 }*/
+.advance__tab--btn__field {
+  border-bottom: 3px solid white;
+}
 .advance__tab--btn__field.active {
   /* background: var(--color-hover); */
   color: var(--color-hover);

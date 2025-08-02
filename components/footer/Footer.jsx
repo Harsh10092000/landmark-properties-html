@@ -444,7 +444,7 @@ const FooterContent = () => {
             <Link
               aria-label="Home"
               rel="noreferrer"
-              target="_blank"
+              //target="_blank"
               href="/"
             >
               <span><IconHome /></span>
@@ -470,7 +470,7 @@ const FooterContent = () => {
             </a>
           </li>
           <li class="my-account">
-            <Link title="#" href={status === "authenticated" ? "https://user.landmarkplots.com/dashboard" : "/login"}>
+            <Link title={status === "authenticated" ? "My Account" : "Login"} target="_blank" href={status === "authenticated" ? "https://user.landmarkplots.com/dashboard" : "/login"}>
               {status === "authenticated" ? (
                 <>
                   <span><IconUser /></span>
