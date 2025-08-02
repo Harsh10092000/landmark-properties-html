@@ -50,7 +50,7 @@ const HeaderContent = () => {
 
   return (
     <>
-    <SessionProvider>
+    {/* <SessionProvider> */}
       <header className="header__section header__transparent color-accent-2">
         <div className="header__sticky">
           <div className="container max-w-1430">
@@ -168,7 +168,7 @@ const HeaderContent = () => {
         </div>
       </div>
 }
-</SessionProvider>
+{/* </SessionProvider> */}
     </>
   );
 };
