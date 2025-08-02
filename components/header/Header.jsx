@@ -168,6 +168,18 @@ const HeaderContent = () => {
         </div>
       </div>
 }
+
+<style jsx>{`
+    .header__account--icon__link__text{
+      background: linear-gradient(135deg, #02a550 0%, #3d787a 100%);
+      color: white;
+      padding: 0 1.5rem;
+      line-height: 4.5rem;
+      height: 4.5rem;
+      border-radius: 10px
+    }
+`}</style> 
+
 {/* </SessionProvider> */}
     </>
   );

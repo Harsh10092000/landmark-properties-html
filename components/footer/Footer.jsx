@@ -452,7 +452,7 @@ const FooterContent = () => {
           <li class="live-chat">
             <Link href="/allproperties">
                <span><IconList /></span>
-               All Properties
+               Properties
             </Link>
           </li>
           <li class="sell-rent active">

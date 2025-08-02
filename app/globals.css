@@ -1654,7 +1654,7 @@ body.overlay__active::before,
 }
 @media only screen and (min-width: 1366px) {
   .main__header--right {
-    gap: 3rem;
+    gap: 2.5rem;
   }
 }
 @media only screen and (min-width: 992px) {
