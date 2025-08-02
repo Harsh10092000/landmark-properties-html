@@ -255,6 +255,16 @@ const FooterContent = () => {
                     </svg>
                   </h2>
                   <ul className="footer__widget--menu footer__widget--inner">
+                  <li className="footer__widget--menu__list">
+                      <Link className="footer__widget--menu__text" href="/add-property">
+                        Add Property
+                      </Link>
+                    </li>
+                  <li className="footer__widget--menu__list">
+                      <Link className="footer__widget--menu__text" href="/allproperties">
+                        View All Properties
+                      </Link>
+                    </li>
                     <li className="footer__widget--menu__list">
                       <Link
                         className="footer__widget--menu__text"
@@ -271,21 +281,13 @@ const FooterContent = () => {
                         Property for Rent
                       </Link>
                     </li>
+                   
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Offices for Buy
+                      <Link className="footer__widget--menu__text" href="/disclaimer">
+                      Disclaimer
                       </Link>
                     </li>
-                    <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Terms of use
-                      </Link>
-                    </li>
-                    <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Offices for Rent
-                      </Link>
-                    </li>
+                    
                   </ul>
                 </div>
               </div>
@@ -317,24 +319,25 @@ const FooterContent = () => {
                         Help/FAQ
                       </Link>
                     </li>
-                    <li className="footer__widget--menu__list">
+                    {/* <li className="footer__widget--menu__list">
                       <Link className="footer__widget--menu__text" href="#">
                         Propert owners
                       </Link>
-                    </li>
+                    </li> */}
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Contact Support
+                      <Link className="footer__widget--menu__text" href="/kurukshetra-maps">
+                        Kurukshetra Maps
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Pricing Plans
+                      <Link className="footer__widget--menu__text" href="/DC-Rates-2024-25.pdf">
+                      DC Rates 2024-25
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Partners
+                      <Link className="footer__widget--menu__text" href="/terms-and-conditions">
+                      Terms & Conditions
+                    
                       </Link>
                     </li>
                   </ul>
@@ -376,25 +379,25 @@ const FooterContent = () => {
                         className="footer__widget--menu__text"
                         href="contactus"
                       >
-                        Contact
+                        Contact Us
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Services Details{" "}
+                      <Link className="footer__widget--menu__text" href="/properties/residential-properties">
+                      Residential Properties
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="#">
-                        Add Listing
+                      <Link className="footer__widget--menu__text" href="/properties/commercial-properties">
+                        Commercial Properties
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
                       <Link
                         className="footer__widget--menu__text"
-                        href="allproperties"
+                        href="/properties/land-properties"
                       >
-                        Property
+                        Land Properties
                       </Link>
                     </li>
                   </ul>
