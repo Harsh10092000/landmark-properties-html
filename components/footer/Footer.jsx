@@ -1,8 +1,20 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { Icon } from "@mui/material";
-import { IconBrandWhatsapp, IconHome, IconPhoneCall, IconPlus, IconStar, IconUser } from "@tabler/icons-react";
+import { IconBrandWhatsapp, IconHome, IconPhoneCall, IconPlus, IconStar, IconUser, IconLogin, IconList } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 const Footer = () => {
+  return (
+    <SessionProvider>
+      <FooterContent />
+    </SessionProvider>
+  );
+};
+
+const FooterContent = () => {
+  const {status } = useSession();
   return (
     <>
       <footer className="footer footer__section color-accent-2">
@@ -429,27 +441,27 @@ const Footer = () => {
       <div className="mobile-bottom-bar">
         <ul>
           <li>
-            <a
+            <Link
               aria-label="Home"
               rel="noreferrer"
               target="_blank"
-              href="#"
+              href="/"
             >
               <span><IconHome /></span>
                Home
-            </a>
+            </Link>
           </li>
           <li class="live-chat">
-            <a href="#">
-               <span><IconBrandWhatsapp /></span>
-                Live Chat
-            </a>
+            <Link href="/allproperties">
+               <span><IconList /></span>
+               All Properties
+            </Link>
           </li>
           <li class="sell-rent active">
-            <a href="#">
+            <Link href="/add-property">
               <span><IconPlus /></span>
               Sell / Rent
-            </a>
+            </Link>
           </li>
           <li class="shortlisted">
             <a href="#">
@@ -458,10 +470,19 @@ const Footer = () => {
             </a>
           </li>
           <li class="my-account">
-            <a title="#">
-               <span><IconUser /></span>
-                My Account
-            </a>
+            <Link title="#" href={status === "authenticated" ? "https://user.landmarkplots.com/dashboard" : "/login"}>
+              {status === "authenticated" ? (
+                <>
+                  <span><IconUser /></span>
+                  My Account
+                </>
+              ) : (
+                <>
+                  <span><IconLogin /></span>
+                  Login
+                </>
+              )}
+            </Link>
           </li>
         </ul>
       </div>

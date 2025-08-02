@@ -2,6 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { IconBuilding, IconHome, IconHomeCheck, IconHomeEco, IconHomeMinus, IconHomePlus, IconHomeSearch, IconHomeStar } from "@tabler/icons-react";
 const Hero = ({ propertyTypeOptions, propertyAdTypeOptions, data }) => {
   const router = useRouter();
@@ -129,44 +130,18 @@ const Hero = ({ propertyTypeOptions, propertyAdTypeOptions, data }) => {
 
             <div className="advance__search--filter">
               <ul className="nav advance__tab--btn justify-content-center">
-                <li className="nav-item advance__tab--btn__list">
+
+              <li className="nav-item advance__tab--btn__list">
                   <button
                     onClick={() => {
-                      setPropertyAdTypeFilter("All Properties");
-                    }}
-                    className="advance__tab--btn__field"
-                    data-bs-toggle="tab"
-                    data-bs-target="#buy"
-                    type="button"
-                  >
-                    Residential
-                  </button>
-                </li>
-                <li className="nav-item advance__tab--btn__list">
-                  <button
-                    onClick={() => {
-                      setPropertyAdTypeFilter("Sale");
+                      setPropertyAdTypeFilter("Buy");
                     }}
                     className="advance__tab--btn__field active"
                     data-bs-toggle="tab"
                     data-bs-target="#buy"
                     type="button"
                   >
-                    {" "}
-                    Commercial
-                  </button>
-                </li>
-                <li className="nav-item advance__tab--btn__list">
-                  <button
-                    onClick={() => {
-                      setPropertyAdTypeFilter("Rent");
-                    }}
-                    className="advance__tab--btn__field"
-                    data-bs-toggle="tab"
-                    data-bs-target="#buy"
-                    type="button"
-                  >
-                    Agricultural
+                    Buy
                   </button>
                 </li>
                 <li className="nav-item advance__tab--btn__list">
@@ -182,33 +157,71 @@ const Hero = ({ propertyTypeOptions, propertyAdTypeOptions, data }) => {
                     Rent
                   </button>
                 </li>
-                <li className="nav-item advance__tab--btn__list">
-                  <button
-                    onClick={() => {
-                      setPropertyAdTypeFilter("Rent");
-                    }}
-                    className="advance__tab--btn__field"
-                    data-bs-toggle="tab"
-                    data-bs-target="#buy"
-                    type="button"
-                  >
-                    Buy
-                  </button>
-                </li>
 
                 <li className="nav-item advance__tab--btn__list">
+                  <Link href="/properties/residential-properties">
+                  <button
+                    // onClick={() => {
+                    //   setPropertyAdTypeFilter("All Properties");
+                    // }}
+                    className="advance__tab--btn__field"
+                    // data-bs-toggle="tab"
+                    // data-bs-target="#buy"
+                    // type="button"
+                  >
+                    Residential
+                  </button>
+                  </Link>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <Link href="/properties/commercial-properties">
+                  <button
+                    // onClick={() => {
+                    //   setPropertyAdTypeFilter("Sale");
+                    // }}
+                    className="advance__tab--btn__field "
+                    // data-bs-toggle="tab"
+                    // data-bs-target="#buy"
+                    // type="button"
+                  >
+                    {" "}
+                    Commercial
+                  </button>
+                  </Link>
+                </li>
+                <li className="nav-item advance__tab--btn__list">
+                  <Link href="/properties/agricultural-properties">
+                  <button
+                    // onClick={() => {
+                    //   setPropertyAdTypeFilter("Rent");
+                    // }}
+                    className="advance__tab--btn__field"
+                    // data-bs-toggle="tab"
+                    // data-bs-target="#buy"
+                    // type="button"
+                  >
+                    Agricultural
+                  </button>
+                  </Link>
+                </li>
+                
+
+                <li className="nav-item advance__tab--btn__list">
+                  <Link href="/add-property">
                   <button
                     onClick={() => {
                       setPropertyAdTypeFilter("Rent");
                     }}
                     className="advance__tab--btn__field"
-                    data-bs-toggle="tab"
-                    data-bs-target="#buy"
-                    type="button"
+                    // data-bs-toggle="tab"
+                    // data-bs-target="#buy"
+                    // type="button"
                   >
                     Post Property
                     <span className="badge bg-danger ms-2">Free</span>
                   </button>
+                 </Link>
+
                 </li>
               </ul>
               <div className="tab-content">

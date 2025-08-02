@@ -5,7 +5,7 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import { ShowPrice } from "@/components/HelperComponents";
 import Link from "next/link";
-
+import moment from "moment";
 
 
 const TrendingProperties = ({data}) => {
@@ -74,8 +74,8 @@ const TrendingProperties = ({data}) => {
 
                         <Image
                           src={
-                            item.img_link
-                              ? `${process.env.webURL}/propertyImages/watermark/${item.img_link}`
+                            item.pro_cover_image
+                              ? `/uploads/${item.pro_cover_image}`
                               :  `/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`
                           }
                           alt={`${item.pro_type.split(",")[0]} in ${
@@ -377,10 +377,12 @@ const TrendingProperties = ({data}) => {
                               " "}
                         </span> */}
                         <span className="featured__author--name">
-                        <span className="featured__info--text" style={{fontSize: "13px"}}> Listed By </span>
-                          {item.pro_user_type}
-                              
+                        <span className="featured__info--text" style={{fontSize: "13px"}}> Listed By  {item.pro_user_type}</span>
+                         {moment(item.pro_creation_date).fromNow()}     
+
+                        
                         </span>
+                        
                       </div>
 
                       <ul className="featured__content--share d-flex">

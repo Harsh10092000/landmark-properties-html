@@ -118,7 +118,7 @@ font-size: 14px;
       transform: scale(1.02);
     }
     @media (max-width: 600px) {
-      .step1-form {
+      /* .step1-form {
         padding: 1.5rem 1rem;
         margin: 1rem;
       }
@@ -132,8 +132,19 @@ font-size: 14px;
       }
       .step1-pill-icon {
         font-size: 1rem;
+      } */
+      .step1-form {
+        height: 100%;
       }
+      .stepper-card {
+        height: auto !important;
+        display: none !important;
+      }
+      .step-info strong {
+        font-size: 18px !important;
+     }
     }
+    
  
 
 .step-form {
