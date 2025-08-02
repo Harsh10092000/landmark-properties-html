@@ -385,11 +385,11 @@ function LoginForm() {
         }
         @media (max-width: 900px) {
          .modern-login-bg {
-            height: 80vh !important;
+            height: 60vh !important;
          }
           .modern-login-card {
           
-          margin: 0 50px;
+          margin: 0 30px;
         padding: 10px;
             flex-direction: column;
             // min-width: 90vw;
