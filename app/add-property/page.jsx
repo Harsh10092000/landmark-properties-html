@@ -259,7 +259,7 @@ function StepperCardContent() {
                   <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#eaf1fa" /><text x="12" y="17" textAnchor="middle" fontSize="16" fill={BLUE} fontWeight="bold">?</text></svg>
                 </span>
                 <span className="stepper-footer-text">Having troubles?</span>
-                <a href="#" className="stepper-footer-link">Contact us</a>
+                <a href="/contactus" className="stepper-footer-link">Contact us</a>
               </div>
               {/* Bottom right: geometric/abstract image placeholder */}
               <div style={{ position: 'absolute', right: 0, bottom: 0, width: 90, height: 70, zIndex: 0 }}>
