@@ -9,8 +9,12 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   //const callbackUrl = "/";
-  const callbackUrl = searchParams.get('callbackUrl') || "/";
+  var callbackUrl = searchParams.get('callbackUrl') || "/";
   console.log("callbackUrl : ", callbackUrl);
+
+  if (callbackUrl === "/dashboard") {
+    callbackUrl = "https://user.landmarkplots.com/dashboard";
+  }
 
   //const [callbackUrl, setCallbackUrl] = useState("/");
   const [isNewUser, setIsNewUser] = useState(false);
