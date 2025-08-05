@@ -13,15 +13,15 @@ const facilitiesOptions = [
   "Parks/Green Spaces",
 ];
 
-function priceFormat(val) {
-  if (!val) return "e.g. ₹ 10,00,000";
-  let num = val.toString().replace(/[^0-9]/g, "");
-  if (!num) return "e.g. ₹ 10,00,000";
-  return (
-    "₹ " +
-    num.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  );
-}
+// function priceFormat(val) {
+//   if (!val) return "e.g. ₹ 10,00,000";
+//   let num = val.toString().replace(/[^0-9]/g, "");
+//   if (!num) return "e.g. ₹ 10,00,000";
+//   return (
+//     "₹ " +
+//     num.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+//   );
+// }
 
 export default function Step5({handleStepChange, onSubmit, loading, initialData, propertyType}) {
   const [ownership, setOwnership] = useState(initialData?.ownership || "");
@@ -35,6 +35,26 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
   const [desc, setDesc] = useState(initialData?.desc || "");
   const [formSubmit, setFormSubmit] = useState(false);
 
+  const priceFormat = (val) => {
+    if (!val) return "e.g. ₹ 10,00,000";
+    let num = parseInt(val.toString().replace(/[^0-9]/g, ""));
+    if (!num) return "e.g. ₹ 10,00,000";
+    
+    // Format in Indian currency style
+    const formatted = num.toLocaleString('en-IN');
+    
+    // Add denomination
+    let denomination = '';
+    if (num >= 10000000) {
+        denomination = ` (${(num / 10000000).toFixed(2)} Crore)`;
+    } else if (num >= 100000) {
+        denomination = ` (${(num / 100000).toFixed(2)} Lac)`;
+    } else if (num >= 1000) {
+        denomination = ` (${(num / 1000).toFixed(2)} Thousand)`;
+    }
+    
+    return `₹ ${formatted}${denomination}`;
+};
   // Load initial data when component mounts
   useEffect(() => {
     if (initialData) {
@@ -112,21 +132,6 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
             ))}
           </div>
 
-          {/* Authority Approved */}
-          <div className="step1-label" style={{ marginTop: 16 }}>Authority Approved</div>
-          <div className="step1-pill-group">
-            {authorityOptions.map((opt) => (
-              <button
-                key={opt}
-                className={`step1-pill${authority === opt ? " selected" : ""}`}
-                type="button"
-                onClick={() => setAuthority(opt)}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-
           {/* Other Rooms */}
           {propertyType !== "Land" && <>
           <div className="step1-label" style={{ marginTop: 16 }}>Other Rooms</div>
@@ -163,26 +168,27 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
           <div style={{ marginTop: 24 }}>
             <input
               className="step-input"
-              placeholder="Expected Amount"
+              placeholder="e.g. ₹ 10,00,000 (10 Lac)"
               value={amount}
               onChange={e => setAmount(e.target.value.replace(/[^0-9]/g, ""))}
             />
             {formSubmit && !amount && (
               <div className="step-error-msg">Expected Amount is required</div>
             )}
-            <div className="price-in-words" style={{ background: '#f6fbf6', color: '#388e3c', padding: '6px 12px', borderRadius: 4, fontSize: '1em', marginTop: 2 }}>
-              {priceFormat(amount)}
-            </div>
+            {amount && (
+              <div className="price-formatted">{priceFormat(amount)}</div>
+            )}
           </div>
 
           {/* Checkboxes */}
-          <div className="step-checkbox-row" style={{ marginTop: 20, marginBottom: 8, display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+          <div className="step-checkbox-row">
             <label className="step-checkbox-label">
               <input
                 type="checkbox"
                 checked={negotiable}
                 onChange={() => setNegotiable(!negotiable)}
               />
+              <span className="step-checkbox-custom"></span>
               Price Negotiable
             </label>
             <label className="step-checkbox-label">
@@ -191,6 +197,7 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
                 checked={rented}
                 onChange={() => setRented(!rented)}
               />
+              <span className="step-checkbox-custom"></span>
               Already on Rented
             </label>
             <label className="step-checkbox-label">
@@ -199,6 +206,7 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
                 checked={corner}
                 onChange={() => setCorner(!corner)}
               />
+              <span className="step-checkbox-custom"></span>
               Corner Property
             </label>
           </div>
@@ -215,7 +223,7 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
           </div>
 
           {/* Summary Section */}
-          <div className="summary-section">
+          {/* <div className="summary-section">
             <div className="summary-header">
               <div className="summary-icon">🎉</div>
               <div className="summary-title">You're Almost Done!</div>
@@ -265,7 +273,7 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
             </div>
 
             
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="step1-footer d-flex justify-content-between">
@@ -424,6 +432,17 @@ export default function Step5({handleStepChange, onSubmit, loading, initialData,
           }
         }
       `}</style>
+      <style>{`
+.price-formatted {
+  color: #388e3c;
+ padding: '6px 12px'
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-size: 1em;
+  letter-spacing: 0.5px;
+  
+}
+`}</style>
     </div>
   );
 }

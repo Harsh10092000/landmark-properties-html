@@ -1,111 +1,126 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Autocomplete } from "@react-google-maps/api";
+import { haryanaCities } from './city.jsx';
+import { getSubDistrictsByCity } from './subdistrict.jsx';
 
 const PINCODE_PATTERN = /^[1-9][0-9]{5}$/;
 
 const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
-    const [location, setLocation] = useState(initialData.location || "");
-    const [showManualFields, setShowManualFields] = useState(false);
     const [plotNumber, setPlotNumber] = useState(initialData.plotNumber || "");
-    const [state, setState] = useState(initialData.state || "");
+    const [state, setState] = useState(initialData.state || "Haryana");
     const [city, setCity] = useState(initialData.city || "");
     const [subDistrict, setSubDistrict] = useState(initialData.subDistrict || "");
     const [locality, setLocality] = useState(initialData.locality || "");
-    const [completeAddress, setCompleteAddress] = useState(initialData.completeAddress || "");
     const [pinCode, setPinCode] = useState(initialData.pinCode || "");
-    const autocompleteRef = useRef(null);
     const [formSubmit, setFormSubmit] = useState(false);
+    const [availableSubDistricts, setAvailableSubDistricts] = useState([]);
+    
+    // Autocomplete states
+    const [citySearch, setCitySearch] = useState("");
+    const [subDistrictSearch, setSubDistrictSearch] = useState("");
+    const [showCityDropdown, setShowCityDropdown] = useState(false);
+    const [showSubDistrictDropdown, setShowSubDistrictDropdown] = useState(false);
+    const [filteredCities, setFilteredCities] = useState([]);
+    const [filteredSubDistricts, setFilteredSubDistricts] = useState([]);
 
     // Load initial data when component mounts
     useEffect(() => {
         if (initialData) {
-            setLocation(initialData.location || "");
             setPlotNumber(initialData.plotNumber || "");
-            setState(initialData.state || "");
+            setState(initialData.state || "Haryana");
             setCity(initialData.city || "");
             setSubDistrict(initialData.subDistrict || "");
             setLocality(initialData.locality || "");
-            setCompleteAddress(initialData.completeAddress || "");
             setPinCode(initialData.pinCode || "");
         }
     }, [initialData]);
 
-    const onLoad = (autocomplete) => {
-        autocompleteRef.current = autocomplete;
-    };
-
-    const onPlaceChanged = () => {
-        if (autocompleteRef.current) {
-            const place = autocompleteRef.current.getPlace();
-            if (place && place.address_components) {
-                setShowManualFields(false); // Ensure manual fields are hidden on auto-fill
-                setPlotNumber("");
-                setState("");
-                setCity("");
+    // Update sub-districts when city changes
+    useEffect(() => {
+        if (city) {
+            const subDistricts = getSubDistrictsByCity(city);
+            setAvailableSubDistricts(subDistricts);
+            setFilteredSubDistricts(subDistricts);
+            // Reset sub-district if current selection is not available for new city
+            if (!subDistricts.includes(subDistrict)) {
                 setSubDistrict("");
-                setLocality("");
-                setCompleteAddress("");
-                setPinCode("");
-
-                place.address_components.forEach((component) => {
-                    const type = component.types[0];
-                    console.log(place);
-                    switch (type) {
-                        case "street_number":
-                            setPlotNumber(component.long_name);
-                            break;
-                        case "administrative_area_level_1":
-                            console.log(component.long_name)
-                            setState(component.long_name);
-                            break;
-                        case "administrative_area_level_3":
-                            setCity(component.long_name);
-                            break;
-                        case "locality":
-                            setSubDistrict(component.long_name);
-                            break;
-                        case "sublocality_level_1":
-                        case "neighborhood":
-                            setLocality(component.long_name);
-                            break;
-                        case "postal_code":
-                            setPinCode(component.long_name);
-                            break;
-                        default:
-                            break;
-                    }
-                });
-                setCompleteAddress(place.formatted_address || "");
+                setSubDistrictSearch("");
             }
+        } else {
+            setAvailableSubDistricts([]);
+            setFilteredSubDistricts([]);
+            setSubDistrict("");
+            setSubDistrictSearch("");
         }
+    }, [city, subDistrict]);
+
+    // Filter cities based on search
+    useEffect(() => {
+        if (citySearch.trim() === "") {
+            setFilteredCities(haryanaCities);
+        } else {
+            const filtered = haryanaCities.filter(city => 
+                city.name.toLowerCase().includes(citySearch.toLowerCase())
+            );
+            setFilteredCities(filtered);
+        }
+    }, [citySearch]);
+
+    // Filter sub-districts based on search
+    useEffect(() => {
+        if (subDistrictSearch.trim() === "") {
+            setFilteredSubDistricts(availableSubDistricts);
+        } else {
+            const filtered = availableSubDistricts.filter(district => 
+                district.toLowerCase().includes(subDistrictSearch.toLowerCase())
+            );
+            setFilteredSubDistricts(filtered);
+        }
+    }, [subDistrictSearch, availableSubDistricts]);
+
+    const handleCitySelect = (selectedCity) => {
+        setCity(selectedCity);
+        setCitySearch(selectedCity);
+        setShowCityDropdown(false);
+        setSubDistrict("");
+        setSubDistrictSearch("");
     };
 
-    const handleUnableToFind = () => {
-        setShowManualFields(true);
-        setLocation("");
-        setState("");
-        setCity("");
-        setSubDistrict("");
-        setLocality("");
-        setCompleteAddress("");
-        setPinCode("");
+    const handleSubDistrictSelect = (selectedDistrict) => {
+        setSubDistrict(selectedDistrict);
+        setSubDistrictSearch(selectedDistrict);
+        setShowSubDistrictDropdown(false);
+    };
+
+    const handleCityInputChange = (e) => {
+        const value = e.target.value;
+        setCitySearch(value);
+        setCity(value);
+        setShowCityDropdown(true);
+    };
+
+    const handleSubDistrictInputChange = (e) => {
+        const value = e.target.value;
+        setSubDistrictSearch(value);
+        setShowSubDistrictDropdown(true);
     };
 
     const handleSaveAndNext = async () => {
         setFormSubmit(true);
-        // All fields required
-        if (!plotNumber || !state || !city || !subDistrict || !locality || !completeAddress || !pinCode || !PINCODE_PATTERN.test(pinCode)) {
+        // All fields required except plotNumber
+        if (!state || !city || !subDistrict || !locality || !pinCode || !PINCODE_PATTERN.test(pinCode)) {
             return;
         }
+        // Combine address fields
+        const addressParts = [plotNumber, locality, subDistrict, city, state, pinCode].filter(Boolean);
+        const completeAddress = addressParts.join(", ");
         const formData = {
-            location,
             plotNumber,
             state,
             city,
             subDistrict,
             locality,
-            completeAddress,
-            pinCode
+            pinCode,
+            completeAddress
         };
         await onSubmit(2, formData);
     };
@@ -123,77 +138,19 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="step1-label">�� Location Details <span style={{color:'#ec161e'}}>*</span></div>
-                            <div className="location-input-group">
-                                <Autocomplete
-                                    onLoad={onLoad}
-                                    onPlaceChanged={onPlaceChanged}
-                                    options={{
-                                        types: ["geocode"],
-                                        componentRestrictions: { country: "in" },
-                                    }}
-                                >
-                                    <input
-                                        id="location-input"
-                                        type="text"
-                                        className="step-input"
-                                        placeholder="Enter location"
-                                        value={location}
-                                        onChange={(e) => setLocation(e.target.value)}
-                                    />
-                                </Autocomplete>
-                                <div className="step-or-divider">
-                                <span>Or</span>
-                            </div>
-                            </div>
-                            
+                            <div className="step1-label">📍 Location Details <span style={{color:'#ec161e'}}>*</span></div>
                         </div>
                         <div className="auto-filled-fields">
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-md-12" style={{padding: "0px"}}>
+                                    <div className="col-md-6 remove-padding-left">
                                         <input
                                             type="text"
                                             className="step-input"
-                                            placeholder="Plot Number"
+                                            placeholder="Plot Number (optional)"
                                             value={plotNumber}
                                             onChange={(e) => setPlotNumber(e.target.value)}
                                         />
-                                        {formSubmit && !plotNumber && <div className="step-error-msg">Plot Number is required</div>}
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6 remove-padding-left">
-                                        <input
-                                            type="text"
-                                            className="step-input "
-                                            placeholder="State"
-                                            value={state}
-                                            onChange={(e) => setState(e.target.value)}
-                                        />
-                                        {formSubmit && !state && <div className="step-error-msg">State is required</div>}
-                                    </div>
-                                    <div className="col-md-6 remove-padding-right">
-                                        <input
-                                            type="text"
-                                            className="step-input"
-                                            placeholder="City"
-                                            value={city}
-                                            onChange={(e) => setCity(e.target.value)}
-                                        />
-                                        {formSubmit && !city && <div className="step-error-msg">City is required</div>}
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-6 remove-padding-left">
-                                        <input
-                                            type="text"
-                                            className="step-input"
-                                            placeholder="Sub District"
-                                            value={subDistrict}
-                                            onChange={(e) => setSubDistrict(e.target.value)}
-                                        />
-                                        {formSubmit && !subDistrict && <div className="step-error-msg">Sub District is required</div>}
                                     </div>
                                     <div className="col-md-6 remove-padding-right">
                                         <input
@@ -203,23 +160,95 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                             value={locality}
                                             onChange={(e) => setLocality(e.target.value)}
                                         />
-                                        {formSubmit && !locality && <div className="step-error-msg">Locality is required</div>}
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-12" style={{padding: "0px"}}>
+                                    <div className="col-md-6 remove-padding-left">
                                         <input
                                             type="text"
                                             className="step-input"
-                                            placeholder="Complete Address"
-                                            value={completeAddress}
-                                            onChange={(e) => setCompleteAddress(e.target.value)}
+                                            placeholder="State"
+                                            value={state}
+                                            onChange={(e) => setState(e.target.value)}
+                                            readOnly
                                         />
-                                        {formSubmit && !completeAddress && <div className="step-error-msg">Complete Address is required</div>}
+                                    </div>
+                                    <div className="col-md-6 remove-padding-right" style={{position: "relative"}}>
+                                        <input
+                                            type="text"
+                                            className="step-input"
+                                            placeholder="Search City"
+                                            value={citySearch}
+                                            onChange={handleCityInputChange}
+                                            onFocus={() => setShowCityDropdown(true)}
+                                            onBlur={() => {
+                                                setTimeout(() => {
+                                                    setShowCityDropdown(false);
+                                                    if (!haryanaCities.some(c => c.name === citySearch)) {
+                                                        setCity("");
+                                                        setCitySearch("");
+                                                    }
+                                                }, 200);
+                                            }}
+                                        />
+                                        {showCityDropdown && (
+                                            <div className="autocomplete-dropdown">
+                                                {filteredCities.length === 0 ? (
+                                                    <div className="dropdown-item no-result">No results found</div>
+                                                ) : (
+                                                    filteredCities.map((cityItem) => (
+                                                        <div
+                                                            key={cityItem.id}
+                                                            className="dropdown-item"
+                                                            onMouseDown={() => handleCitySelect(cityItem.name)}
+                                                        >
+                                                            {cityItem.name}
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-12" style={{padding: "0px"}}>
+                                    <div className="col-md-6 remove-padding-left" style={{position: "relative"}}>
+                                        <input
+                                            type="text"
+                                            className="step-input"
+                                            placeholder="Search Sub District"
+                                            value={subDistrictSearch}
+                                            onChange={handleSubDistrictInputChange}
+                                            onFocus={() => city && setShowSubDistrictDropdown(true)}
+                                            onBlur={() => {
+                                                setTimeout(() => {
+                                                    setShowSubDistrictDropdown(false);
+                                                    if (!availableSubDistricts.includes(subDistrictSearch)) {
+                                                        setSubDistrict("");
+                                                        setSubDistrictSearch("");
+                                                    }
+                                                }, 200);
+                                            }}
+                                            disabled={!city}
+                                        />
+                                        {showSubDistrictDropdown && city && (
+                                            <div className="autocomplete-dropdown">
+                                                {filteredSubDistricts.length === 0 ? (
+                                                    <div className="dropdown-item no-result">No results found</div>
+                                                ) : (
+                                                    filteredSubDistricts.map((district, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="dropdown-item"
+                                                            onMouseDown={() => handleSubDistrictSelect(district)}
+                                                        >
+                                                            {district}
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="col-md-6 remove-padding-right">
                                         <input
                                             type="text"
                                             className="step-input"
@@ -228,10 +257,9 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                             onChange={(e) => setPinCode(e.target.value)}
                                             maxLength={6}
                                         />
-                                        {formSubmit && !pinCode && <div className="step-error-msg">Pin Code is required</div>}
-                                        {formSubmit && pinCode && !PINCODE_PATTERN.test(pinCode) && <div className="step-error-msg">Pin Code must be a valid 6-digit number</div>}
                                     </div>
                                 </div>
+                              
                             </div>
                         </div>
                     </div>

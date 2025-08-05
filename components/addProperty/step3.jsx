@@ -182,9 +182,9 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
                     required
                   />
                 </div>
-                <div className="col-md-2 remove-padding-left-with-dropdown cursor-pointer">
+                <div className="col-md-2 remove-padding-left-with-dropdown ">
                   <select
-                    className="step-select"
+                    className="step-select cursor-pointer"
                     value={plotSizeUnit}
                     onChange={(e) => setPlotSizeUnit(e.target.value)}
                   >
@@ -202,9 +202,9 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
                     onChange={(e) => setRoadWidth(e.target.value)}
                   />
                 </div>
-                <div className="col-md-2 remove-padding-left-with-dropdown cursor-pointer">
+                <div className="col-md-2 remove-padding-left-with-dropdown ">
                   <select
-                    className="step-select"
+                    className="step-select cursor-pointer"
                     value={roadWidthUnit}
                     onChange={(e) => setRoadWidthUnit(e.target.value)}
                   >

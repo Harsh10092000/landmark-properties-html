@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import Otp from '../../mail-templates/Otp';
+import { render } from '@react-email/components';
+
 
 // Create email transporter
 const transporter = nodemailer.createTransport({
@@ -26,18 +29,14 @@ export async function sendOTPEmail(email, otp) {
     otp: otp
   });
 
+  // Use a React element, not a function call
+  const html = await render(<Otp otp={otp} contactEmail={process.env.contactEmail || 'support@landmarkplots.com'} />);
+
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: `${process.env.EMAIL_USER_NAME} <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: 'Your Login OTP',
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2>Your Login OTP</h2>
-        <p>Your one-time password is: <strong>${otp}</strong></p>
-        <p>This OTP will expire in 10 minutes.</p>
-        <p>If you didn't request this OTP, please ignore this email.</p>
-      </div>
-    `
+    subject: 'Your Login OTP - ' + otp,
+    html: html
   };
 
   try {

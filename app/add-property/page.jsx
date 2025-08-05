@@ -9,7 +9,7 @@ import Step3 from "@/components/addProperty/step3";
 import Step4 from "@/components/addProperty/step4";
 import Step5 from "@/components/addProperty/step5";
 import Step6 from "@/components/addProperty/step6";
-import { LoadScript } from "@react-google-maps/api";
+//import { LoadScript } from "@react-google-maps/api";
 import { SessionProvider, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -85,6 +85,7 @@ function StepperCardContent() {
   if (sessionError) {
     return <Error message={sessionError.message || "Session error. Please try again."} />;
   }
+  console.log("sessionStatus : ", sessionStatus);
   if (sessionStatus === "loading" || !sessionStatus) {
     return <Loading />;
   }
@@ -282,10 +283,10 @@ function StepperCardContent() {
                     initialData={formData.step1}
                   />
                 )}
-                <LoadScript
+                {/* <LoadScript
                   googleMapsApiKey="AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc"
                   libraries={libraries}
-                >
+                > */}
                   {step === 2 &&
                     <Step2
                       handleStepChange={handleStepChange}
@@ -294,7 +295,7 @@ function StepperCardContent() {
                       initialData={formData.step2}
                     />
                   }
-                </LoadScript>
+                {/* </LoadScript> */}
                 {step === 3 && (
                   <Step3
                     handleStepChange={handleStepChange}

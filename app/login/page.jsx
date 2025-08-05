@@ -8,8 +8,11 @@ import { Suspense } from 'react';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = "/";
+  //const callbackUrl = "/";
+  const callbackUrl = searchParams.get('callbackUrl') || "/";
+  console.log("callbackUrl : ", callbackUrl);
 
+  //const [callbackUrl, setCallbackUrl] = useState("/");
   const [isNewUser, setIsNewUser] = useState(false);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -62,12 +65,13 @@ function LoginForm() {
         name: !userExists ? name : undefined,
         otp,
         isNewUser: !userExists,
-        redirect: false
+        redirect: true,
+        callbackUrl: callbackUrl,
       });
       if (result?.error) {
         throw new Error(result.error);
       }
-      router.push(callbackUrl);
+      //router.push(callbackUrl);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -427,7 +431,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <LoginForm />
     </Suspense>
   );

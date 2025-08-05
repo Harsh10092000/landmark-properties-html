@@ -166,7 +166,7 @@ export const authOptions = {
   //       domain: '.landmarkplots.com', // allow all subdomains
   //     },
   //   },
-  //},
+  // },
 };
 
 const handler = NextAuth(authOptions);
