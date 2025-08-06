@@ -7,16 +7,16 @@ import PropertyByType from '@/components/index/propertyByType/PropertyByType'
 import Services from '@/components/index/services/Services'
 
 import dynamic from 'next/dynamic'
-// import TrendingProperties from '@/components/index/trendingProperties/TrendingProperties'
+import TrendingProperties from '@/components/index/trendingProperties/TrendingProperties'
 
 import React from 'react'
 import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
 import PropertiesCategories from '@/components/about/PropertiesCategories'
 
-const TrendingProperties = dynamic(() => import('@/components/index/trendingProperties/TrendingProperties'), {
-  loading: () => <div>Loading...</div>,
-})
+// const TrendingProperties = dynamic(() => import('@/components/index/trendingProperties/TrendingProperties'), {
+//   loading: () => <div>Loading...</div>,
+// })
 
 export async function generateMetadata({ params }, parent) {
 

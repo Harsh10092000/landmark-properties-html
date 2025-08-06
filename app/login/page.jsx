@@ -73,10 +73,20 @@ function LoginForm() {
         redirect: true,
         callbackUrl: callbackUrl,
       });
+      // const result = await signIn('credentials', {
+      //   email,
+      //   phone: !userExists ? phone : undefined,
+      //   name: !userExists ? name : undefined,
+      //   otp,
+      //   isNewUser: !userExists,
+      //   redirect: false,
+      //   //callbackUrl: callbackUrl,
+      // });
       if (result?.error) {
         throw new Error(result.error);
       }
       //router.push(callbackUrl);
+      //window.location.href = callbackUrl;
     } catch (err) {
       setError(err.message);
     } finally {
