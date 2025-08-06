@@ -10,11 +10,12 @@ function LoginForm() {
   const searchParams = useSearchParams();
   //const callbackUrl = "/";
   var callbackUrl = searchParams.get('callbackUrl') || "/";
-  console.log("callbackUrl : ", callbackUrl);
+  console.log("callbackUrl 1 : ", callbackUrl);
 
-  if (callbackUrl === "/dashboard") {
+  if (callbackUrl == "/dashboard" || callbackUrl == "dashboard") {
     callbackUrl = "https://user.landmarkplots.com/dashboard";
   }
+  console.log("callbackUrl 2 : ", callbackUrl);
 
   //const [callbackUrl, setCallbackUrl] = useState("/");
   const [isNewUser, setIsNewUser] = useState(false);
