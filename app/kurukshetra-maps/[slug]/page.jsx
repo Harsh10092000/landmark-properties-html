@@ -12,6 +12,49 @@ const getMapById = async (id) => {
   }
 };
 
+
+export async function generateMetadata({ params }, parent) {
+    const { slug } = params;
+    if (!slug) {
+      return <div>Invalid Property ID</div>;
+    }
+    const arrproId = slug.split("-");
+    const proId = arrproId[arrproId.length - 1];
+    const url = slug + ".webp";
+    const db = await pool;
+    const q1 = "SELECT map_image, map_sub_category from city_map_module WHERE map_image = ?";
+    const [images] = await db.query(q1, [url]);
+    const mapName = images[0]?.map_sub_category || slug.replace(/-/g, ' ');
+    const title = `${mapName} Map - Kurukshetra City Map | Landmark Plots`;
+    const desc = `View and download the map of ${mapName}, Kurukshetra. High-quality, updated city maps for navigation, planning, and property search by Landmark Plots.`;
+
+    return {
+      title,
+      description: desc,
+      openGraph: {
+        type: "website",
+        url: `https://landmarkplots.com/kurukshetra-maps/${slug}`,
+        title,
+        description: desc,
+        images: [
+          {
+            url:
+              images[0] !== undefined
+                ? `https://adminapi.landmarkplots.com/mapImages/${images[0].map_image}`
+                : "https://landmarkplots.com/uploads/default.jpg",
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+      metadataBase: new URL("https://landmarkplots.com"),
+      alternates: {
+        canonical: `https://landmarkplots.com/kurukshetra-maps/${slug}`,
+      },
+    };
+  }
+
 const MapDetailPage = async ({ params }) => {
   const { slug } = params;
   const map = await getMapById(slug);
