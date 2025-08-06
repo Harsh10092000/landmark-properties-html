@@ -1,4 +1,4 @@
-const NewPropertyAdminTemplate = ({ user, property }) => (
+const NewUserAdminTemplate = ({ user }) => (
   <div style={{
     fontFamily: 'Segoe UI, Arial, sans-serif',
     background: '#fff',
@@ -27,13 +27,10 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
       <div style={{ fontSize: '15px', color: '#222', marginBottom: '32px', lineHeight: '1.7' }}>
         <div style={{ marginBottom: '18px' }}>Dear Admin,</div>
         <div style={{ marginBottom: '18px' }}>
-          A new property has been listed by <strong>{user?.email}</strong> (Property ID: <strong>{property?.id}</strong>).
+          A new user has registered: <strong>{user?.email}</strong> (User ID: <strong>{user?.id}</strong>).
         </div>
         <div style={{ marginBottom: '18px' }}>
-          Property details: <a href={`${process.env.NEXTAUTH_URL}/property/${property?.slug || property?.id}`} style={{ color: '#02a550', textDecoration: 'underline' }}>{property?.title || property?.slug || property?.id}</a>
-        </div>
-        <div style={{ marginBottom: '18px' }}>
-          Contact the user at: <strong>{user?.phone}</strong>
+          Contact: <strong>{user?.phone}</strong>
         </div>
         <div style={{ margin: '32px 0 0 0', color: '#666' }}>
           Thank you,<br/>
@@ -44,4 +41,4 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
   </div>
 );
 
-export default NewPropertyAdminTemplate;
+export default NewUserAdminTemplate;
