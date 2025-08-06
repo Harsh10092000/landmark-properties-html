@@ -52,7 +52,7 @@ const page = async ({ searchParams }) => {
 
       <div style={{ display: "none" }}>
         {data.map((item, index) => (
-          <a key={index} href={`/${item.map_image}`}>
+          <a key={index} href={`/kurukshetra-maps/${item.map_image.replace('.webp', '')}`}>
             {item.map_image}
           </a>
         ))}
