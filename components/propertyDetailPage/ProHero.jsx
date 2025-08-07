@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Controller } from 'swiper/modules';
 import { Autoplay } from 'swiper/modules';
+import ImageModal from './ImageModal';
 
 // Import Swiper styles
 // import 'swiper/css';
@@ -47,6 +48,19 @@ const ProHero = ({ propertyData }) => {
   // Swiper controller refs
   const [mainSwiper, setMainSwiper] = useState(null);
   const [thumbSwiper, setThumbSwiper] = useState(null);
+  
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInitialIndex, setModalInitialIndex] = useState(0);
+
+  const handleImageClick = (index) => {
+    setModalInitialIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const renderMainContent = () => {
     if (allImages.length > 1) {
@@ -77,7 +91,7 @@ const ProHero = ({ propertyData }) => {
                   decoding="async"
                   width="438px"
                   height="304px"
-                  className=" coursor-pointer bg-img"
+                  className="cursor-pointer bg-img"
                   src={
                     process.env.webURL +
                     "/uploads/" +
@@ -87,15 +101,19 @@ const ProHero = ({ propertyData }) => {
                     }
                 ${propertyData.pro_type ? propertyData.pro_type.split(",")[0] : ""} For ${" " + propertyData.pro_ad_type + " in " + propertyData.pro_city
                     }}`}
+                  onClick={() => handleImageClick(index)}
+                  style={{ cursor: 'pointer' }}
                 />
                 <img
-                  className="listing__hero--slider__media"
+                  className="listing__hero--slider__media cursor-pointer"
                   //src={image.img_link}
                   src={
                     process.env.webURL +
                     "/uploads/" +
                     item
                   }
+                  onClick={() => handleImageClick(index)}
+                  style={{ cursor: 'pointer' }}
                 // alt={image.alt} 
                 />
 
@@ -107,10 +125,8 @@ const ProHero = ({ propertyData }) => {
     } else {
       return (
         <div className="listing__hero--slider__items position-relative">
-
-
           <img
-            className="listing__hero--slider__media"
+            className="listing__hero--slider__media cursor-pointer"
             // src={images[0].img_link} 
             //  width="438px"
             width="100%"
@@ -120,9 +136,10 @@ const ProHero = ({ propertyData }) => {
               "/uploads/" +
               "dummy.webp"
             }
+            onClick={() => handleImageClick(0)}
+            style={{ cursor: 'pointer' }}
           // alt={mainImages[0].alt} 
           />
-
         </div>
       );
     }
@@ -132,8 +149,7 @@ const ProHero = ({ propertyData }) => {
   const renderThumbnailContent = () => {
     if (allImages.length > 1) {
       return (
-        <div className="listing__small--hero__slider listing__small--hero__slider{
-">
+        <div className="listing__small--hero__slider listing__small--hero__slider{">
           <Swiper
             modules={[Navigation]}
             spaceBetween={10}
@@ -191,15 +207,24 @@ const ProHero = ({ propertyData }) => {
 
 
   return (
-    <section className="listing__hero--section">
-      <div className="listing__hero--section__inner position-relative">
-        <div className="listing__hero--slider">
-          {renderMainContent()}
-         
+    <>
+      <section className="listing__hero--section">
+        <div className="listing__hero--section__inner position-relative">
+          <div className="listing__hero--slider">
+            {renderMainContent()}
+          </div>
+          {allImages.length > 1 && renderThumbnailContent()}
         </div>
-        {allImages.length > 1 && renderThumbnailContent()}
-      </div>
-    </section>
+      </section>
+      
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        images={allImages}
+        initialIndex={modalInitialIndex}
+      />
+    </>
   );
 };
 
