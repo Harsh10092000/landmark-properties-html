@@ -5210,6 +5210,8 @@ scrollbar-color: #fff #fff;
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
+  position: relative;
+  z-index: -1;
 }
 
 .featured__card {
