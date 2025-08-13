@@ -46,9 +46,11 @@ function StepperCardContent() {
   // All hooks must be called unconditionally at the top
   let sessionError = null;
   let sessionStatus;
+  let sessionData;
   try {
-    const { status } = useSession();
+    const { status, data: session } = useSession();
     sessionStatus = status;
+    sessionData = session;
   } catch (err) {
     sessionError = err;
   }
@@ -64,6 +66,7 @@ function StepperCardContent() {
   const [proAreaUnit, setProAreaUnit] = useState(null);
   const [proCity, setProCity] = useState(null);
   const [proSubDistrict, setProSubDistrict] = useState(null);
+  const [propertyUrl, setPropertyUrl] = useState(null);
  
   const [formData, setFormData] = useState({
     step1: {},
@@ -181,9 +184,13 @@ function StepperCardContent() {
           "-" +
           listingId;
 
+        // Store the property URL in state
+        setPropertyUrl(url);
+
         // Update the property URL in the database
         console.log("propertyId : ", propertyId);
-        console.log("url : ", url);
+        console.log("Constructed URL: ", url);
+        console.log("Property URL state: ", propertyUrl);
         if (propertyId && url) {
 
           await fetch('/api/property/update-url', {
@@ -192,13 +199,60 @@ function StepperCardContent() {
             body: JSON.stringify({ propertyId, url })
           });
         }
+
+        // Send notification emails after successful form completion
+        if (sessionData?.user) {
+          try {
+            console.log('Sending notification emails from page...');
+            
+            // Prepare property data for email
+            const propertyData = {
+              id: listingId,
+              title: `${proType || 'Property'} for ${proAdType || 'Sale'} in ${proCity || 'Haryana'}`,
+              slug: listingId,
+              price: data.amount,
+              area: proArea,
+              areaUnit: proAreaUnit,
+              city: proCity,
+              subDistrict: proSubDistrict,
+              propertyType: proType,
+              adType: proAdType,
+              url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/property/${url}`
+            };
+
+            console.log('Sending email with property data:', propertyData);
+
+            // Send notification emails
+            const emailResponse = await fetch('/api/property/send-notification', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                user: sessionData.user,
+                property: propertyData
+              }),
+            });
+
+            if (emailResponse.ok) {
+              console.log('Notification emails sent successfully');
+            } else {
+              console.error('Failed to send notification emails');
+            }
+          } catch (error) {
+            console.error('Failed to send notification emails:', error);
+            // Don't block the form submission if email fails
+          }
+        }
       }
 
 
 
       handleStepChange(stepNumber + 1);
+      return result; // Return result for step5 to use
     } else {
       alert(`Error: ${result.error}`);
+      return result;
     }
   };
 
@@ -324,7 +378,10 @@ function StepperCardContent() {
                   />
                 )}
                 {step === 6 && (
-                  <Step6 listingId={listingId} />
+                  <Step6 
+                    listingId={listingId} 
+                    proUrl={`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/${propertyUrl || listingId}`}  
+                  />
                 )}
               </div>
             </div>

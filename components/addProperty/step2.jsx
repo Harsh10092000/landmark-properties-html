@@ -14,6 +14,9 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
     const [formSubmit, setFormSubmit] = useState(false);
     const [availableSubDistricts, setAvailableSubDistricts] = useState([]);
     
+    // Error states
+    const [errors, setErrors] = useState({});
+    
     // Autocomplete states
     const [citySearch, setCitySearch] = useState("");
     const [subDistrictSearch, setSubDistrictSearch] = useState("");
@@ -77,18 +80,51 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
         }
     }, [subDistrictSearch, availableSubDistricts]);
 
+    const validateForm = () => {
+        const newErrors = {};
+        
+        if (!locality.trim()) {
+            newErrors.locality = "Locality is required";
+        }
+        
+        if (!city.trim()) {
+            newErrors.city = "City is required";
+        }
+        
+        if (!subDistrict.trim()) {
+            newErrors.subDistrict = "Sub District is required";
+        }
+        
+        if (!pinCode.trim()) {
+            newErrors.pinCode = "Pin Code is required";
+        } else if (!PINCODE_PATTERN.test(pinCode)) {
+            newErrors.pinCode = "Please enter a valid 6-digit pin code";
+        }
+        
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleCitySelect = (selectedCity) => {
         setCity(selectedCity);
         setCitySearch(selectedCity);
         setShowCityDropdown(false);
         setSubDistrict("");
         setSubDistrictSearch("");
+        // Clear city error when valid city is selected
+        if (errors.city) {
+            setErrors(prev => ({ ...prev, city: "" }));
+        }
     };
 
     const handleSubDistrictSelect = (selectedDistrict) => {
         setSubDistrict(selectedDistrict);
         setSubDistrictSearch(selectedDistrict);
         setShowSubDistrictDropdown(false);
+        // Clear subDistrict error when valid district is selected
+        if (errors.subDistrict) {
+            setErrors(prev => ({ ...prev, subDistrict: "" }));
+        }
     };
 
     const handleCityInputChange = (e) => {
@@ -96,20 +132,45 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
         setCitySearch(value);
         setCity(value);
         setShowCityDropdown(true);
+        // Clear city error when user starts typing
+        if (errors.city) {
+            setErrors(prev => ({ ...prev, city: "" }));
+        }
     };
 
     const handleSubDistrictInputChange = (e) => {
         const value = e.target.value;
         setSubDistrictSearch(value);
         setShowSubDistrictDropdown(true);
+        // Clear subDistrict error when user starts typing
+        if (errors.subDistrict) {
+            setErrors(prev => ({ ...prev, subDistrict: "" }));
+        }
+    };
+
+    const handleLocalityChange = (e) => {
+        setLocality(e.target.value);
+        // Clear locality error when user starts typing
+        if (errors.locality) {
+            setErrors(prev => ({ ...prev, locality: "" }));
+        }
+    };
+
+    const handlePinCodeChange = (e) => {
+        setPinCode(e.target.value);
+        // Clear pinCode error when user starts typing
+        if (errors.pinCode) {
+            setErrors(prev => ({ ...prev, pinCode: "" }));
+        }
     };
 
     const handleSaveAndNext = async () => {
         setFormSubmit(true);
-        // All fields required except plotNumber
-        if (!state || !city || !subDistrict || !locality || !pinCode || !PINCODE_PATTERN.test(pinCode)) {
+        
+        if (!validateForm()) {
             return;
         }
+        
         // Combine address fields
         const addressParts = [plotNumber, locality, subDistrict, city, state, pinCode].filter(Boolean);
         const completeAddress = addressParts.join(", ");
@@ -155,11 +216,14 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                     <div className="col-md-6 remove-padding-right">
                                         <input
                                             type="text"
-                                            className="step-input"
+                                            className={`step-input ${formSubmit && errors.locality ? 'error-input' : ''}`}
                                             placeholder="Locality"
                                             value={locality}
-                                            onChange={(e) => setLocality(e.target.value)}
+                                            onChange={handleLocalityChange}
                                         />
+                                        {formSubmit && errors.locality && (
+                                            <div className="error-message">{errors.locality}</div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="row">
@@ -176,7 +240,7 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                     <div className="col-md-6 remove-padding-right" style={{position: "relative"}}>
                                         <input
                                             type="text"
-                                            className="step-input"
+                                            className={`step-input ${formSubmit && errors.city ? 'error-input' : ''}`}
                                             placeholder="Search City"
                                             value={citySearch}
                                             onChange={handleCityInputChange}
@@ -191,6 +255,9 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                                 }, 200);
                                             }}
                                         />
+                                        {formSubmit && errors.city && (
+                                            <div className="error-message">{errors.city}</div>
+                                        )}
                                         {showCityDropdown && (
                                             <div className="autocomplete-dropdown">
                                                 {filteredCities.length === 0 ? (
@@ -214,7 +281,7 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                     <div className="col-md-6 remove-padding-left" style={{position: "relative"}}>
                                         <input
                                             type="text"
-                                            className="step-input"
+                                            className={`step-input ${formSubmit && errors.subDistrict ? 'error-input' : ''}`}
                                             placeholder="Search Sub District"
                                             value={subDistrictSearch}
                                             onChange={handleSubDistrictInputChange}
@@ -230,6 +297,9 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                             }}
                                             disabled={!city}
                                         />
+                                        {formSubmit && errors.subDistrict && (
+                                            <div className="error-message">{errors.subDistrict}</div>
+                                        )}
                                         {showSubDistrictDropdown && city && (
                                             <div className="autocomplete-dropdown">
                                                 {filteredSubDistricts.length === 0 ? (
@@ -251,12 +321,15 @@ const Step2 = ({handleStepChange, onSubmit, loading, initialData}) => {
                                     <div className="col-md-6 remove-padding-right">
                                         <input
                                             type="text"
-                                            className="step-input"
+                                            className={`step-input ${formSubmit && errors.pinCode ? 'error-input' : ''}`}
                                             placeholder="Pin Code"
                                             value={pinCode}
-                                            onChange={(e) => setPinCode(e.target.value)}
+                                            onChange={handlePinCodeChange}
                                             maxLength={6}
                                         />
+                                        {formSubmit && errors.pinCode && (
+                                            <div className="error-message">{errors.pinCode}</div>
+                                        )}
                                     </div>
                                 </div>
                               

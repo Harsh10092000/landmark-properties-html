@@ -3547,7 +3547,8 @@ scrollbar-color: #fff #fff;
 }
 @media only screen and (min-width: 1200px) {
   .hero__section--inner__style4 {
-    padding: 23rem 0 16rem;
+    /* padding: 23rem 0 16rem; */
+    padding: 0 0 60px 0;
   }
 }
 @media only screen and (min-width: 1600px) {

@@ -101,8 +101,8 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
 
     // Save and next: upload images, then call onSubmit
     const handleSaveAndNext = async () => {
-        let coverImageName = DEFAULT_IMAGE;
-        let otherImageNames = [DEFAULT_IMAGE];
+        let coverImageName = "";
+        let otherImageNames = [];
 
         // Prepare unique files array: cover first, then others (excluding cover)
         let filesToUpload = [];
@@ -139,17 +139,17 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
         // Assign filenames: first is cover, rest are others
         if (coverFile && filenames.length > 0) {
             coverImageName = filenames[0];
-            otherImageNames = filenames.slice(1).length > 0 ? filenames.slice(1) : [DEFAULT_IMAGE];
+            otherImageNames = filenames.slice(1);
         } else if (!coverFile && filenames.length > 0) {
             // No cover, all go to other images
             otherImageNames = filenames;
-            coverImageName = DEFAULT_IMAGE;
+            coverImageName = "";
         } else {
             // If no new upload, use already uploaded names if present
             if (coverImage && coverImage.uploadedName) coverImageName = coverImage.uploadedName;
             if (otherImages.map(img => img.uploadedName).filter(Boolean).length > 0) {
                 otherImageNames = otherImages.map(img => img.uploadedName).filter(Boolean);
-        }
+            }
         }
 
         const submitData = {
@@ -171,7 +171,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
                     </div>
 
                     {/* Cover Image Uploader */}
-                    <div className="step1-label" style={{marginTop: 24}}>Cover Image <span style={{color:'#ec161e'}}>*</span></div>
+                    {/* <div className="step1-label" style={{marginTop: 24}}>Cover Image <span style={{color:'#ec161e'}}>*</span></div> */}
                     <div className="image-upload-dropzone" style={{marginBottom: 24}} onClick={() => coverInputRef.current.click()}>
                         <input
                             type="file"

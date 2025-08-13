@@ -8,23 +8,23 @@ export const metadata = {
   title: 'Contact Us - Get in Touch | Landmark Plots',
   description: 'Contact Landmark Plots for all your real estate needs. Get expert guidance on property buying, selling, and investment. Call us or fill our contact form for immediate assistance.',
   keywords: 'contact Landmark Plots, real estate contact, property consultation, property expert, Landmark Plots contact details',
-  openGraph: {
+    openGraph: {
     title: 'Contact Us - Get in Touch | Landmark Plots',
     description: 'Contact Landmark Plots for all your real estate needs. Get expert guidance on property buying, selling, and investment. Call us or fill our contact form for immediate assistance.',
     url: 'https://landmarkplots.com/contactus',
     siteName: 'Landmark Plots',
-    images: [
-      {
+      images: [
+        {
         url: 'https://landmarkplots.com/uploads/default.jpg',
-        width: 1200,
-        height: 630,
+          width: 1200,
+          height: 630,
         alt: 'Contact Landmark Plots',
-      },
-    ],
+        },
+      ],
     locale: 'en_IN',
     type: 'website',
-  },
-  twitter: {
+    },
+    twitter: {
     card: 'summary_large_image',
     title: 'Contact Us - Get in Touch | Landmark Plots',
     description: 'Contact Landmark Plots for all your real estate needs. Get expert guidance on property buying, selling, and investment. Call us or fill our contact form for immediate assistance.',

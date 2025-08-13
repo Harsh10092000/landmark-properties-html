@@ -1,7 +1,7 @@
 // landmark-properties-html/components/addProperty/step6.jsx
 import React from "react";
 
-export default function Step6({ listingId }) {
+export default function Step6({ listingId, proUrl }) {
   return (
     <div
       className="step1-form"
@@ -121,6 +121,54 @@ export default function Step6({ listingId }) {
         <div style={{ color: "#888", fontSize: 15, marginBottom: 8, zIndex: 1, position: "relative" }}>
           Please save this ID for future reference.
         </div>
+
+        {/* View Listing Button */}
+        {proUrl && (
+          <div style={{ marginTop: 24, zIndex: 1, position: "relative" }}>
+            <div style={{ 
+              marginBottom: 12, 
+              padding: '8px 12px', 
+              background: '#f8f9fa', 
+              borderRadius: '6px', 
+              fontSize: '12px', 
+              color: '#666',
+              wordBreak: 'break-all'
+            }}>
+              <strong>Property URL:</strong> {proUrl}
+            </div>
+            <a
+              href={proUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #02a550 0%, #3d787a 100%)',
+                color: '#fff',
+                padding: '14px 28px',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '600',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                boxShadow: '0 4px 12px rgba(2, 165, 80, 0.3)',
+                transition: 'all 0.3s ease',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 16px rgba(2, 165, 80, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(2, 165, 80, 0.3)';
+              }}
+            >
+              🏠 View Your Listing
+            </a>
+          </div>
+        )}
       
         <style>{`
           @keyframes pulse {

@@ -86,6 +86,15 @@ const propertySides = [
   { value: "4" },
 ];
 
+const facilitiesOptions = [
+  "Schools",
+  "Hospitals",
+  "Public Transportation",
+  "Shops/Malls",
+  "Restaurants",
+  "Parks/Green Spaces",
+];
+
 export default function Step3({handleStepChange, onSubmit, loading, initialData, propertyType}) {
   // State for each field
   const [age, setAge] = useState(initialData?.age || "");
@@ -104,6 +113,8 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
   const [roadWidthUnit, setRoadWidthUnit] = useState(initialData?.roadWidthUnit || "Feet");
   const [plotWidth, setPlotWidth] = useState(initialData?.plotWidth || "");
   const [plotLength, setPlotLength] = useState(initialData?.plotLength || "");
+  const [facilities, setFacilities] = useState(initialData?.facilities || []);
+  const [errors, setErrors] = useState({});
 
   // Load initial data when component mounts
   useEffect(() => {
@@ -124,13 +135,40 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
       setRoadWidthUnit(initialData.roadWidthUnit || "Feet");
       setPlotWidth(initialData.plotWidth || "");
       setPlotLength(initialData.plotLength || "");
+      setFacilities(initialData.facilities || []);
     }
   }, [initialData]);
 
-  const handleSaveAndNext = async () => {
-    // Validate required fields
+  const handleMultiSelect = (arr, setArr, val) => {
+    if (arr.includes(val)) {
+      setArr(arr.filter((v) => v !== val));
+    } else {
+      setArr([...arr, val]);
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate Area Plot Size
     if (!plotSize || plotSize.trim() === "") {
-      alert("Area Plot Size is required. Please enter the plot size.");
+      newErrors.plotSize = "Area Plot Size is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handlePlotSizeChange = (e) => {
+    setPlotSize(e.target.value);
+    // Clear error when user starts typing
+    if (errors.plotSize) {
+      setErrors(prev => ({ ...prev, plotSize: "" }));
+    }
+  };
+
+  const handleSaveAndNext = async () => {
+    if (!validateForm()) {
       return;
     }
 
@@ -151,6 +189,7 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
       roadWidthUnit,
       plotWidth,
       plotLength,
+      facilities,
       areaSize: plotSize,
       areaUnit: plotSizeUnit
     };
@@ -175,12 +214,15 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
               <div className="row">
                 <div className="col-md-4 remove-padding-right-with-dropdown">
                   <input
-                    className="step-input"
+                    className={`step-input ${errors.plotSize ? 'error-input' : ''}`}
                     placeholder="Area Plot Size *"
                     value={plotSize}
-                    onChange={(e) => setPlotSize(e.target.value)}
+                    onChange={handlePlotSizeChange}
                     required
                   />
+                  {errors.plotSize && (
+                    <div className="error-message">{errors.plotSize}</div>
+                  )}
                 </div>
                 <div className="col-md-2 remove-padding-left-with-dropdown ">
                   <select
@@ -387,6 +429,23 @@ export default function Step3({handleStepChange, onSubmit, loading, initialData,
                     type="button"
                   >
                     {item.value}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Near By Facilities */}
+            <div className="col-md-12 padding-bottom">
+              <div className="step1-label">Near By Facilities</div>
+              <div className="step1-pill-group step1-pill-group-wrap">
+                {facilitiesOptions.map((opt) => (
+                  <button
+                    key={opt}
+                    className={`step1-pill${facilities.includes(opt) ? " selected" : ""}`}
+                    type="button"
+                    onClick={() => handleMultiSelect(facilities, setFacilities, opt)}
+                  >
+                    {opt}
                   </button>
                 ))}
               </div>

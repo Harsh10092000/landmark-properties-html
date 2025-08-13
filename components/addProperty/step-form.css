@@ -553,20 +553,47 @@ font-size: 14px;
   }
 
 .step-error-msg {
-  font-weight: 400;
+  color: #dc2626;
     font-size: 12px;
-    line-height: 1.66;
-    letter-spacing: 0.03333em;
-    text-align: left;
-    margin: -6px 14px 10px;
-    color: red;
+  margin-top: 4px;
+  font-weight: 500;
+  animation: fadeInError 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-
-
 @keyframes fadeInError {
-  from { opacity: 0; transform: translateY(8px);}
-  to { opacity: 1; transform: translateY(0);}
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Error input styling */
+.step-input.error-input {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 1px #dc2626;
+}
+
+.step-input.error-input:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+}
+
+/* Error message styling */
+.error-message {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+  animation: fadeInError 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error-message::before {
+  content: "⚠";
+  font-size: 14px;
 }
 
 .autocomplete-dropdown {

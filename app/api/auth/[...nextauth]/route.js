@@ -3,8 +3,23 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import pool from '@/app/libs/mysql';
 import { generateOTP, sendOTPEmail } from '@/app/libs/otp';
 import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+import { render } from '@react-email/components';
+import NewUserTemplate from '../../../../mail-templates/NewUser';
+import NewUserAdminTemplate from '../../../../mail-templates/NewUserAdmin';
 
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || [];
+
+// Email transporter for new-user notifications
+const newUserEmailTransporter = nodemailer.createTransport({
+  host: process.env.EMAIL_SERVER,
+  port: process.env.EMAIL_PORT,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_WELCOME_USER,
+    pass: process.env.EMAIL_WELCOME_PASSWORD,
+  },
+});
 
 export const authOptions = {
   providers: [
@@ -84,6 +99,52 @@ export const authOptions = {
               [result.insertId]
             );
             user = userRows[0];
+
+            // Fire new user emails (non-blocking)
+            (async () => {
+              try {
+                const appName = process.env.EMAIL_USER_NAME || 'Landmark Properties';
+
+                // Send welcome email to user
+                const userHtml = await render(
+                  <NewUserTemplate user={{
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    createdAt: new Date().toISOString()
+                  }} />
+                );
+                await newUserEmailTransporter.sendMail({
+                  from: `${appName} <${process.env.EMAIL_USER}>`,
+                  to: user.email,
+                  subject: 'Welcome to Landmark Properties',
+                  html: userHtml,
+                });
+
+                // Send notification email to admin
+                const adminHtml = await render(
+                  <NewUserAdminTemplate user={{
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    createdAt: new Date().toISOString()
+                  }} />
+                );
+                const adminTo = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+                if (adminTo) {
+                  await newUserEmailTransporter.sendMail({
+                    from: `${appName} <${process.env.EMAIL_USER}>`,
+                    to: adminTo,
+                    subject: 'New user registered',
+                    html: adminHtml,
+                  });
+                }
+              } catch (emailErr) {
+                console.error('Failed to send new-user notification emails:', emailErr);
+              }
+            })();
           } else {
             user = userRows[0];
             
