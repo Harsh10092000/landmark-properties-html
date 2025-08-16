@@ -6,11 +6,10 @@ import Image from "next/image";
 import { ShowPrice } from "@/components/HelperComponents";
 import Link from "next/link";
 import moment from "moment";
+import FavoriteStar from "@/components/common/FavoriteStar";
 
 
-const TrendingProperties = ({data}) => {
-
-  const currentUser = "";
+const TrendingProperties = ({data, currentUser = ""}) => {
   return (
     <section className="featured__section section--padding color-accent-2">
       <div className="container">
@@ -59,6 +58,13 @@ const TrendingProperties = ({data}) => {
               <div className="col-md-4 mb-4" key={item.id}>
                 <article className="featured__card">
                   <div className="featured__thumbnail position-relative">
+                    {/* Favorite Star */}
+                    <FavoriteStar
+                      propertyId={item.listing_id || item.pro_id}
+                      userId={currentUser?.login_id || currentUser}
+                      propertyUserId={item.pro_user_id}
+                      size={20}
+                    />
                     <div className="media">
                       <Link
                         className="featured__thumbnail--link"
@@ -180,7 +186,7 @@ const TrendingProperties = ({data}) => {
                         
                         {item.pro_sub_district
                           ? item.pro_sub_district + ", "
-                          : ""}
+                          : " "}
                         {item.pro_city + " " + item.pro_state}
                       </Link>
                        
@@ -377,7 +383,15 @@ const TrendingProperties = ({data}) => {
                               " "}
                         </span> */}
                         <span className="featured__author--name">
-                        <span className="featured__info--text" style={{fontSize: "13px"}}> Listed By  {item.pro_user_type}</span>
+                        <span className="featured__info--text" style={{fontSize: "13px"}}> 
+                          {(() => {
+                            const userId = currentUser?.login_id || currentUser;
+                            const propertyUserId = item.pro_user_id;
+                            const isOwnProperty = userId && propertyUserId && String(userId) === String(propertyUserId);
+                            
+                            return isOwnProperty ? "Listed by me" : `Listed by ${item.pro_user_type || 'Owner'}`;
+                          })()}
+                        </span>
                          {moment(item.pro_creation_date).fromNow()}     
 
                         
@@ -441,7 +455,7 @@ const TrendingProperties = ({data}) => {
             ))}
           </div>
 
-          <div className="swiper-pagination featured-pagination4"></div>
+          {/* <div className="swiper-pagination featured-pagination4"></div> */}
         </div>
       </div>
     </section>

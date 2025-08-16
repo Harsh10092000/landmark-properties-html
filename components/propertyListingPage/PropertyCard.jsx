@@ -4,9 +4,10 @@ import Link from "next/link";
 import React from "react";
 import { ShowPrice } from "../HelperComponents";
 import moment from "moment";
+import FavoriteStar from "@/components/common/FavoriteStar";
 
 
-const PropertyCard = ({ item, index }) => {
+const PropertyCard = ({ item, index, currentUser = "" }) => {
   return (
     <div key={index} class="listing__page--wrapper">
       <div class="listing__main--content">
@@ -15,6 +16,12 @@ const PropertyCard = ({ item, index }) => {
             <div class="listing__featured--list">
               <article class="featured__card--list d-flex align-items-center mb-30">
                 <div class="listing__featured--thumbnail position-relative">
+                  {/* Favorite Star */}
+                  <FavoriteStar 
+                    propertyId={item.listing_id || item.pro_id} 
+                    userId={currentUser?.login_id || currentUser}
+                    size={20}
+                  />
                   <div class="media">
                     <Link
                       class="featured__thumbnail--link"

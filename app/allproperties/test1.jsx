@@ -949,7 +949,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
 
           {records?.length > 0 &&
             records.map((item, index) => (
-              <PropertyCard item={item} index={index} />
+              <PropertyCard key={index} item={item} index={index} currentUser={currentUser} />
             ))}
         </div>
         {currentPage > 1 && (

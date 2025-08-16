@@ -1,6 +1,8 @@
 import React from "react";
 import pool from "@/app/libs/mysql";
 import Page2 from "./page2";
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 const getData = async () => {
   try {
     const db = await pool;
@@ -17,6 +19,10 @@ const getData = async () => {
 };
 
 const page = async ({ params, searchParams }) => {
+  // Get user session
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user?.id || "";
+  
   const { cat } = await params;
   if (!cat) {
     return <div>Invalid Property ID</div>;
@@ -67,8 +73,6 @@ const page = async ({ params, searchParams }) => {
   } else if (cat.startsWith("properties-for-rent")) {
     adType = "Rent";
   }
-
-  const currentUser = "";
 
   let currentPage = (await searchParams["page"]) || 1;
   const res = await getData(currentPage);

@@ -4,9 +4,9 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
       fontFamily: '"Inter", "Arial", sans-serif',
       background: 'linear-gradient(to bottom, #f7fafc 0%, #e6f0fa 100%)',
       padding: '40px 16px',
-      minHeight: '100vh',
-      margin: 0,
-      boxSizing: 'border-box',
+    minHeight: '100vh',
+    margin: 0,
+    boxSizing: 'border-box',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -15,15 +15,15 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
     <div
       style={{
         maxWidth: '840px',
-        width: '100%',
-        margin: '0 auto',
+      width: '100%',
+      margin: '0 auto',
         background: '#ffffff',
         borderRadius: '16px',
         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
         padding: '40px 32px',
-        textAlign: 'left',
+      textAlign: 'left',
         border: '1px solid #dfe6e9',
-        boxSizing: 'border-box',
+      boxSizing: 'border-box',
       }}
     >
       <img

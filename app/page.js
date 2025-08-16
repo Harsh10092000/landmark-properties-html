@@ -13,6 +13,8 @@ import React from 'react'
 import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
 import PropertiesCategories from '@/components/about/PropertiesCategories'
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
 // const TrendingProperties = dynamic(() => import('@/components/index/trendingProperties/TrendingProperties'), {
 //   loading: () => <div>Loading...</div>,
@@ -97,12 +99,16 @@ const propertyAdTypeOptions = [
 
 
 const page = async () => {
+  // Get user session
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user?.id || "";
+  
   const { data, subData, cityCount } = await getData();
   console.log("subData : ", subData);
   return (
     <>
       <Hero propertyTypeOptions={propertyTypeOptions} propertyAdTypeOptions={propertyAdTypeOptions} data={data}  />  
-      <TrendingProperties data={data}  />
+      <TrendingProperties data={data} currentUser={currentUser} />
           <About />
       <Services />
       <PropertiesCategories />

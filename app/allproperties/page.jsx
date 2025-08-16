@@ -2,6 +2,8 @@ import PropertyCard from "@/components/propertyListingPage/PropertyCard";
 import React from "react";
 import pool from "../libs/mysql";
 import Test1 from "./test1";
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 const getData = async () => {
   try {
     const db = await pool;
@@ -21,7 +23,9 @@ const getData = async () => {
 };
 
 const page = async ({ searchParams }) => {
-  const currentUser = "";
+  // Get user session
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user?.id || "";
   
   let currentPage = searchParams["page"] || 1;
   const res = await getData(currentPage);

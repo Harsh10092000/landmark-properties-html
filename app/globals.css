@@ -3514,7 +3514,9 @@ scrollbar-color: #fff #fff;
   /* background-color: #0b4621; */
   /* background: #0b4621 url("/images/hero-01.png") no-repeat right; */
       background-position: 0 -310px;
+      height: 310px;
 }
+
 
 
 .hero__section--bg4:before {
@@ -3831,11 +3833,16 @@ scrollbar-color: #fff #fff;
     width: 45rem;
     padding-bottom: 2rem;
   }
+  .hero__section--bg4 {
+    height: auto;
+  }
+
 }
 @media only screen and (max-width: 575px) {
   .about__thumbnail {
     width: 100%;
   }
+
 }
 .about__thumbnail--list {
   display: inline-block;
@@ -5211,8 +5218,8 @@ scrollbar-color: #fff #fff;
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
-  position: relative;
-  z-index: -1;
+  /* position: relative;
+  z-index: -1; */
 }
 
 .featured__card {
