@@ -1,0 +1,145 @@
+.property-not-found-card {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* margin: 40px 0; */
+}
+
+.property-not-found-icon {
+  margin-bottom: 24px;
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #ff6b6b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.property-not-found-title {
+  color: #ff6b6b;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.property-not-found-description {
+  color: #6c757d;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.property-not-found-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.info-text {
+  color: #495057;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.property-not-found-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.property-not-found-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.property-not-found-actions .btn-primary {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.property-not-found-actions .btn-primary:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.property-not-found-actions .btn-outline-secondary {
+  background: white;
+  color: #6c757d;
+  border-color: #dee2e6;
+}
+
+.property-not-found-actions .btn-outline-secondary:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+  color: #495057;
+  transform: translateY(-2px);
+}
+
+.property-not-found-actions .btn-icon {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .property-not-found-card {
+    padding: 30px 20px;
+    margin: 20px 0;
+  }
+
+  .property-not-found-title {
+    font-size: 24px;
+  }
+
+  .property-not-found-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .property-not-found-actions .btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}

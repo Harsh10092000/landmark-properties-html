@@ -20,6 +20,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                   <FavoriteStar 
                     propertyId={item.listing_id || item.pro_id} 
                     userId={currentUser?.login_id || currentUser}
+                    propertyUserId={item.pro_user_id}
                     size={20}
                   />
                   <div class="media">

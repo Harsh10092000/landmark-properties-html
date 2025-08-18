@@ -7,6 +7,7 @@ import { ShowPrice } from "@/components/HelperComponents";
 import Link from "next/link";
 import moment from "moment";
 import FavoriteStar from "@/components/common/FavoriteStar";
+import "./TrendingProperties.css";
 
 
 const TrendingProperties = ({data, currentUser = ""}) => {
@@ -453,6 +454,23 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                 </article>
               </div>
             ))}
+          </div>
+
+          {/* View All Properties Button */}
+          <div className="text-center mb-5" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <Link href="/allproperties" className="view-all-properties-btn">
+              <span className="btn-content">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="btn-icon">
+                  <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="btn-text">View All Properties</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="btn-arrow">
+                  <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </Link>
           </div>
 
           {/* <div className="swiper-pagination featured-pagination4"></div> */}

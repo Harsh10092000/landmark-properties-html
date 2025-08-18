@@ -13,6 +13,10 @@ import PropertiesAmenities from "@/components/propertyDetailPage/PropertiesAmeni
 import PropertiesDetails from "@/components/propertyDetailPage/PropertiesDetails";
 import PropertyHeader from "@/components/propertyDetailPage/PropertyHeader";
 import PropertiesDetails2 from "@/components/propertyDetailPage/PropertiesDetails2";
+import FavoriteStar from "@/components/common/FavoriteStar";
+import PropertyNotFound from "@/components/common/PropertyNotFound";
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
 export async function generateMetadata({ params }, parent) {
   const { slug } = params;
@@ -122,7 +126,7 @@ const getData = async (slug, proId) => {
     //   property_module.pro_user_id = agent_data.user_cnct_id where pro_listed = 1 group by pro_id ORDER BY pro_id DESC limit 6`;
     // const [latestProperty] = await db.query(q2);
 
-    const q2 = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size , pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image FROM property_module where pro_listed = 1 ORDER BY pro_id DESC limit 6`;
+    const q2 = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size , pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image, pro_creation_date FROM property_module where pro_listed = 1 ORDER BY pro_id DESC limit 6`;
     const [latestProperty] = await db.query(q2);
 
     // const q3 =
@@ -132,6 +136,14 @@ const getData = async (slug, proId) => {
     // const q4 = "SELECT agent_type FROM agent_module where user_cnct_id = ?";
     // const [userType] = await db.query(q4, rows[0].pro_user_id);
 
+    if (!rows || rows.length === 0) {
+      return {
+        row: null,
+        latestProperty: latestProperty,
+        error: "Property not found"
+      };
+    }
+
     return {
       row: rows[0],
       // images: updatedImages,
@@ -140,13 +152,20 @@ const getData = async (slug, proId) => {
       // userType: userType[0],
     };
   } catch (err) {
-    console.log("err : ", err);
-    return err;
+    console.log("Something went wrong: ", err);
+    return {
+      row: null,
+      latestProperty: [],
+      error: "Something went wrong"
+    };
   }
 };
 
 const page = async ({ params }) => {
-  const currentUser = "";
+  // Get user session
+  const session = await getServerSession(authOptions);
+  const currentUser = session?.user?.id || "";
+
   const { slug } = params;
   if (!slug) {
     return <div>Invalid Property ID</div>;
@@ -158,6 +177,7 @@ const page = async ({ params }) => {
   const {
     row: propertyData,
     latestProperty: latestProperty,
+    error: dbError,
     // agentData: agentData,
     // userType: userType,
   } = await getData(slug, proId1);
@@ -169,8 +189,27 @@ const page = async ({ params }) => {
     return value;
   };
 
-  return (
-    <>
+    // Check if property exists
+  if (!propertyData) {
+    return (
+      <>
+        <PropertyNotFound latestProperty={latestProperty} currentUser={currentUser} />
+        <TrendingProperties data={latestProperty} currentUser={currentUser} />
+      </>
+    );
+  }
+
+  // Check if there's an unexpected error
+  if (propertyData && propertyData.error) {
+    return (
+      <>
+        <PropertyNotFound latestProperty={latestProperty} currentUser={currentUser} />
+        <TrendingProperties data={latestProperty} currentUser={currentUser} />
+      </>
+    );
+  }
+
+    return (
       <section className="listing__page--section section--padding">
         <div className="container">
           
@@ -182,7 +221,7 @@ const page = async ({ params }) => {
                     <a href="#">All Property</a>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Rent
+                    {propertyData?.pro_type}
                   </li>
                 </ol>
               </nav>
@@ -194,14 +233,50 @@ const page = async ({ params }) => {
               </div>
               <div className="col-lg-4">
                 <div className="property-id">
-                  Property <span class="listing__details--badge">ID5475</span>
+                  Property <span class="listing__details--badge">{propertyData?.listing_id}</span>
                 </div>
               </div>
               <div className="col-lg-12">
                 <PropertyHeader propertyData={propertyData} />
               </div>
               <div className="col-lg-6">
-                <ProHero propertyData={propertyData} />
+                <div className="position-relative">
+                  {/* Favorite Star */}
+                  <FavoriteStar 
+                    propertyId={propertyData?.listing_id || propertyData?.pro_id} 
+                    userId={currentUser?.login_id || currentUser}
+                    propertyUserId={propertyData?.pro_user_id}
+                    size={24}
+                  />
+                  <ProHero propertyData={propertyData} />
+                  
+                  {/* Listed By Information */}
+                  {/* <div style={{ 
+                    position: 'absolute',
+                    top: '10px',
+                    right: '50px',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    padding: '6px 12px',
+                    borderRadius: '20px',
+                    fontSize: '13px',
+                    color: '#666',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    zIndex: 10
+                  }}>
+                    <span>📋</span>
+                    <span>
+                      {(() => {
+                        const userId = currentUser?.login_id || currentUser;
+                        const propertyUserId = propertyData?.pro_user_id;
+                        const isOwnProperty = userId && propertyUserId && String(userId) === String(propertyUserId);
+                        
+                        return isOwnProperty ? "Listed by me" : `Listed by ${propertyData?.pro_user_type || 'Owner'}`;
+                      })()}
+                    </span>
+                  </div> */}
+                </div>
               </div>
               <div className="col-lg-6">
                 {/* <Detail2 propertyData={propertyData} /> */}
@@ -252,11 +327,18 @@ const page = async ({ params }) => {
             </div>
           </div>
           {/* <TrendingProperties data={latestProperty}  /> */}
+          
+
+          <div className="mt-5 mb-5">
+           
+                  <TrendingProperties data={latestProperty} currentUser={currentUser} />
+             
+          </div>
+          
           <Disclaimer />
         </section>
       </section>
-    </>
-  );
+    );
 };
 
 export default page;

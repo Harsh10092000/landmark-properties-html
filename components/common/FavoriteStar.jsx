@@ -2,13 +2,35 @@
 import React, { useState, useEffect } from "react";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 
-const FavoriteStar = ({ propertyId, userId, initialFavorited = false, size = 24, className = "" }) => {
+const FavoriteStar = ({ propertyId, userId, propertyUserId, initialFavorited = false, size = 24, className = "" }) => {
   const [isFavorited, setIsFavorited] = useState(initialFavorited);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   // Check if user is logged in
   const isLoggedIn = userId && userId !== "";
+
+  // Check if property is listed by current user
+  const isOwnProperty = userId && propertyUserId && String(userId) === String(propertyUserId);
+
+  // Check favorite status when component mounts
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (!isLoggedIn || !propertyId) return;
+
+      try {
+        const response = await fetch(`/api/favorites/toggle?userId=${userId}&propertyId=${propertyId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setIsFavorited(data.isFavorited);
+        }
+      } catch (error) {
+        console.error('Error checking favorite status:', error);
+      }
+    };
+
+    checkFavoriteStatus();
+  }, [userId, propertyId, isLoggedIn]);
 
   const handleToggleFavorite = async () => {
     if (!isLoggedIn) {
@@ -55,6 +77,11 @@ const FavoriteStar = ({ propertyId, userId, initialFavorited = false, size = 24,
 
   const StarIcon = isFavorited ? IconStarFilled : IconStar;
   const starColor = isFavorited ? "#FFD700" : "#FFFFFF";
+
+  // Don't render star if property is listed by current user
+  if (isOwnProperty) {
+    return null;
+  }
 
   return (
     <div className="position-relative">
