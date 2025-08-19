@@ -67,7 +67,7 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
           <div style={{ marginBottom: '12px' }}>
             <strong>Title:</strong>{' '}
             <a
-              href={property?.url || `${process.env.NEXTAUTH_URL}/${property?.id}`}
+              href={`https://landmarkplots.com/${property?.url}`}
               style={{
                 color: '#1a9050',
                 textDecoration: 'none',
@@ -122,7 +122,7 @@ const NewPropertyAdminTemplate = ({ user, property }) => (
         </div>
         <div style={{ marginBottom: '20px' }}>
           <a
-            href={property?.url || `${process.env.NEXTAUTH_URL}/${property?.id}`}
+            href={`https://landmarkplots.com/${property?.url}`}
             style={{
               display: 'inline-block',
               background: 'linear-gradient(90deg, #1a9050 0%, #2d3748 100%)',

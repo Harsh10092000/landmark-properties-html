@@ -217,10 +217,10 @@ function StepperCardContent() {
               subDistrict: proSubDistrict,
               propertyType: proType,
               adType: proAdType,
-              url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/property/${url}`
+              url: `https://landmarkplots.com/${url}`
             };
 
-            console.log('Sending email with property data:', propertyData);
+            //console.log('Sending email with property data:', propertyData);
 
             // Send notification emails
             const emailResponse = await fetch('/api/property/send-notification', {
@@ -380,7 +380,7 @@ function StepperCardContent() {
                 {step === 6 && (
                   <Step6 
                     listingId={listingId} 
-                    proUrl={`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/${propertyUrl || listingId}`}  
+                    proUrl={`https://landmarkplots.com/${propertyUrl}`}  
                   />
                 )}
               </div>
