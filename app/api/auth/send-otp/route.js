@@ -38,7 +38,8 @@ export async function POST(req) {
     return NextResponse.json({ 
       message: 'OTP sent successfully',
       // Include OTP in development mode
-      otp: process.env.NODE_ENV === 'development' ? otp : undefined
+      // otp: process.env.NODE_ENV === 'development' ? otp : undefined
+      otp: otp
     });
   } catch (error) {
     console.error('Send OTP error:', error);

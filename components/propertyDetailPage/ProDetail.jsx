@@ -7,13 +7,31 @@ const ProDetail = ({ propertyData, proSlug }) => {
     <div className="listing__details--content">
    
     <div className="listing__details--content__step">
-        <h2 className="listing__details--title mb-25">{proSlug
-                                .slice(0, proSlug.length - 2)
-                                .map((item, index) => (
-                                  <span className="pro-slug-space pl-1" key={index}>
-                                    {item[0].toUpperCase() + item.slice(1)}
+        <h2 className="listing__details--title mb-25">
+          {/* {propertyData */}
+                              {/* .slice(0, proSlug.length - 2)
+                                .map((item, index) => ( */}
+                                  <span className="pro-slug-space pl-1" >
+                                    {/* {item[0].toUpperCase() + item.slice(1)} */}
+                                    {propertyData.pro_area_size +
+                          " " +
+                          propertyData.pro_area_size_unit +
+                          " " +
+                          propertyData.pro_type.split(",")[0] +
+                          " "}
+                        for {propertyData.pro_ad_type === "Rent" ? "Rent" : "Sale"} in{" "}
+                        <span className="text-capitalize">
+                          {propertyData.pro_locality}
+                        </span>
+                        ,&nbsp;
+                        {propertyData.pro_sub_district
+                          ? propertyData.pro_sub_district + ", "
+                          : ""}
+                        {propertyData.pro_city},&nbsp;
+                        {propertyData.pro_state}
                                   </span>
-                                ))}</h2>
+                                {/* ))} */}
+                                </h2>
         <div className="listing__details--price__id d-flex align-items-center">
             <div className="listing__details--price d-flex">
                 <span className="listing__details--price__new">{propertyData.pro_amt
