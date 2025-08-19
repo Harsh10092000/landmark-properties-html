@@ -14,7 +14,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
         <div class="tab-content">
           <div class="tab-pane fade show active" id="list">
             <div class="listing__featured--list">
-              <article class="featured__card--list d-flex align-items-center mb-30">
+              <article class="featured__card--list d-flex align-items-center mb-30 card-hover">
                 <div class="listing__featured--thumbnail position-relative">
                   {/* Favorite Star */}
                   <FavoriteStar 
@@ -23,7 +23,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                     propertyUserId={item.pro_user_id}
                     size={20}
                   />
-                  <div class="media">
+                  <div class="media thumbnail-zoom">
                     <Link
                       class="featured__thumbnail--link"
                       href={`/${item.pro_url}`}
@@ -94,7 +94,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                     </h3>
                     <ul class="featured__list--action d-flex">
                       <li class="featured__share--btn__list">
-                        <a class="featured__share--btn" href="#">
+                        <a class="featured__share--btn" href="tel:919996716787">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -138,7 +138,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                           <span class="visually-hidden">Whatsapp</span>
                         </Link>
                       </li>
-                      <li class="featured__share--btn__list">
+                      {/* <li class="featured__share--btn__list">
                         <Link class="featured__share--btn" href="#">
                           <svg
                             width="16"
@@ -158,7 +158,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                           </svg>
                           <span class="visually-hidden">listing</span>
                         </Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   <span class="featured__card--price">

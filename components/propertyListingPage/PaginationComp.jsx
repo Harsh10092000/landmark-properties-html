@@ -53,15 +53,17 @@ const PaginationComp = (props) => {
         options={{ showSpinner: false }}
         shallowRouting={false}
       />
-    <Pagination
-      count={parseInt(props.Pages)}
-      size="large"
-      shape="rounded"
-      className="col-md-6 mx-auto py-2 "
-      color="primary"
-      page={parseInt(props.currentPage)}
-      onChange={(e, value) => router.push(`/allproperties?page=${value}`)}
-    />
+    <div className="pagination-wrapper">
+      <Pagination
+        count={parseInt(props.Pages)}
+        size="large"
+        shape="rounded"
+        className="col-md-6 mx-auto py-2 custom-pagination"
+        color="primary"
+        page={parseInt(props.currentPage)}
+        onChange={(e, value) => router.push(`/allproperties?page=${value}`)}
+      />
+    </div>
     {/* <span>
         <Link href={nextPage}>Next</Link>
       </span> */}
