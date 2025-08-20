@@ -432,7 +432,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
         }
       })
       .filter((item) => {
-        const result = proCategoryFilter.includes(item.pro_type.split(",")[1]);
+        const result = proCategoryFilter.includes(item.pro_type);
         if (result === true) {
           return item;
         } else if (proCategoryFilter.length === 0) {
@@ -441,7 +441,7 @@ const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
       })
       .filter((item) => {
         const result = selectedSubTypeFilter.includes(
-          item.pro_type.split(",")[0]
+          item.pro_sub_cat.split(",")[0]
         );
 
         if (result === true) {

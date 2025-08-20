@@ -23,8 +23,8 @@ const HeaderContent = () => {
     { id: 2, label: "All Properties", href: "/allproperties" },
     { id: 3, label: "About Us", href: "/aboutus" },
     { id: 4, label: "Contact Us", href: "/contactus" },
-    { id: 5, label: "Buy", href: "/properties/properties-for-sale" },
-    { id: 6, label: "Rent", href: "/properties/properties-for-rent" },
+    { id: 5, label: "Buy", href: "/properties-for-sale" },
+    { id: 6, label: "Rent", href: "/properties-for-rent" },
     { id: 8, label: "Blog", href: "/blog" },
   ];
 
@@ -34,8 +34,8 @@ const HeaderContent = () => {
     { id: 3, label: "Properties", href: "/allproperties" },
     { id: 4, label: "About Us", href: "/aboutus" },
     { id: 5, label: "Contact Us", href: "/contactus" },
-    { id: 6, label: "Buy", href: "/properties/properties-for-sale" },
-    { id: 7, label: "Rent", href: "/properties/properties-for-rent" },
+    { id: 6, label: "Buy", href: "/properties-for-sale" },
+    { id: 7, label: "Rent", href: "/properties-for-rent" },
     { id: 8, label: "Blog", href: "/blog" },
   ];
 
@@ -129,6 +129,7 @@ const HeaderContent = () => {
                               border: "1px solid #e6e8f0"
                             }}>
                               <a
+                                //href="http://localhost:5173/dashboard"
                                 href="https://user.landmarkplots.com/dashboard"
                                 target="_blank"
                                 style={{

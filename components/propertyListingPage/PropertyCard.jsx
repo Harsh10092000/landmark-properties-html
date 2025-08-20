@@ -46,7 +46,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                       ) : (
                         <Image
                           src={`/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`}
-                          alt={`${item.pro_type.split(",")[0]} in ${
+                          alt={`${item.pro_sub_cat.split(",")[0]} in ${
                             item.pro_city
                           }`}
                           className="featured__thumbnail--img"
@@ -78,7 +78,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                           " " +
                           item.pro_area_size_unit +
                           " " +
-                          item.pro_type.split(",")[0] +
+                          item.pro_sub_cat.split(",")[0] +
                           " "}
                         for {item.pro_ad_type === "Rent" ? "Rent" : "Sale"} in{" "}
                         <span className="text-capitalize">

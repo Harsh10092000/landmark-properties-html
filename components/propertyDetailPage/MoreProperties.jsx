@@ -1,26 +1,8 @@
 import Link from 'next/link';
 import React from 'react'
-
+import { moreProLinks } from "@/components/moreProLinks/MoreProLinks";
 const MoreProperties = () => {
-    const moreProLinks = [
-        {
-            name: "View Residential Properties",
-            link: "/properties/residential-properties"
-        },
-        {
-            name: "View Commercial Properties",
-            link: "/properties/commercial-properties"
-        },
-        {
-            name: "View Land/Plots Properties",
-            link: "/properties/land-properties"
-        },
-        {
-            name: "View All Properties",
-            link: "/allproperties"
-        }
-        
-    ];
+    
     
   return (
 

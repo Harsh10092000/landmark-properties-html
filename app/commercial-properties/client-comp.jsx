@@ -7,32 +7,23 @@ import { useRouter } from "next/navigation";
 import PaginationComponent from "@/components/common/PaginationComponent";
 import Link from "next/link";
 import { moreProLinks } from "@/components/moreProLinks/MoreProLinks";
-const Page2 = ({
+const ClientComp = ({
   data,
   currentUser,
   recordsPerPage,
   currentPage,
   catType,
-  cat,
-  adType,
-  location,
+
 }) => {
-  // let url = "";
-  // if (catType !== "") {
-  //   url = `/properties/${cat}`;
-  // } else if (adType == "Sale") {
-  //   url = `/properties/${cat}`;
-  // }
-  console.log("location : ", location);
-  console.log("data : ", data);
-  const url = `/properties/${cat}`;
+  
+  const url = "/commercial-properties";
   const [openSortByOptions, setOpenSortByOptions] = useState(false);
   const [sortBy, setSortBy] = useState("Recent Listed");
-  const [searchValue1, setSearchValue1] = useState(location);
+  const [searchValue1, setSearchValue1] = useState("");
   const [openPropertyAdTypeOptions, setOpenPropertyAdTypeOptions] =
     useState(false);
   const [change, setChange] = useState(1);
-  const [searchValue, setSearchValue] = useState(location);
+  const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState();
   const [openSuggestions, setOpenSuggestions] = useState(false);
   const [sortedUsers, setSortedUsers] = useState([]);
@@ -56,7 +47,7 @@ const Page2 = ({
   const nPages = Math.ceil(results?.length / recordsPerPage);
 
   const [propertyAdTypeFilter, setPropertyAdTypeFilter] =
-    useState(adType);
+    useState("All Properties");
 
   const propertyAdTypeOptions = [
     { type: "All Properties" },
@@ -94,15 +85,13 @@ const Page2 = ({
     { type: "Other" },
   ];
 
-  const [proCategoryFilter, setProCategoryFilter] = useState([]);
-  if (catType !== "") {
-    () => setProCategoryFilter([catType]);
-  }
+  const [proCategoryFilter, setProCategoryFilter] = useState(["Commercial"]);
+
   const [openProCategoryOptions, setOpenProCategoryOptions] = useState(false);
   const proCategoryOptions = [
-    { type: "Residential" },
+    // { type: "Residential" },
     { type: "Commercial" },
-    { type: "Land" },
+    //  { type: "Land" },
   ];
 
   const [proWithPhotos, setProWithPhotos] = useState(false);
@@ -225,7 +214,7 @@ const Page2 = ({
     setSearchValue1(searchValue);
 
     currentPage = 1;
-    router.push(`${url}?page=1`);
+        router.push(`${url}?page=1`);
 
     const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
       (item) => {
@@ -328,9 +317,7 @@ const Page2 = ({
         }
       })
       .filter((code) => {
-        if (propertyAdTypeFilter === "Sale") {
-          return code.pro_ad_type === "Sale";
-        } else if (propertyAdTypeFilter === "Rent") {
+        if (propertyAdTypeFilter === "Rent") {
           return code.pro_ad_type === "Rent";
         } else if (propertyAdTypeFilter === "All Properties") {
           return true;
@@ -990,4 +977,4 @@ const Page2 = ({
   );
 };
 
-export default Page2;
+export default ClientComp;

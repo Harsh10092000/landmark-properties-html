@@ -268,7 +268,7 @@ const FooterContent = () => {
                     <li className="footer__widget--menu__list">
                       <Link
                         className="footer__widget--menu__text"
-                        href="/properties/properties-for-sale"
+                        href="/properties-for-sale"
                       >
                         Property for Sale
                       </Link>
@@ -276,7 +276,7 @@ const FooterContent = () => {
                     <li className="footer__widget--menu__list">
                       <Link
                         className="footer__widget--menu__text"
-                        href="/properties/properties-for-rent"
+                        href="/properties-for-rent"
                       >
                         Property for Rent
                       </Link>
@@ -378,19 +378,19 @@ const FooterContent = () => {
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="/properties/residential-properties">
+                      <Link className="footer__widget--menu__text" href="/residential-properties">
                       Residential Properties
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
-                      <Link className="footer__widget--menu__text" href="/properties/commercial-properties">
+                      <Link className="footer__widget--menu__text" href="/commercial-properties">
                         Commercial Properties
                       </Link>
                     </li>
                     <li className="footer__widget--menu__list">
                       <Link
                         className="footer__widget--menu__text"
-                        href="/properties/land-properties"
+                        href="/land-properties"
                       >
                         Land Properties
                       </Link>
