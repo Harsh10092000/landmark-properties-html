@@ -18,6 +18,12 @@
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://landmarkplots.com/properties</loc>
+  <lastmod>2025-08-20T08:50:22+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
   <loc>https://landmarkplots.com/aboutus</loc>
   <lastmod>2025-08-01T08:50:22+00:00</lastmod>
   <priority>0.80</priority>
