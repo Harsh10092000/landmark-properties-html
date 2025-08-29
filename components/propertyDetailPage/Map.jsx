@@ -13,7 +13,8 @@ const Map = ({ formatted_address }) => {
     // Load Google Maps script if not already loaded
     if (!window.google) {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc&libraries=places`;
+      // script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDLzo_eOh509ONfCjn1XQp0ZM2pacPdnWc&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBFS6rl_ssMBYia0Effw78Giy1OItQzBnI&libraries=places`;
       script.async = true;
       script.onload = () => {
         initializeMap();

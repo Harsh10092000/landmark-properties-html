@@ -11,7 +11,7 @@ export async function GET(request) {
       return Response.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    console.log('Session found in Landmark Plots:', session);
+   // console.log('Session found in Landmark Plots:', session);
 
     // Get the latest valid session token from database for this user
     const [sessionRows] = await pool.query(
@@ -28,9 +28,9 @@ export async function GET(request) {
     const accessToken = sessionRows[0].access_token;
     const expires = sessionRows[0].expires;
 
-    console.log('Valid session found, expires at:', expires);
+    //console.log('Valid session found, expires at:', expires);
 
-    console.log('Session tokens from database:', { sessionToken, accessToken });
+   // console.log('Session tokens from database:', { sessionToken, accessToken });
 
     const responseData = {
       user: {
@@ -44,7 +44,7 @@ export async function GET(request) {
       expires: expires.toISOString()
     };
 
-    console.log('Sending session data to dashboard:', responseData);
+    // console.log('Sending session data to dashboard:', responseData);
 
     return Response.json(responseData);
 

@@ -5,9 +5,8 @@ import React, { useEffect, useState, Suspense } from "react";
 import { Checkbox, Switch } from "@mui/material";
 import { IconSquareCheckFilled, IconSquare, IconX } from "@tabler/icons-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import NewsletterWidget from "@/components/common/NewsletterWidget";
 
-const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
+const SearchSlugContent = ({ data, currentUser, recordsPerPage, currentPage }) => {
   const searchParams = useSearchParams();
   const searchVal = searchParams.get("search") || null;
   const proadtype = searchParams.get("proadtype") || null;
@@ -195,7 +194,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
     //console.log(type);
     //props.handleCurrentPage(1);
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     if (selectedSubTypeFilter.includes(type)) {
       setSelectedSubTypeFilter(
         selectedSubTypeFilter.filter((item) => item !== type)
@@ -207,7 +206,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
 
   const handleAllSubTypes = () => {
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     setSelectedSubTypeFilter((prevSelectedTypes) => {
       const updatedTypes = propertySubTypeOptions
         .map((item) => item.type)
@@ -219,7 +218,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
   const handleToggleFurnishing = (type) => {
     //props.handleCurrentPage(1);
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     if (furnishingStatusFilter.includes(type)) {
       setFurnishingStatusFilter(
         furnishingStatusFilter.filter((item) => item !== type)
@@ -232,7 +231,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
   const handleToggleAuthority = (type) => {
     //props.handleCurrentPage(1);
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     if (authorityApprovedFilter.includes(type)) {
       setAuthorityApprovedFilter(
         authorityApprovedFilter.filter((item) => item !== type)
@@ -245,7 +244,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
   const handleTogglePossession = (type) => {
     //props.handleCurrentPage(1);
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     if (possessionAvailableFilter.includes(type)) {
       setPossessionAvailableFilter(
         possessionAvailableFilter.filter((item) => item !== type)
@@ -258,7 +257,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
   const handleToggleProCategory = (type) => {
     //props.handleCurrentPage(1);
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     if (proCategoryFilter.includes(type)) {
       setProCategoryFilter(proCategoryFilter.filter((item) => item !== type));
     } else {
@@ -285,7 +284,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
     setSearchValue1(searchValue);
 
     currentPage= 1;
-    router.push(`/allproperties?page=1`);
+    router.push(`/search/results?page=1&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`);
     
     const filteredData = (data && data.length > 0 ? data : sortedUsers).filter(
       (item) => {
@@ -901,13 +900,7 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
                 </div>
               </div>
             </div>
-            
-            {/* Newsletter Widget */}
-           
           </div>
-          <div className="mt-4">
-              <NewsletterWidget />
-            </div>
         </div>
         <div className="col-md-9">
           <div class="listing__header d-flex justify-content-between align-items-center">
@@ -960,23 +953,23 @@ const Test1Content = ({ data, currentUser, recordsPerPage, currentPage }) => {
             ))}
         </div>
         {currentPage > 1 && (
-          <a className="next-prev-link" href={`/allproperties?page=${parseInt(currentPage) - 1}`}>Prev</a>
+          <a className="next-prev-link" href={`/search/results?page=${parseInt(currentPage) - 1}&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`}>Prev</a>
         )}
         <PaginationComp Pages={nPages} currentPage={currentPage} />
         {currentPage < 16 && (
-          <a className="next-prev-link" href={`/allproperties?page=${parseInt(currentPage) + 1}`}>Next</a>
+          <a className="next-prev-link" href={`/search/results?page=${parseInt(currentPage) + 1}&search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${proCategoryFilter.join(',')}`}>Next</a>
         )}
       </div>
     </section>
   );
 };
 
-const Test1 = ({ data, currentUser, recordsPerPage, currentPage }) => {
+const page = ({ data, currentUser, recordsPerPage, currentPage }) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Test1Content data={data} currentUser={currentUser} recordsPerPage={recordsPerPage} currentPage={currentPage} />
+      <SearchSlugContent data={data} currentUser={currentUser} recordsPerPage={recordsPerPage} currentPage={currentPage} />
     </Suspense>
   );
 };
 
-export default Test1;
+export default page;

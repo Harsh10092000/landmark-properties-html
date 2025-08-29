@@ -1,6 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 const PropertyByType = ({ subData }) => {
+    // Check if subData exists and has data
+    if (!subData || !Array.isArray(subData) || subData.length === 0) {
+        return null; // Don't render anything if no data
+    }
+
     const chekSubType = (type_val) => {
         if (type_val == undefined) {
             return "0"

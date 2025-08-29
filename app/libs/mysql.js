@@ -18,6 +18,7 @@ const pool = mysql.createPool({
   password: "6k@Z/*6VN+a9",
   database: "u706648698_landmark_plots",
   waitForConnections: true,
+  port: 3306,
 })
 
 export default pool

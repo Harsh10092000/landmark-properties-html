@@ -21,6 +21,11 @@ const CityBannerCard = ({city_name, city_number, delay, banner_img}) => {
 }
 
 const CityBanner = ({cityCount}) => {
+  // Check if cityCount exists and has data
+  if (!cityCount || !Array.isArray(cityCount) || cityCount.length === 0) {
+    return null; // Don't render anything if no data
+  }
+
   return (
 
     <section className="banner__section mb--n30">

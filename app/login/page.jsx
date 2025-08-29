@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-function LoginForm() {
+const LoginFormContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   //const callbackUrl = "/";
@@ -447,7 +447,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={<div></div>}>
-      <LoginForm />
+      <LoginFormContent />
     </Suspense>
   );
 }   

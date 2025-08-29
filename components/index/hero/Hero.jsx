@@ -14,7 +14,7 @@ const Hero = ({ propertyTypeOptions, propertyAdTypeOptions, data }) => {
     useState("All Properties ");
 
   const handleClick = () => {
-    const url = `/allproperties?search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${propertyTypeFilter}`;
+    const url = `/search/results?search=${searchValue}&proadtype=${propertyAdTypeFilter}&procat=${propertyTypeFilter}`;
     router.push(url);
   };
 

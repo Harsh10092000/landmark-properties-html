@@ -25,6 +25,11 @@ export async function POST(req) {
     }
 
     const userId = session.user.id;
+    const userEmail = session.user.email;
+
+    // Build absolute base URL for server-side fetch
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+
     let result;
 
     switch (step) {
@@ -179,6 +184,56 @@ export async function POST(req) {
                WHERE id = ?`,
               [data.contactName || session.user.name, data.contactPhone || session.user.phone, userId]
             );
+
+            // Trigger subscriber notifications asynchronously (fire-and-forget)
+            try {
+              // Fetch property details for notification
+              const [propertyRows] = await pool.query(
+                `SELECT 
+                  pro_id, listing_id, pro_url, pro_type, pro_ad_type, 
+                  pro_city, pro_state, pro_area_size, pro_area_size_unit,
+                  pro_amt, pro_amt_unit, pro_cover_image, pro_sub_cat
+                FROM property_module WHERE pro_id = ?`,
+                [propertyId]
+              );
+
+              if (propertyRows.length > 0) {
+                const propertyData = propertyRows[0];
+                
+                // Prepare property data for subscriber notification
+                const notificationData = {
+                  id: propertyData.listing_id,
+                  title: `${propertyData.pro_type || 'Property'} for ${propertyData.pro_ad_type || 'Sale'} in ${propertyData.pro_city || 'Haryana'}`,
+                  slug: propertyData.listing_id,
+                  price: propertyData.pro_amt,
+                  priceUnit: propertyData.pro_amt_unit || 'Lakh',
+                  area: propertyData.pro_area_size,
+                  areaUnit: propertyData.pro_area_size_unit,
+                  city: propertyData.pro_city,
+                  state: propertyData.pro_state,
+                  propertyType: propertyData.pro_type,
+                  adType: propertyData.pro_ad_type,
+                  coverImage: propertyData.pro_cover_image,
+                  url: `https://landmarkplots.com/${propertyData.pro_url}`
+                };
+
+                // Send subscriber notifications asynchronously with absolute URL
+                fetch(`${baseUrl}/api/property/send-subscriber-notifications`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    property: notificationData,
+                    excludeEmail: userEmail || null
+                  }),
+                }).catch(error => {
+                  console.error('Failed to send subscriber notifications:', error);
+                });
+              }
+            } catch (error) {
+              console.error('Error preparing subscriber notification:', error);
+            }
           }
         } else {
           return NextResponse.json(

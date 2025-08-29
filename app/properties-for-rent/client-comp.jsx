@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import PaginationComponent from "@/components/common/PaginationComponent";
 import Link from "next/link";
 import { moreProLinks } from "@/components/moreProLinks/MoreProLinks";
+import NewsletterWidget from "@/components/common/NewsletterWidget";
 const ClientComp = ({
   data,
   currentUser,
@@ -898,7 +899,13 @@ const ClientComp = ({
                 </div>
               </div>
             </div>
+            
+            {/* Newsletter Widget */}
+         
           </div>
+          <div className="mt-4">
+              <NewsletterWidget />
+            </div>
         </div>
         <div className="col-md-9">
           <div class="listing__header d-flex justify-content-between align-items-center">

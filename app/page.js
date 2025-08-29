@@ -13,6 +13,7 @@ import React from 'react'
 import pool from './libs/mysql'
 import Reviews from '@/components/common/Reviews'
 import PropertiesCategories from '@/components/about/PropertiesCategories'
+//import NewsletterSection from '@/components/common/NewsletterSection'
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]/route';
 
@@ -117,7 +118,8 @@ const page = async () => {
       <PropertyByType subData={subData} />
       }
       <CityBanner cityCount={cityCount} />
-     <Reviews />
+      {/* <NewsletterSection /> */}
+      <Reviews />
     </>
   )
 }
