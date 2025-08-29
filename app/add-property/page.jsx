@@ -89,7 +89,8 @@ function StepperCardContent() {
     return <Error message={sessionError.message || "Session error. Please try again."} />;
   }
   console.log("sessionStatus : ", sessionStatus);
-  if (sessionStatus === "loading" || !sessionStatus) {
+  // if (sessionStatus === "loading" || !sessionStatus) {
+  if (sessionStatus === "loading") {
     return <Loading />;
   }
   if (sessionStatus === "error") {
