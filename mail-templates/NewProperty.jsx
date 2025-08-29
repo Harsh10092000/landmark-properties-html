@@ -91,7 +91,7 @@ const NewPropertyTemplate = ({ user, property }) => (
             Your property has been successfully added to our platform and is now live for potential buyers and renters to view. Your listing will be visible to thousands of users searching for properties in your area.
           </p>
         <a
-          href={`https://landmarkplots.com/${property?.url}`}
+          href={`${property?.url}`}
             style={{
               display: 'inline-block',
             background: 'linear-gradient(90deg, #1a9050 0%, #2d3748 100%)',
