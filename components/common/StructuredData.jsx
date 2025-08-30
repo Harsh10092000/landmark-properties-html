@@ -80,7 +80,8 @@ const StructuredData = () => {
       ]
     },
     "sameAs": [
-      siteConfig.url
+      siteConfig.url,
+      siteConfig.social.instagram
     ]
   };
 
@@ -95,13 +96,14 @@ const StructuredData = () => {
     "description": siteConfig.description,
     "telephone": siteConfig.contact.phone,
     "email": siteConfig.contact.email,
+    "image": `${siteConfig.url}${siteConfig.seo.businessImage}`,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": siteConfig.business.address.streetAddress,
       "addressLocality": siteConfig.business.address.city,
       "addressRegion": siteConfig.business.address.region,
       "addressCountry": siteConfig.business.address.country,
-      "postalCode": siteConfig.business.address.postalCode
+      "postalCode": "136118"
     },
     "geo": {
       "@type": "GeoCoordinates",
@@ -109,10 +111,10 @@ const StructuredData = () => {
       "longitude": "76.8783"
     },
     "hasMap": siteConfig.business.hasMap,
-    "openingHours": "Mo-Su 09:00-18:00",
-    "priceRange": "₹₹",
-    "paymentAccepted": ["Cash", "Bank Transfer", "Cheque"],
-    "currenciesAccepted": "INR",
+    "openingHours": siteConfig.business.openingHours,
+    "priceRange": siteConfig.business.priceRange,
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
     "areaServed": {
       "@type": "Place",
       "name": siteConfig.business.primaryArea
@@ -120,7 +122,8 @@ const StructuredData = () => {
     "serviceType": siteConfig.business.services,
     "foundingDate": siteConfig.business.foundingDate,
     "sameAs": [
-      siteConfig.url
+      siteConfig.url,
+      siteConfig.social.instagram
     ]
   };
 
@@ -138,6 +141,12 @@ const StructuredData = () => {
       "width": 32,
       "height": 32
     },
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": siteConfig.contact.phone,
@@ -152,7 +161,8 @@ const StructuredData = () => {
       "addressCountry": siteConfig.business.address.country
     },
     "sameAs": [
-      siteConfig.url
+      siteConfig.url,
+      siteConfig.social.instagram
     ]
   };
 
@@ -162,7 +172,20 @@ const StructuredData = () => {
     "@type": "LocalBusiness",
     "name": siteConfig.businessName,
     "alternateName": siteConfig.name,
+    "legalName": siteConfig.business.fullBusinessName,
     "url": siteConfig.url,
+    "description": siteConfig.description,
+    "telephone": siteConfig.contact.phone,
+    "email": siteConfig.contact.email,
+    "image": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": siteConfig.business.address.streetAddress,
+      "addressLocality": siteConfig.business.address.city,
+      "addressRegion": siteConfig.business.address.region,
+      "addressCountry": siteConfig.business.address.country,
+      "postalCode": siteConfig.business.address.postalCode
+    },
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.8",

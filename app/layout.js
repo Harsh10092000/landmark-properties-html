@@ -83,6 +83,16 @@ export default function RootLayout({ children }) {
         <meta name="business:landmark" content="beside New Bus Stand" />
         <meta name="business:floor" content="1st Floor, Cabin 2" />
         
+        {/* Social media and business image meta tags */}
+        <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:image:alt" content="Landmark Properties - Real Estate Broker & Builders" />
+        
+        {/* Instagram and social media links */}
+        <meta property="og:see_also" content="https://www.instagram.com/reel/DMUs1fbBPIq/" />
+        <link rel="me" href="https://www.instagram.com/reel/DMUs1fbBPIq/" />
+        
         <link rel="preload" fetchpriority="high" as="image" href="/assets/img/hero/hero-banner.webp" type="image/webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

@@ -42,18 +42,24 @@ export const siteConfig = {
       fullAddress: "1st Floor, Cabin 2, SCO 32, beside New Bus Stand, Sector 10, Kurukshetra, Haryana 136118"
     },
     foundingDate: "2020",
-    hasMap: "https://maps.google.com/?q=1st+Floor+Cabin+2+SCO+32+beside+New+Bus+Stand+Sector+10+Kurukshetra+Haryana+136118"
+    hasMap: "https://maps.google.com/?q=1st+Floor+Cabin+2+SCO+32+beside+New+Bus+Stand+Sector+10+Kurukshetra+Haryana+136118",
+    priceRange: "₹₹",
+    openingHours: "Mo-Su 09:00-18:00",
+    paymentAccepted: ["Cash", "Bank Transfer", "Cheque"],
+    currenciesAccepted: "INR"
   },
   
   // Social media and external links
   social: {
-    website: "https://landmarkplots.com"
+    website: "https://landmarkplots.com",
+    instagram: "https://www.instagram.com/reel/DMUs1fbBPIq/"
   },
   
   // SEO settings
   seo: {
     defaultImage: "/images/property-banner-img.jpg",
     logo: "/favicon.png",
+    businessImage: "/uploads/default.jpg",
     languages: ["English", "Hindi"],
     keywords: [
       "LandmarkPlots",
