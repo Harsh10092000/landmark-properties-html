@@ -64,6 +64,12 @@ for ${
     "name": capitalizedName1,
     "url": data.pro_url || `https://landmarkplots.com/${slug}`,
     "datePosted": data.pro_creation_date || new Date().toISOString().split("T")[0],
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
     "author": {
       "@type": "Organization",
       "name": siteConfig.businessName,
@@ -256,9 +262,6 @@ for ${
     metadataBase: new URL("https://landmarkplots.com"),
     alternates: {
       canonical: `https://landmarkplots.com/${slug}`,
-    },
-    other: {
-      "schema.org": JSON.stringify(realEstateListingSchema),
     },
   };
 }
