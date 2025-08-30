@@ -521,7 +521,7 @@ for ${
 
   const { realEstateListingSchema, localBusinessSchema } = generatePropertyStructuredData();
 
-  return (
+    return (
     <>
       {/* Structured Data for Property Detail Page */}
       <script
@@ -667,7 +667,7 @@ for ${
         </section>
       </section>
     </>
-  );
+    );
 };
 
 export default page;
