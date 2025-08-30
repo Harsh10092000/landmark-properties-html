@@ -36,13 +36,22 @@ const StructuredData = () => {
     "description": siteConfig.description,
     "telephone": siteConfig.contact.phone,
     "email": siteConfig.contact.email,
+    "priceRange": siteConfig.business.priceRange,
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": siteConfig.business.address.streetAddress,
       "addressLocality": siteConfig.business.address.city,
       "addressRegion": siteConfig.business.address.region,
       "addressCountry": siteConfig.business.address.country,
-      "postalCode": siteConfig.business.address.postalCode
+      "postalCode": "136118"
     },
     "areaServed": {
       "@type": "Place",
@@ -135,6 +144,9 @@ const StructuredData = () => {
     "alternateName": siteConfig.name,
     "legalName": siteConfig.business.fullBusinessName,
     "url": siteConfig.url,
+    "priceRange": siteConfig.business.priceRange,
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
     "logo": {
       "@type": "ImageObject",
       "url": `${siteConfig.url}${siteConfig.seo.logo}`,
@@ -158,7 +170,8 @@ const StructuredData = () => {
       "streetAddress": siteConfig.business.address.streetAddress,
       "addressLocality": siteConfig.business.address.city,
       "addressRegion": siteConfig.business.address.region,
-      "addressCountry": siteConfig.business.address.country
+      "addressCountry": siteConfig.business.address.country,
+      "postalCode": "136118"
     },
     "sameAs": [
       siteConfig.url,
@@ -184,8 +197,11 @@ const StructuredData = () => {
       "addressLocality": siteConfig.business.address.city,
       "addressRegion": siteConfig.business.address.region,
       "addressCountry": siteConfig.business.address.country,
-      "postalCode": siteConfig.business.address.postalCode
+      "postalCode": "136118"
     },
+    "priceRange": siteConfig.business.priceRange,
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.8",
