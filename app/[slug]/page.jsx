@@ -17,6 +17,7 @@ import FavoriteStar from "@/components/common/FavoriteStar";
 import PropertyNotFound from "@/components/common/PropertyNotFound";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
+import { siteConfig } from '@/app/config/site';
 
 export async function generateMetadata({ params }, parent) {
   const { slug } = params;
@@ -51,33 +52,185 @@ for ${
     .join(" ");
 
   const [propertyData] = await db.query(
-    "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type FROM property_module WHERE listing_id = ?",
+    "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type, pro_amt, pro_area_size, pro_area_size_unit, pro_bedroom, pro_washrooms, pro_locality, pro_city, pro_state FROM property_module WHERE listing_id = ?",
     listingId
   );
   const data = propertyData[0] || {};
 
-  const schema = {
+  // Enhanced RealEstateListing schema
+  const realEstateListingSchema = {
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
-    name: capitalizedName1,
-    url: data.pro_url || `https://landmarkplots.com/${slug}`,
-    datePosted:
-      data.pro_creation_date || new Date().toISOString().split("T")[0],
-    author: {
-      "@type": "Person",
-      name: data.pro_ad_type || "Unknown",
+    "name": capitalizedName1,
+    "url": data.pro_url || `https://landmarkplots.com/${slug}`,
+    "datePosted": data.pro_creation_date || new Date().toISOString().split("T")[0],
+    "author": {
+      "@type": "Organization",
+      "name": siteConfig.businessName,
+      "alternateName": siteConfig.name,
+      "legalName": siteConfig.business.fullBusinessName,
+      "url": siteConfig.url,
+      "telephone": siteConfig.contact.phone,
+      "email": siteConfig.contact.email,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": siteConfig.business.address.streetAddress,
+        "addressLocality": siteConfig.business.address.city,
+        "addressRegion": siteConfig.business.address.region,
+        "addressCountry": siteConfig.business.address.country,
+        "postalCode": "136118"
+      }
     },
-    description: desc,
-    relatedLink: [
+    "description": desc,
+    "offers": {
+      "@type": "Offer",
+      "price": data.pro_amt || "Contact for price",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": siteConfig.businessName,
+        "url": siteConfig.url
+      }
+    },
+    "itemOffered": {
+      "@type": "Property",
+      "name": capitalizedName1,
+      "description": desc,
+      "floorSize": {
+        "@type": "QuantitativeValue",
+        "value": data.pro_area_size || "",
+        "unitText": data.pro_area_size_unit || "sq ft"
+      },
+      "numberOfRooms": data.pro_bedroom || "",
+      "numberOfBathroomsTotal": data.pro_washrooms || "",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": data.pro_locality || data.pro_city || "",
+        "addressRegion": data.pro_state || "",
+        "addressCountry": "IN"
+      },
+      "propertyType": data.pro_type || "Property"
+    },
+    "relatedLink": [
       `https://landmarkplots.com/properties/residential-properties`,
+      `https://landmarkplots.com/properties/commercial-properties`,
+      `https://landmarkplots.com/properties/land-properties`
     ].filter(Boolean),
-    significantLink: [
+    "significantLink": [
       "https://landmarkplots.com/allproperties",
       "https://landmarkplots.com/contactus",
       "https://landmarkplots.com/aboutus",
       "https://landmarkplots.com/properties/properties-for-sale",
       "https://landmarkplots.com/properties/properties-for-rent",
+    ]
+  };
+
+  // LocalBusiness schema for regional focus
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": siteConfig.businessName,
+    "alternateName": siteConfig.name,
+    "legalName": siteConfig.business.fullBusinessName,
+    "url": siteConfig.url,
+    "description": "Landmark Properties is a real estate company specializing in buying, selling, and renting various types of properties across Haryana, with a strong focus on Kurukshetra and surrounding areas.",
+    "telephone": siteConfig.contact.phone,
+    "email": siteConfig.contact.email,
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": siteConfig.business.address.streetAddress,
+      "addressLocality": siteConfig.business.address.city,
+      "addressRegion": siteConfig.business.address.region,
+      "addressCountry": siteConfig.business.address.country,
+      "postalCode": "136118"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "29.9695",
+      "longitude": "76.8783"
+    },
+    "hasMap": siteConfig.business.hasMap,
+    "openingHours": siteConfig.business.openingHours,
+    "priceRange": siteConfig.business.priceRange,
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
+    "areaServed": [
+      {
+        "@type": "Place",
+        "name": "Kurukshetra, Haryana"
+      },
+      {
+        "@type": "Place",
+        "name": "Haryana, India"
+      }
     ],
+    "serviceType": [
+      "Property Sales",
+      "Property Rentals", 
+      "Land Sales",
+      "Commercial Properties",
+      "Residential Properties",
+      "Premium Villa Plots",
+      "Agricultural Land",
+      "Property Consultation",
+      "Expert Guidance"
+    ],
+    "foundingDate": siteConfig.business.foundingDate,
+    "sameAs": [
+      siteConfig.url,
+      siteConfig.social.instagram
+    ]
+  };
+
+  // Organization schema for company information
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteConfig.businessName,
+    "alternateName": siteConfig.name,
+    "legalName": siteConfig.business.fullBusinessName,
+    "url": siteConfig.url,
+    "description": "Landmark Properties is a premier real estate company specializing in buying, selling, and renting various types of properties. We offer expert guidance and consultation services for property transactions across Haryana, with a strong regional focus on Kurukshetra and surrounding areas.",
+    "priceRange": siteConfig.business.priceRange,
+    "paymentAccepted": siteConfig.business.paymentAccepted,
+    "currenciesAccepted": siteConfig.business.currenciesAccepted,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.logo}`,
+      "width": 32,
+      "height": 32
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": siteConfig.contact.phone,
+      "contactType": "customer service",
+      "availableLanguage": siteConfig.seo.languages
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": siteConfig.business.address.streetAddress,
+      "addressLocality": siteConfig.business.address.city,
+      "addressRegion": siteConfig.business.address.region,
+      "addressCountry": siteConfig.business.address.country,
+      "postalCode": "136118"
+    },
+    "sameAs": [
+      siteConfig.url,
+      siteConfig.social.instagram
+    ]
   };
 
   return {
@@ -105,7 +258,7 @@ for ${
       canonical: `https://landmarkplots.com/${slug}`,
     },
     other: {
-      "schema.org": JSON.stringify(schema),
+      "schema.org": JSON.stringify(realEstateListingSchema),
     },
   };
 }
@@ -209,7 +362,317 @@ const page = async ({ params }) => {
     );
   }
 
-    return (
+    // Generate structured data for this specific property
+  const generatePropertyStructuredData = () => {
+    const arrproId = slug.split("-");
+    const capitalizedName1 = arrproId
+      .slice(0, arrproId.length - 2)
+      .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+      .join(" ");
+
+    const desc = `Check out this ${
+      arrproId[0] + " " + arrproId[1] + " " + arrproId[2] + " "
+    }${arrproId[3] !== "for" ? arrproId[3] : ""}
+for ${
+      arrproId[3] === "for" ? arrproId[4] : arrproId[5]
+    }. It is an ideal investment opportunity in a prime${
+      arrproId[3] !== "for"
+        ? " " + arrproId[2] + " " + arrproId[3]
+        : " " + arrproId[2] + ""
+    } area with verified property assurance.`;
+
+    // RealEstateListing schema for this specific property
+    const realEstateListingSchema = {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "name": capitalizedName1,
+      "url": `https://landmarkplots.com/${slug}`,
+      "datePosted": propertyData?.pro_creation_date || new Date().toISOString().split("T")[0],
+      "author": {
+        "@type": "Organization",
+        "name": siteConfig.businessName,
+        "alternateName": siteConfig.name,
+        "legalName": siteConfig.business.fullBusinessName,
+        "url": siteConfig.url,
+        "telephone": siteConfig.contact.phone,
+        "email": siteConfig.contact.email,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": siteConfig.business.address.streetAddress,
+          "addressLocality": siteConfig.business.address.city,
+          "addressRegion": siteConfig.business.address.region,
+          "addressCountry": siteConfig.business.address.country,
+          "postalCode": "136118"
+        }
+      },
+      "description": desc,
+      "offers": {
+        "@type": "Offer",
+        "price": propertyData?.pro_amt || "Contact for price",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": siteConfig.businessName,
+          "url": siteConfig.url
+        }
+      },
+      "itemOffered": {
+        "@type": "Property",
+        "name": capitalizedName1,
+        "description": desc,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": propertyData?.pro_area_size || "",
+          "unitText": propertyData?.pro_area_size_unit || "sq ft"
+        },
+        "numberOfRooms": propertyData?.pro_bedroom || "",
+        "numberOfBathroomsTotal": propertyData?.pro_washrooms || "",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": propertyData?.pro_locality || propertyData?.pro_city || "",
+          "addressRegion": propertyData?.pro_state || "",
+          "addressCountry": "IN"
+        },
+        "propertyType": propertyData?.pro_type || "Property"
+      },
+      "relatedLink": [
+        `https://landmarkplots.com/properties/residential-properties`,
+        `https://landmarkplots.com/properties/commercial-properties`,
+        `https://landmarkplots.com/properties/land-properties`
+      ],
+      "significantLink": [
+        "https://landmarkplots.com/allproperties",
+        "https://landmarkplots.com/contactus",
+        "https://landmarkplots.com/aboutus",
+        "https://landmarkplots.com/properties/properties-for-sale",
+        "https://landmarkplots.com/properties/properties-for-rent",
+      ]
+    };
+
+    // LocalBusiness schema for regional focus - Property Detail Page specific
+    const localBusinessSchema = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": siteConfig.businessName,
+      "alternateName": siteConfig.name,
+      "legalName": siteConfig.business.fullBusinessName,
+      "url": siteConfig.url,
+      "description": "Landmark Properties is a real estate company specializing in buying, selling, and renting various types of properties across Haryana, with a strong focus on Kurukshetra and surrounding areas.",
+      "telephone": siteConfig.contact.phone,
+      "email": siteConfig.contact.email,
+      "image": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+        "width": 800,
+        "height": 600
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": siteConfig.business.address.streetAddress,
+        "addressLocality": siteConfig.business.address.city,
+        "addressRegion": siteConfig.business.address.region,
+        "addressCountry": siteConfig.business.address.country,
+        "postalCode": "136118"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "29.9695",
+        "longitude": "76.8783"
+      },
+      "hasMap": siteConfig.business.hasMap,
+      "openingHours": siteConfig.business.openingHours,
+      "priceRange": siteConfig.business.priceRange,
+      "paymentAccepted": siteConfig.business.paymentAccepted,
+      "currenciesAccepted": siteConfig.business.currenciesAccepted,
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "Kurukshetra, Haryana"
+        },
+        {
+          "@type": "Place",
+          "name": "Haryana, India"
+        }
+      ],
+      "serviceType": [
+        "Property Sales",
+        "Property Rentals", 
+        "Land Sales",
+        "Commercial Properties",
+        "Residential Properties",
+        "Premium Villa Plots",
+        "Agricultural Land",
+        "Property Consultation",
+        "Expert Guidance"
+      ],
+      "foundingDate": siteConfig.business.foundingDate,
+      "sameAs": [
+        siteConfig.url,
+        siteConfig.social.instagram
+      ]
+    };
+
+    // Generate dynamic FAQ schema based on property type
+    const generatePropertyFAQSchema = () => {
+      const propertyType = propertyData?.pro_type?.toLowerCase() || "property";
+      const propertyArea = propertyData?.pro_locality || propertyData?.pro_city || "Kurukshetra";
+      const propertyPrice = propertyData?.pro_amt || "Contact for price";
+      
+      // Base FAQs for all properties
+      const baseFAQs = [
+        {
+          "@type": "Question",
+          "name": "What documents are needed to buy this property?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For this property, you'll need: Sale Deed or Title Deed proving ownership, Encumbrance Certificate showing no pending loans, Property Tax Receipts, Building Approval Plans, Completion Certificate for constructed properties, and No Objection Certificates (NOCs) from relevant authorities. Our team at Landmark Properties can help verify all documents and ensure legal compliance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I verify if this property is legally clear?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Property verification involves multiple steps: Check the Sale Deed for clear title transfer history, obtain an Encumbrance Certificate from the Sub-Registrar's office, verify building approvals and completion certificates with local authorities, confirm property tax payments are up-to-date, and check for any pending litigation. Landmark Properties provides comprehensive property verification services to ensure your investment is secure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the hidden costs when buying this property?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Beyond the property price, consider these additional costs: Stamp Duty and Registration charges (typically 5-8% of property value), Legal fees for documentation and verification, Property tax and maintenance charges, Home loan processing fees and insurance, Interior decoration and furnishing costs, Utility connection charges, and Society maintenance fees for apartments. Budget an additional 10-15% of the property value for these expenses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment options are available for this property?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Landmark Properties offers flexible payment options including: Cash payments, Bank transfers, Cheque payments, and Home loan assistance. We can help you connect with leading banks and financial institutions for competitive home loan rates. Our team can guide you through the entire financing process to make your property purchase smooth and hassle-free."
+          }
+        }
+      ];
+
+      // Property type specific FAQs
+      let typeSpecificFAQs = [];
+      
+      if (propertyType.includes("residential") || propertyType.includes("apartment") || propertyType.includes("house")) {
+        typeSpecificFAQs = [
+          {
+            "@type": "Question",
+            "name": "What are the maintenance charges for this residential property?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Maintenance charges for this residential property typically include: Society maintenance fees, Security charges, Water and electricity maintenance, Common area upkeep, and Parking charges. The exact amount depends on the property size and amenities. Our team can provide detailed breakdown of all maintenance costs before you make the purchase decision."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there any society rules to consider for this property?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, society rules may include: Pet policies, Parking regulations, Renovation restrictions, Guest policies, and Noise regulations. We recommend reviewing the complete society rulebook before purchasing. Our team can help you understand all applicable rules and ensure they align with your lifestyle requirements."
+            }
+          }
+        ];
+      } else if (propertyType.includes("commercial") || propertyType.includes("shop") || propertyType.includes("office")) {
+        typeSpecificFAQs = [
+          {
+            "@type": "Question",
+            "name": "What is the commercial potential of this area?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `${propertyArea} offers excellent commercial potential with: High foot traffic areas, Growing business opportunities, Good connectivity to major roads, Proximity to residential areas, and Future development plans. The area is witnessing rapid commercial growth making it an ideal investment location for businesses and investors.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there any business restrictions for this commercial property?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Commercial properties may have restrictions based on: Zoning regulations, Business type limitations, Operating hours restrictions, and Parking requirements. We can help you verify all applicable restrictions and ensure the property meets your business requirements. Contact us for detailed zoning and compliance information."
+            }
+          }
+        ];
+      } else if (propertyType.includes("land") || propertyType.includes("plot") || propertyType.includes("villa")) {
+        typeSpecificFAQs = [
+          {
+            "@type": "Question",
+            "name": "What is the development potential of this plot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `This plot in ${propertyArea} offers excellent development potential with: Clear title and legal status, Good soil conditions for construction, Proper road connectivity, Future infrastructure development plans, and High appreciation potential. The area is ideal for residential or commercial development based on your requirements.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there any construction restrictions for this plot?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Construction restrictions may include: Floor Area Ratio (FAR) limits, Height restrictions, Setback requirements, and Building code compliance. We can help you understand all construction regulations and obtain necessary approvals. Our team provides complete guidance for plot development and construction planning."
+            }
+          }
+        ];
+      }
+
+      // Location specific FAQs
+      const locationFAQs = [
+        {
+          "@type": "Question",
+          "name": `Why invest in ${propertyArea} real estate?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `${propertyArea} offers excellent investment opportunities due to: Strategic location with good connectivity, Growing infrastructure development, High rental yields, Strong appreciation potential, and Government development initiatives. The area is witnessing rapid growth making it an ideal location for property investment.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the connectivity from this location?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `This location offers excellent connectivity with: Easy access to major roads and highways, Public transportation facilities, Proximity to railway stations and bus stands, Good road network, and Future infrastructure projects planned. The area is well-connected making it convenient for daily commute and business activities.`
+          }
+        }
+      ];
+
+      return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [...baseFAQs, ...typeSpecificFAQs, ...locationFAQs]
+      };
+    };
+
+    const propertyFAQSchema = generatePropertyFAQSchema();
+
+    return { realEstateListingSchema, localBusinessSchema, propertyFAQSchema };
+  };
+
+  const { realEstateListingSchema, localBusinessSchema, propertyFAQSchema } = generatePropertyStructuredData();
+
+  return (
+    <>
+      {/* Structured Data for Property Detail Page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(realEstateListingSchema)
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema)
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(propertyFAQSchema)
+        }}
+      />
+      
       <section className="listing__page--section section--padding">
         <div className="container">
           
@@ -338,7 +801,8 @@ const page = async ({ params }) => {
           <Disclaimer />
         </section>
       </section>
-    );
+    </>
+  );
 };
 
 export default page;

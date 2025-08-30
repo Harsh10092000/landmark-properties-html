@@ -105,7 +105,12 @@ const StructuredData = () => {
     "description": siteConfig.description,
     "telephone": siteConfig.contact.phone,
     "email": siteConfig.contact.email,
-    "image": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": siteConfig.business.address.streetAddress,
@@ -190,7 +195,12 @@ const StructuredData = () => {
     "description": siteConfig.description,
     "telephone": siteConfig.contact.phone,
     "email": siteConfig.contact.email,
-    "image": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+    "image": {
+      "@type": "ImageObject",
+      "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+      "width": 800,
+      "height": 600
+    },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": siteConfig.business.address.streetAddress,
