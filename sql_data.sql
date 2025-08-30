@@ -102,3 +102,17 @@ CREATE TABLE `property_module` (
    PRIMARY KEY (`img_id`),
    KEY `idx_img_cnct_id` (`img_cnct_id`)
  )
+
+-- Expiry fields for property_module
+ALTER TABLE property_module
+  ADD COLUMN IF NOT EXISTS expiry_date DATETIME NULL,
+  ADD COLUMN IF NOT EXISTS pro_status ENUM('active','expired') DEFAULT 'active',
+  ADD COLUMN IF NOT EXISTS reminder_sent TINYINT(1) DEFAULT 0;
+
+-- Settings table for expiry configuration
+CREATE TABLE IF NOT EXISTS app_settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  setting_key VARCHAR(191) UNIQUE NOT NULL,
+  setting_value VARCHAR(191) NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
