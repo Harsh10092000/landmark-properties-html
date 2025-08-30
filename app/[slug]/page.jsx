@@ -516,143 +516,10 @@ for ${
       ]
     };
 
-    // Generate dynamic FAQ schema based on property type
-    const generatePropertyFAQSchema = () => {
-      const propertyType = propertyData?.pro_type?.toLowerCase() || "property";
-      const propertyArea = propertyData?.pro_locality || propertyData?.pro_city || "Kurukshetra";
-      const propertyPrice = propertyData?.pro_amt || "Contact for price";
-      
-      // Base FAQs for all properties
-      const baseFAQs = [
-        {
-          "@type": "Question",
-          "name": "What documents are needed to buy this property?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "For this property, you'll need: Sale Deed or Title Deed proving ownership, Encumbrance Certificate showing no pending loans, Property Tax Receipts, Building Approval Plans, Completion Certificate for constructed properties, and No Objection Certificates (NOCs) from relevant authorities. Our team at Landmark Properties can help verify all documents and ensure legal compliance."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How can I verify if this property is legally clear?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Property verification involves multiple steps: Check the Sale Deed for clear title transfer history, obtain an Encumbrance Certificate from the Sub-Registrar's office, verify building approvals and completion certificates with local authorities, confirm property tax payments are up-to-date, and check for any pending litigation. Landmark Properties provides comprehensive property verification services to ensure your investment is secure."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What are the hidden costs when buying this property?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Beyond the property price, consider these additional costs: Stamp Duty and Registration charges (typically 5-8% of property value), Legal fees for documentation and verification, Property tax and maintenance charges, Home loan processing fees and insurance, Interior decoration and furnishing costs, Utility connection charges, and Society maintenance fees for apartments. Budget an additional 10-15% of the property value for these expenses."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What payment options are available for this property?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Landmark Properties offers flexible payment options including: Cash payments, Bank transfers, Cheque payments, and Home loan assistance. We can help you connect with leading banks and financial institutions for competitive home loan rates. Our team can guide you through the entire financing process to make your property purchase smooth and hassle-free."
-          }
-        }
-      ];
-
-      // Property type specific FAQs
-      let typeSpecificFAQs = [];
-      
-      if (propertyType.includes("residential") || propertyType.includes("apartment") || propertyType.includes("house")) {
-        typeSpecificFAQs = [
-          {
-            "@type": "Question",
-            "name": "What are the maintenance charges for this residential property?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Maintenance charges for this residential property typically include: Society maintenance fees, Security charges, Water and electricity maintenance, Common area upkeep, and Parking charges. The exact amount depends on the property size and amenities. Our team can provide detailed breakdown of all maintenance costs before you make the purchase decision."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are there any society rules to consider for this property?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, society rules may include: Pet policies, Parking regulations, Renovation restrictions, Guest policies, and Noise regulations. We recommend reviewing the complete society rulebook before purchasing. Our team can help you understand all applicable rules and ensure they align with your lifestyle requirements."
-            }
-          }
-        ];
-      } else if (propertyType.includes("commercial") || propertyType.includes("shop") || propertyType.includes("office")) {
-        typeSpecificFAQs = [
-          {
-            "@type": "Question",
-            "name": "What is the commercial potential of this area?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `${propertyArea} offers excellent commercial potential with: High foot traffic areas, Growing business opportunities, Good connectivity to major roads, Proximity to residential areas, and Future development plans. The area is witnessing rapid commercial growth making it an ideal investment location for businesses and investors.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are there any business restrictions for this commercial property?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Commercial properties may have restrictions based on: Zoning regulations, Business type limitations, Operating hours restrictions, and Parking requirements. We can help you verify all applicable restrictions and ensure the property meets your business requirements. Contact us for detailed zoning and compliance information."
-            }
-          }
-        ];
-      } else if (propertyType.includes("land") || propertyType.includes("plot") || propertyType.includes("villa")) {
-        typeSpecificFAQs = [
-          {
-            "@type": "Question",
-            "name": "What is the development potential of this plot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `This plot in ${propertyArea} offers excellent development potential with: Clear title and legal status, Good soil conditions for construction, Proper road connectivity, Future infrastructure development plans, and High appreciation potential. The area is ideal for residential or commercial development based on your requirements.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are there any construction restrictions for this plot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Construction restrictions may include: Floor Area Ratio (FAR) limits, Height restrictions, Setback requirements, and Building code compliance. We can help you understand all construction regulations and obtain necessary approvals. Our team provides complete guidance for plot development and construction planning."
-            }
-          }
-        ];
-      }
-
-      // Location specific FAQs
-      const locationFAQs = [
-        {
-          "@type": "Question",
-          "name": `Why invest in ${propertyArea} real estate?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `${propertyArea} offers excellent investment opportunities due to: Strategic location with good connectivity, Growing infrastructure development, High rental yields, Strong appreciation potential, and Government development initiatives. The area is witnessing rapid growth making it an ideal location for property investment.`
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How is the connectivity from this location?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `This location offers excellent connectivity with: Easy access to major roads and highways, Public transportation facilities, Proximity to railway stations and bus stands, Good road network, and Future infrastructure projects planned. The area is well-connected making it convenient for daily commute and business activities.`
-          }
-        }
-      ];
-
-      return {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [...baseFAQs, ...typeSpecificFAQs, ...locationFAQs]
-      };
-    };
-
-    const propertyFAQSchema = generatePropertyFAQSchema();
-
-    return { realEstateListingSchema, localBusinessSchema, propertyFAQSchema };
+    return { realEstateListingSchema, localBusinessSchema };
   };
 
-  const { realEstateListingSchema, localBusinessSchema, propertyFAQSchema } = generatePropertyStructuredData();
+  const { realEstateListingSchema, localBusinessSchema } = generatePropertyStructuredData();
 
   return (
     <>
@@ -669,12 +536,7 @@ for ${
           __html: JSON.stringify(localBusinessSchema)
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(propertyFAQSchema)
-        }}
-      />
+
       
       <section className="listing__page--section section--padding">
         <div className="container">
