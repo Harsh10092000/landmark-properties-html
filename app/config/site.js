@@ -11,7 +11,7 @@ export const siteConfig = {
   contact: {
     phone: "+91-999-671-6787",
     secondaryPhone: "+91-905-004-8884",
-    email: "propertieslandmark07@gmail.com",
+    email: "info@landmarkplots.com",
     whatsapp: "https://wa.me/919996716787?text=https://landmarkplots.com/",
     shareWhatsapp: "https://api.whatsapp.com/send?text=https://landmarkplots.com/"
   },

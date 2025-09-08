@@ -61,8 +61,8 @@ const FooterContent = () => {
               </span>
               <p className="contact__information--email__text">
                 Contact us at{" "}
-                <a href="mailto:propertieslandmark07@gmail.com">
-                  propertieslandmark07@gmail.com
+                <a href="mailto:info@landmarkplots.com">
+                  info@landmarkplots.com
                 </a>{" "}
               </p>
             </div>
@@ -201,9 +201,9 @@ const FooterContent = () => {
                         </svg>
                         <a
                           className="footer__widget--info__text"
-                          href="mailto:propertieslandmark07@gmail.com"
+                          href="mailto:info@landmarkplots.com"
                         >
-                          propertieslandmark07@gmail.com
+                          info@landmarkplots.com
                         </a>
                       </li>
                       <li className="footer__widget--info_list">
