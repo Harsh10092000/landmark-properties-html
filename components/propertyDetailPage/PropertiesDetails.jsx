@@ -26,35 +26,35 @@ const PropertiesDetails = ({propertyData, handleNullString}) => {
         </li>
         <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconBorderInner /></span>Facing</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_facing)}</span>
         </li>
          <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconTrademark /></span> Type Of Ownership</span> 
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_ownership)}</span>
         </li>
          <li className="properties__details--info__list">
             <span className="properties__details--info__title"><span className='pro-icon'><IconMapPinCheck /></span> Authority Approval</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_approval)}</span>
         </li>
          <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconBed /></span>Furnishing</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_furnishing)}</span>
         </li>
          <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconBath /></span>Washrooms</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{propertyData.pro_washrooms !== 0 ? handleNullString(propertyData.pro_washrooms) : "-"}</span>
         </li> 
         <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconBarcode /></span>Balconies</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_balconies)}</span>
         </li>
           <li className="properties__details--info__list">
             <span className="properties__details--info__title"><span className='pro-icon'><IconDimensions /></span>Facing Road Width</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_facing_road_width) !== 0 ? handleNullString(propertyData.pro_facing_road_width) + " " + propertyData.pro_facing_road_unit : "-"}</span>
         </li>
         <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconStairsUp /></span> Floor Number</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_open_sides)}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_floor_number)}</span>
         </li>
     </ul>
 </div>

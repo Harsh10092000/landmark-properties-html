@@ -54,7 +54,7 @@ function StepperCardContent() {
   } catch (err) {
     sessionError = err;
   }
-  //const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
 
   const [step, setStep] = useState(1);
   const [propertyId, setPropertyId] = useState(null);
@@ -77,13 +77,18 @@ function StepperCardContent() {
   });
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (sessionStatus === "unauthenticated") {
-  //     setShowLoginModal(true);
-  //   } else {
-  //     setShowLoginModal(false);
-  //   }
-  // }, [sessionStatus]);
+  // Grace period: show loader first, then (if still unauthenticated) show login prompt
+  useEffect(() => {
+    let timer;
+    if (sessionStatus === "unauthenticated") {
+      timer = setTimeout(() => setShowAuthPrompt(true), 350);
+    } else {
+      setShowAuthPrompt(false);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [sessionStatus]);
 
   if (sessionError) {
     return <Error message={sessionError.message || "Session error. Please try again."} />;
@@ -269,8 +274,8 @@ function StepperCardContent() {
     <meta property="og:description" content="Add Property | Landmark Plots" />
     <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
  
-    {sessionStatus === "unauthenticated" && <RequiredLogin />}
-    <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0, filter: sessionStatus === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', pointerEvents: sessionStatus === "unauthenticated" === "unauthenticated" ? 'none' : 'auto', opacity: sessionStatus === "unauthenticated" ? 0.5 : 1, transition: 'filter 0.2s, opacity 0.2s' }}>
+    {showAuthPrompt && <RequiredLogin />}
+    <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0, filter: sessionStatus === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', pointerEvents: sessionStatus === "unauthenticated" ? 'none' : 'auto', opacity: sessionStatus === "unauthenticated" ? 0.5 : 1, transition: 'filter 0.2s, opacity 0.2s' }}>
       <div className="container h-100">
         <div className="row h-100">
           <div className="col-md-4 h-100">
