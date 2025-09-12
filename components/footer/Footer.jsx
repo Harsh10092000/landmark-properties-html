@@ -281,7 +281,24 @@ const FooterContent = () => {
                         Property for Rent
                       </Link>
                     </li>
+                    <li className="footer__widget--menu__list">
+                      <Link
+                        className="footer__widget--menu__text"
+                        href="/properties-for-rent"
+                      >
+                        Property for Rent
+                      </Link>
+                    </li>
                    
+
+                    <li className="footer__widget--menu__list">
+                      <Link
+                        className="footer__widget--menu__text"
+                        href="/hsvp-private-property-sale-purpose-portal"
+                      >
+                        HSVP Private Property Sale Purpose Portal
+                      </Link>
+                    </li>
                     
                     
                   </ul>
