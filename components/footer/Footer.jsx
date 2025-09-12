@@ -345,6 +345,12 @@ const FooterContent = () => {
                       Disclaimer
                       </Link>
                     </li>
+
+                    <li className="footer__widget--menu__list">
+                      <Link className="footer__widget--menu__text" href="/kurukshetra-real-estate">
+                      Kurukshetra Real Estate
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>
