@@ -6,6 +6,7 @@ Disallow: /images
 Disallow: /_next
 Disallow: /user
 Disallow: /blog
+Disallow: /properties
 Disallow: /property-profile
 Disallow: /6-marla-independent-house-for-sale-in-akash-nagar-kurukshetra-322
 Disallow: /1375-sq-yards-apartment-for-sale-in-skygrand-kalkere-agara-mai-road-dodda-kempaiah-bengaluru-urban-507
