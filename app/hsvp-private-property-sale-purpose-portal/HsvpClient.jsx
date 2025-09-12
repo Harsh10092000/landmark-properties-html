@@ -7,17 +7,7 @@ import MoreProperties from '@/components/propertyDetailPage/MoreProperties';
 const Page = () => {
     return (
         <main class="main__content_wrapper">
-            <title>HSVP Private Property Sale–Purchase Portal | Guide, Policy PDF, Highlights</title>
-            <meta name="description" content="Know about HSVP (Haryana Shehri Vikas Pradhikaran) Private Property Sale–Purchase Portal: policy, process handbook (valid till 31.12.2025), benefits, who can use, and how Landmark Plots can help you sell/buy in HSVP sectors." />
-            <meta name="keywords" content="HSVP private property sale purchase, HSVP policy PDF, Haryana Shehri Vikas Pradhikaran portal, HSVP auction, HSVP e-auction, HSVP portal handbook, HSVP Panchkula policy" />
-            <meta name="author" content="Landmark Plots" />
-            <meta property="og:title" content="HSVP Private Property Sale–Purchase Portal | Guide, Policy PDF, Highlights" />
-            <meta property="og:description" content="Official initiative by HSVP for transparent sale-purchase of private properties in HSVP sectors. Read the highlights, benefits and download the policy handbook." />
-            <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
-            <meta property="og:url" content="https://landmarkplots.com/hsvp-private-property-sale-purpose-portal" />
-            <meta property="og:type" content="article" />
-            <meta property="og:site_name" content="Landmark Plots" />
-            <link rel="canonical" href="https://landmarkplots.com/hsvp-private-property-sale-purpose-portal" />
+            
 
             <BreadcrumbSection val1={"HSVP"} val2={"Private Property Portal"} />
 
