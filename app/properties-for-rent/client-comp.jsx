@@ -13,6 +13,8 @@ const ClientComp = ({
   currentUser,
   recordsPerPage,
   currentPage,
+  totalRecords,
+  totalPages,
   adType,
 
 }) => {
@@ -41,10 +43,9 @@ const ClientComp = ({
     setResults(data);
   }, []);
 
-  const lastIndex = currentPage * recordsPerPage;
-  let firstIndex = lastIndex - recordsPerPage;
-  const records = results?.slice(firstIndex, lastIndex);
-  const nPages = Math.ceil(results?.length / recordsPerPage);
+  // Since we're now using server-side pagination, we don't need client-side slicing
+  const records = results || data;
+  const nPages = totalPages || Math.ceil((results?.length || data?.length || 0) / recordsPerPage);
 
   const [propertyAdTypeFilter, setPropertyAdTypeFilter] =
     useState(adType);
@@ -911,7 +912,7 @@ const ClientComp = ({
           <div class="listing__header d-flex justify-content-between align-items-center">
             <div class="listing__header--left">
               <p class="results__cout--text">
-                Showing {records.length} of {results.length} Results
+                Showing {records.length} of {totalRecords || results.length} Results
               </p>
             </div>
             <div class="listing__header--right d-flex align-items-center">

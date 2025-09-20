@@ -63,18 +63,27 @@ export async function generateMetadata() {
   };
 }
 
-const getData = async () => {
+const getData = async (page = 1) => {
   try {
     const db = await pool;
-    const q = `SELECT * FROM property_module where pro_listed = 1 and pro_ad_type = 'Rent' ORDER BY pro_id DESC`;
-    const q1 =
-      "SELECT COUNT(*) as total from property_module where pro_listed = 1";
+    const recordsPerPage = 12;
+    const offset = (page - 1) * recordsPerPage;
+    
+    const q = `SELECT * FROM property_module where pro_listed = 1 and pro_ad_type = 'Rent' ORDER BY pro_id DESC LIMIT ${recordsPerPage} OFFSET ${offset}`;
+    const q1 = "SELECT COUNT(*) as total from property_module where pro_listed = 1 and pro_ad_type = 'Rent'";
+    
     const [rows] = await db.query(q);
     const [total] = await db.query(q1);
 
-    return { row: rows, total: total };
+    return { 
+      row: rows, 
+      total: total[0].total,
+      currentPage: page,
+      totalPages: Math.ceil(total[0].total / recordsPerPage)
+    };
   } catch (err) {
-    return err;
+    console.error('Database error:', err);
+    return { row: [], total: 0, currentPage: 1, totalPages: 0 };
   }
 };
 
@@ -83,15 +92,29 @@ const page = async ({searchParams}) => {
   const session = await getServerSession(authOptions);
   const currentUser = session?.user?.id || "";
 
-  let currentPage = (await searchParams["page"]) || 1;
+  let currentPage = parseInt((await searchParams["page"]) || 1);
+  
+  // Validate page number
+  if (currentPage < 1) {
+    currentPage = 1;
+  }
+  
   const res = await getData(currentPage);
   const data = res.row;
+  const totalRecords = res.total;
+  const totalPages = res.totalPages;
 
   const recordsPerPage = 12;
-  // Generate high-converting SEO content for maximum rankings
-  let seoTitle = "";
-  let seoDescription = "";
-  let canonicalUrl = "";
+  
+  // If page number is greater than total pages, redirect to last page
+  if (currentPage > totalPages && totalPages > 0) {
+    return {
+      redirect: {
+        destination: `/properties-for-rent?page=${totalPages}`,
+        permanent: false,
+      },
+    };
+  }
   
   
 
@@ -141,10 +164,9 @@ const page = async ({searchParams}) => {
         currentUser={currentUser}
         recordsPerPage={recordsPerPage}
         currentPage={currentPage}
-        // catType={catType}
-        // cat={cat}
+        totalRecords={totalRecords}
+        totalPages={totalPages}
         adType="Rent"
-        //location={location}
       />
     </div>
   );

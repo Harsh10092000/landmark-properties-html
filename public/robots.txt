@@ -6,7 +6,7 @@ Disallow: /images
 Disallow: /_next
 Disallow: /user
 Disallow: /blog
-Disallow: /properties
+Disallow: /properties/
 Disallow: /property-profile
 Disallow: /6-marla-independent-house-for-sale-in-akash-nagar-kurukshetra-322
 Disallow: /1375-sq-yards-apartment-for-sale-in-skygrand-kalkere-agara-mai-road-dodda-kempaiah-bengaluru-urban-507
@@ -187,5 +187,5 @@ Disallow: /8-marla-independent-house-for-sale-in-sector-3-kurukshetra-147
 Disallow: /10-marla-independent-house-for-sale-in-sector-2-kurukshetra-451
 Disallow: /204-sq-yards-independent-house-for-sale-in-mohan-nagar-kurukshetra-174
 Disallow: /10-marla-independent-house-for-sale-in-sector-13-kurukshetra-327
-Sitemap: https://landmark-properties-html.vercel.app/sitemap.xml
+Sitemap: https://landmarkplots.com/sitemap.xml
 Allow: /mapImages/

@@ -33,14 +33,14 @@ export async function POST(req) {
 
     // Validate name
     const nameValidation = validateName(name);
-    if (!nameValidation.ok) {
-      validationErrors.name = nameValidation.message;
+      if (!nameValidation.ok) {
+        validationErrors.name = nameValidation.message;
     }
 
     // Validate email
     const emailValidation = validateEmail(email);
-    if (!emailValidation.ok) {
-      validationErrors.email = emailValidation.message;
+      if (!emailValidation.ok) {
+        validationErrors.email = emailValidation.message;
     }
 
     // If validation failed, return errors
