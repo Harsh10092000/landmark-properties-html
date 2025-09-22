@@ -205,7 +205,7 @@ const NewPropertySubscriber = ({ subscriber = {}, property = {} }) => {
               Ref: {property?.id ? `#${property.id}` : ''}{property?.id && property?.slug ? ' • ' : ''}{property?.slug || ''}
             </p>
           )}
-        </div>
+            </div>
 
         <div style={{ margin: '0 0 16px 0' }}>
           <a
@@ -226,8 +226,8 @@ const NewPropertySubscriber = ({ subscriber = {}, property = {} }) => {
           >
             View Property Listing
           </a>
-        </div>
-        <div>
+            </div>
+            <div>
           <a
             href={`${baseUrl}/allproperties`}
             style={{
@@ -244,7 +244,7 @@ const NewPropertySubscriber = ({ subscriber = {}, property = {} }) => {
           >
             Browse More Properties
           </a>
-        </div>
+            </div>
 
         <div
           style={{
@@ -267,7 +267,7 @@ const NewPropertySubscriber = ({ subscriber = {}, property = {} }) => {
           >
             💡 <strong>Tip:</strong> Set your preferences on the website to receive more tailored property alerts.
           </p>
-        </div>
+            </div>
 
         <div
           style={{
@@ -314,8 +314,8 @@ const NewPropertySubscriber = ({ subscriber = {}, property = {} }) => {
             >
               Unsubscribe from notifications
             </a>
-          </p>
-        </div>
+              </p>
+            </div>
       </div>
     </div>
   );

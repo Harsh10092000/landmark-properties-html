@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import RequiredLogin from "@/components/common/RequiredLogin";
 import Loading from "@/components/common/Loading";
 import Error from "@/components/common/Error";
+import Step6 from "@/components/addProperty/step6";
 import { haryanaCities } from '@/components/addProperty/city.jsx';
 import { getSubDistrictsByCity } from '@/components/addProperty/subdistrict.jsx';
 import "@/components/addProperty/step-form.css";
@@ -85,6 +86,11 @@ function QuickListingContent() {
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formSubmit, setFormSubmit] = useState(false);
+  const [description, setDescription] = useState("");
+  const [pendingFormData, setPendingFormData] = useState(null);
+  const [autoSubmitAfterLogin, setAutoSubmitAfterLogin] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
+  const [successData, setSuccessData] = useState(null);
   
   // Form states
   const [adType, setAdType] = useState("Sale");
@@ -105,7 +111,6 @@ function QuickListingContent() {
   const [negotiable, setNegotiable] = useState(true);
   const [rented, setRented] = useState(false);
   const [corner, setCorner] = useState(false);
-  const [description, setDescription] = useState("");
   const [coverImage, setCoverImage] = useState(null);
   const [otherImages, setOtherImages] = useState([]);
 
@@ -119,7 +124,7 @@ function QuickListingContent() {
   const [availableSubDistricts, setAvailableSubDistricts] = useState([]);
   const [errors, setErrors] = useState({});
 
-  // Price formatting function (from step5.jsx)
+  // Price formatting function
   const priceFormat = (val) => {
     if (!val) return "e.g. ₹ 10,00,000";
     let num = parseInt(val.toString().replace(/[^0-9]/g, ""));
@@ -141,18 +146,50 @@ function QuickListingContent() {
     return `₹ ${formatted}${denomination}`;
   };
 
-  // Grace period: show loader first, then (if still unauthenticated) show login prompt
-  useEffect(() => {
-    let timer;
-    if (status === "unauthenticated") {
-      timer = setTimeout(() => setShowAuthPrompt(true), 350);
+  // Generate description based on form data
+  const generateDescription = useMemo(() => {
+    const type = propertySubType || propertyType || "Property";
+    const area = areaSize || "";
+    const areaUnitText = areaUnit || "";
+    const locationText = [subDistrict, city, state].filter(Boolean).join(", ");
+    const price = amount ? priceFormat(amount) : "";
+
+    let desc = "";
+    
+    if (type.includes("Apartment")) {
+      desc = `Looking for apartments for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? Discover this exceptional apartment${area ? ` spanning ${area} ${areaUnitText}` : ''}${locationText ? ` in the prime location of ${locationText}` : ''}. This modern apartment offers the perfect blend of comfort, convenience, and contemporary living. Designed with an open floor plan, the interiors are bright and airy, with large windows that fill every corner with natural light throughout the day. The layout ensures maximum space utilization and a smooth flow between rooms. The home is finished with modern fittings, premium flooring, and thoughtful details that elevate everyday living. Whether you are a family looking for comfort or a working professional seeking connectivity, this apartment offers an ideal lifestyle. ${price ? `Currently available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}This is an excellent opportunity to own${adType === "Rent" ? " or rent" : ""} a well-connected, spacious home in ${locationText || "Haryana"}. Contact us today to schedule a site visit and make this premium apartment yours!`;
+    } else if (type.includes("Independent House")) {
+      desc = `Searching for independent houses for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? This stunning independent house${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in the prestigious area of ${locationText}` : ''} is a true architectural masterpiece. The open layout is perfect for family gatherings and entertaining, with large windows that bring in natural light to every room. The design balances functionality with elegance, ensuring a lifestyle that is both practical and luxurious. Built with premium construction standards, this home offers timeless appeal. ${price ? `Available now for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}If you are seeking a well-connected, spacious, and comfortable independent house in ${locationText || "Haryana"}, this property is an excellent choice. Schedule a visit today and experience the grandeur of this home for yourself!`;
+    } else if (type.includes("Residential Land")) {
+      desc = `Find residential land for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This prime residential plot${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in the developing area of ${locationText}` : ''} is a great choice for building your dream home. The location ensures excellent connectivity, making it a promising investment for the future. The plot is well-drained, ready for construction, and offers flexibility for various architectural designs. ${price ? `Offered for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Secure your piece of land in ${locationText || "Haryana"} today and turn it into the home you've always envisioned. This is an opportunity you should not miss!`;
+    } else if (type.includes("Commercial Land")) {
+      desc = `Search for commercial land for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This commercial plot${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in the prime commercial hub of ${locationText}` : ''} is an excellent choice for business growth. With high visibility and accessibility, it is ideal for setting up offices, retail stores, restaurants, or other commercial establishments. The location guarantees strong foot traffic and business potential. ${price ? `Available now for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Don't miss this opportunity to establish or expand your business in ${locationText || "Haryana"}. This land offers long-term commercial growth potential!`;
     } else {
-      setShowAuthPrompt(false);
+      desc = `Search for properties for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This property${type ? ` (${type})` : ''}${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in ${locationText}` : ''} offers excellent potential. It can serve a variety of purposes depending on your needs. ${price ? `Available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Don't miss this chance to secure a valuable property in ${locationText || "Haryana"}. Contact us today for more information and a site visit!`;
     }
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [status]);
+
+    return desc.replace(/\s+/g, ' ').trim();
+  }, [propertySubType, propertyType, areaSize, areaUnit, subDistrict, city, state, amount, adType]);
+
+  // Auto-generate description when form fields change
+  useEffect(() => {
+    if (generateDescription && !description) {
+      setDescription(generateDescription);
+    }
+  }, [generateDescription, description]);
+
+  // Price formatting function (from step5.jsx)
+ 
+
+  // Handle auto-submit after login
+  useEffect(() => {
+    if (session && autoSubmitAfterLogin && pendingFormData) {
+      // User logged in and we have pending form data, auto-submit
+      submitFormData(pendingFormData);
+      setAutoSubmitAfterLogin(false);
+      setPendingFormData(null);
+    }
+  }, [session, autoSubmitAfterLogin, pendingFormData]);
 
   // Update sub-districts when city changes
   useEffect(() => {
@@ -270,20 +307,14 @@ function QuickListingContent() {
     if (!subDistrict.trim()) newErrors.subDistrict = "Sub District is required";
     if (!pinCode.trim()) newErrors.pinCode = "Pin Code is required";
     else if (!/^[1-9][0-9]{5}$/.test(pinCode)) newErrors.pinCode = "Please enter a valid 6-digit pin code";
+    if (!description.trim()) newErrors.description = "Property Description is required";
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!session) return;
-
-    setFormSubmit(true);
-    if (!validateForm()) {
-      return;
-    }
-
+  // Function to submit form data
+  const submitFormData = async (formData) => {
     setLoading(true);
     try {
       // Generate listing ID
@@ -291,14 +322,14 @@ function QuickListingContent() {
       
       // Create property URL
       const sanitize = (input) => input.toLowerCase().replace(/[\s.,]+/g, "-");
-      const url = sanitize(areaSize) + "-" + 
-                  sanitize(areaUnit) + "-" + 
-                  sanitize(propertySubType.split(",")[1]) + "-for-" + 
-                  sanitize(adType) + "-in-" + 
-                  sanitize(city) + "-" + listingId;
+      const url = sanitize(formData.areaSize) + "-" + 
+                  sanitize(formData.areaUnit) + "-" + 
+                  sanitize(formData.propertyType) + "-for-" + 
+                  sanitize(formData.adType) + "-in-" + 
+                  sanitize(formData.city) + "-" + listingId;
 
       // Combine address fields
-      const addressParts = [locality, subDistrict, city, state, pinCode].filter(Boolean);
+      const addressParts = [formData.locality, formData.subDistrict, formData.city, formData.state, formData.pinCode].filter(Boolean);
       const completeAddress = addressParts.join(", ");
 
       // Submit to API
@@ -308,75 +339,111 @@ function QuickListingContent() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          adType,
-          userType,
-          propertyType: propertySubType.split(",")[1],
-          propertySubType: propertySubType.split(",")[0],
-          amount,
-          areaSize,
-          areaUnit,
-          state,
-          city,
-          subDistrict,
-          locality,
-          pinCode,
+          ...formData,
           completeAddress,
-          facing,
-          ownership,
-          otherRooms,
-          negotiable,
-          rented,
-          corner,
-          description,
-          coverImage: coverImage?.uploadedName || "",
-          otherImages: otherImages.map(img => img.uploadedName).filter(Boolean),
           listingId,
           url,
           userId: session.user.id,
           userEmail: session.user.email
-        }),
+        })
       });
 
-      const result = await response.json();
-      
-      if (result.success) {
-        // Send notification emails
-        try {
-          await fetch('/api/property/send-notification', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              user: session.user,
-              property: {
-                id: listingId,
-                title: `${propertySubType.split(",")[0]} for ${adType} in ${city}`,
-                slug: listingId,
-                price: amount,
-                area: areaSize,
-                areaUnit: areaUnit,
-                city: city,
-                subDistrict: subDistrict,
-                propertyType: propertySubType.split(",")[1],
-                adType: adType,
-                url: `https://landmarkplots.com/${url}`
-              }
-            }),
-          });
-        } catch (emailError) {
-          console.error('Failed to send notification emails:', emailError);
-        }
-
-        // Redirect to success page or property page
-        router.push(`/${url}`);
+      if (response.ok) {
+        const result = await response.json();
+        setSuccessData({
+          listingId: result.listingId,
+          url: result.url,
+          propertyUrl: `https://landmarkplots.com/${result.url}`
+        });
+        setShowThankYou(true);
       } else {
-        alert(`Error: ${result.error}`);
+        const error = await response.json();
+        alert(`Error: ${error.message || 'Failed to list property'}`);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to submit property listing. Please try again.');
+      alert('An error occurred while submitting the form. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    setFormSubmit(true);
+    if (!validateForm()) {
+      return;
+    }
+
+    // If user is not logged in, save form data and show login prompt
+    if (!session) {
+      // Combine address fields
+      const addressParts = [locality, subDistrict, city, state, pinCode].filter(Boolean);
+      const completeAddress = addressParts.join(", ");
+
+      const formData = {
+        adType,
+        userType,
+        propertyType: propertySubType.split(",")[1],
+        propertySubType: propertySubType.split(",")[0],
+        amount,
+        areaSize,
+        areaUnit,
+        state,
+        city,
+        subDistrict,
+        locality,
+        pinCode,
+        completeAddress,
+        facing,
+        ownership,
+        otherRooms,
+        negotiable,
+        rented,
+        corner,
+        description,
+        coverImage: coverImage?.uploadedName || "",
+        otherImages: otherImages.map(img => img.uploadedName).filter(Boolean)
+      };
+      
+      setPendingFormData(formData);
+      setAutoSubmitAfterLogin(true);
+      setShowAuthPrompt(true);
+      return;
+    }
+
+    // User is logged in, submit directly
+    // Combine address fields
+    const addressParts = [locality, subDistrict, city, state, pinCode].filter(Boolean);
+    const completeAddress = addressParts.join(", ");
+
+    const formData = {
+      adType,
+      userType,
+      propertyType: propertySubType.split(",")[1],
+      propertySubType: propertySubType.split(",")[0],
+      amount,
+      areaSize,
+      areaUnit,
+      state,
+      city,
+      subDistrict,
+      locality,
+      pinCode,
+      completeAddress,
+      facing,
+      ownership,
+      otherRooms,
+      negotiable,
+      rented,
+      corner,
+      description,
+      coverImage: coverImage?.uploadedName || "",
+      otherImages: otherImages.map(img => img.uploadedName).filter(Boolean)
+    };
+    
+    await submitFormData(formData);
   };
 
   return (
@@ -387,15 +454,17 @@ function QuickListingContent() {
       
       {showAuthPrompt && <RequiredLogin />}
       
-      <div style={{ 
-        minHeight: "100vh", 
-        background: BG_GRADIENT, 
-        padding: "2rem 0",
-        filter: status === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', 
-        pointerEvents: status === "unauthenticated" ? 'none' : 'auto', 
-        opacity: status === "unauthenticated" ? 0.5 : 1, 
-        transition: 'filter 0.2s, opacity 0.2s' 
-      }}>
+      {showThankYou ? (
+        <Step6 
+          listingId={successData?.listingId} 
+          proUrl={successData?.propertyUrl}  
+        />
+      ) : (
+        <div style={{ 
+          minHeight: "100vh", 
+          background: BG_GRADIENT, 
+          padding: "2rem 0"
+        }}>
         <div className="container h-100">
           <div className="row h-100">
             <div className="col-md-4 h-100">
@@ -423,31 +492,17 @@ function QuickListingContent() {
                 {/* Useful Information Section */}
                 <div className="sidebar-info-section">
                   <div className="info-card">
-                    <h4>📋 Required Fields</h4>
-                    <ul>
-                      <li>Ad Type (Sale/Rent)</li>
-                      <li>Property Type & Sub Type</li>
-                      <li>Expected Amount</li>
-                      <li>Area Plot Size</li>
-                      <li>City & Locality</li>
-                      <li>Pin Code</li>
-                    </ul>
-                  </div>
-
-                  <div className="info-card">
-                    <h4>💡 Tips for Better Listing</h4>
+                    <h4>💡 Quick Tips</h4>
                     <ul>
                       <li>Add high-quality images</li>
-                      <li>Write detailed description</li>
                       <li>Set competitive pricing</li>
                       <li>Choose accurate location</li>
-                      <li>Select proper property type</li>
                     </ul>
                   </div>
 
                   <div className="info-card">
                     <h4>📞 Need Help?</h4>
-                    <p>Our team is here to assist you with your property listing.</p>
+                    <p>Our team is here to assist you.</p>
                     <div className="contact-info">
                       <div>📱 +91 99967 16787</div>
                       <div>📧 info@landmarkplots.com</div>
@@ -568,22 +623,14 @@ function QuickListingContent() {
                     {/* Expected Amount */}
                     <div className="col-md-6">
                       <div className="step1-label">💰 Expected Amount <span style={{color:'#ec161e'}}>*</span></div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <input
-                          type="text"
-                          className="step-input"
-                          placeholder="e.g. ₹ 10,00,000"
-                          value={amount}
-                          onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ""))}
-                          required
-                          style={{ flex: 1 }}
-                        />
-                        {areaUnit ? (
-                          <span className="unit-chip" title="Price unit is based on your plot size unit">
-                            ₹ Price per {String(areaUnit).toLowerCase()}
-                          </span>
-                        ) : null}
-                      </div>
+                      <input
+                        type="text"
+                        className="step-input"
+                        placeholder="e.g. ₹ 10,00,000"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ""))}
+                        required
+                      />
                       {formSubmit && errors.amount && <div className="step-error-msg">{errors.amount}</div>}
                       {amount && (
                         <div className="price-formatted">{priceFormat(amount)}</div>
@@ -591,10 +638,10 @@ function QuickListingContent() {
                     </div>
 
                     {/* Area Size */}
-                    <div className="col-md-12">
+                    <div className="col-md-6">
                       <div className="step1-label">📏 Area Plot Size <span style={{color:'#ec161e'}}>*</span></div>
                       <div className="row">
-                        <div className="col-md-4 remove-padding-right-with-dropdown">
+                        <div className="col-md-8 remove-padding-right-with-dropdown">
                           <input
                             type="text"
                             className={`step-input ${formSubmit && errors.areaSize ? 'error-input' : ''}`}
@@ -605,7 +652,7 @@ function QuickListingContent() {
                           />
                           {formSubmit && errors.areaSize && <div className="error-message">{errors.areaSize}</div>}
                         </div>
-                        <div className="col-md-2 remove-padding-left-with-dropdown">
+                        <div className="col-md-4 remove-padding-left-with-dropdown">
                           <select
                             className="step-select cursor-pointer"
                             value={areaUnit}
@@ -824,6 +871,24 @@ function QuickListingContent() {
                       </div>
                     </div>
 
+                    {/* Description */}
+                    <div className="col-md-12">
+                      <div className="step1-label">📝 Property Description <span style={{color:'#ec161e'}}>*</span></div>
+                      <textarea
+                        className="step-input"
+                        placeholder="Describe your property in detail..."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                        rows={4}
+                        style={{ resize: 'vertical', minHeight: '100px' }}
+                      />
+                      {formSubmit && errors.description && <div className="step-error-msg">{errors.description}</div>}
+                      <div style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+                        💡 Description is auto-generated based on your property details. You can edit it as needed.
+                      </div>
+                    </div>
+
                     {/* Image Upload */}
                     <div className="col-md-12">
                       <div className="step1-label">📸 Property Images</div>
@@ -921,7 +986,7 @@ function QuickListingContent() {
                       <div className="step1-label">📝 Property Description</div>
                       <textarea
                         className="step-input"
-                        style={{ minHeight: 80, resize: 'vertical' }}
+                        style={{ minHeight: 90, resize: 'vertical' }}
                         placeholder="Describe your property in detail..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -950,58 +1015,14 @@ function QuickListingContent() {
                 </div>
               </div>
 
-              {/* Help Card */}
-              <div style={{
-                background: "#fff",
-                borderRadius: "20px",
-                boxShadow: "0 8px 32px 0 rgba(31,38,135,0.1)",
-                padding: "1.5rem",
-                textAlign: "center"
-              }}>
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem",
-                  marginBottom: "0.5rem"
-                }}>
-                  <div style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "50%",
-                    background: "#f4f7ff",
-                    color: BLUE,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: "700",
-                    fontSize: "18px"
-                  }}>
-                    ?
-                  </div>
-                  <span style={{
-                    color: "#6b7280",
-                    fontWeight: "600",
-                    fontSize: "1rem"
-                  }}>
-                    Having troubles?
-                  </span>
-                </div>
-                <Link href="/contactus" style={{
-                  color: BLUE,
-                  fontWeight: "700",
-                  textDecoration: "underline",
-                  fontSize: "1rem"
-                }}>
-                  Contact us
-                </Link>
-              </div>
+            
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      )}
 
       <style jsx>{`
         .stepper-card {
@@ -1184,20 +1205,20 @@ function QuickListingContent() {
           flex: 1;
           width: 100%;
           margin: 1rem 0;
-          overflow-y: auto;
+          overflow-y: visible;
         }
         .info-card {
           background: #fff;
-          border-radius: 16px;
-          padding: 1.5rem;
-          margin-bottom: 1.5rem;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          border-radius: 12px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .info-card h4 {
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 700;
           color: #1f2937;
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
         .info-card ul {
           list-style: none;
@@ -1205,9 +1226,9 @@ function QuickListingContent() {
           margin: 0;
         }
         .info-card li {
-          font-size: 16px;
+          font-size: 14px;
           color: #374151;
-          padding: 0.75rem 0;
+          padding: 0.5rem 0;
           border-bottom: 1px solid #e5e7eb;
           font-weight: 500;
         }
@@ -1215,17 +1236,17 @@ function QuickListingContent() {
           border-bottom: none;
         }
         .info-card p {
-          font-size: 16px;
+          font-size: 14px;
           color: #374151;
-          margin-bottom: 1rem;
-          line-height: 1.5;
+          margin-bottom: 0.75rem;
+          line-height: 1.4;
         }
         .contact-info {
-          font-size: 16px;
+          font-size: 14px;
           color: #374151;
         }
         .contact-info div {
-          padding: 0.5rem 0;
+          padding: 0.25rem 0;
           font-weight: 500;
         }
         .price-formatted {
