@@ -119,6 +119,62 @@ export async function POST(req) {
       [builtUrl, propertyId]
     );
 
+    // Send notification emails (same behavior as add-property) - fire-and-forget
+    try {
+      // Build absolute base URL for server-side fetch
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+
+      // Fetch property details to include in email
+      const [propertyRows] = await pool.query(
+        `SELECT 
+          pro_id, listing_id, pro_url, pro_type, pro_ad_type, 
+          pro_city, pro_state, pro_area_size, pro_area_size_unit,
+          pro_amt, pro_amt_unit, pro_cover_image, pro_sub_cat, pro_sub_district
+        FROM property_module WHERE pro_id = ?`,
+        [propertyId]
+      );
+
+      let userForEmail = null;
+      try {
+        const [userRows] = await pool.query('SELECT id, name, email, phone FROM users WHERE id = ? LIMIT 1', [userId]);
+        if (userRows && userRows.length > 0) {
+          userForEmail = userRows[0];
+        }
+      } catch (e) {
+        // ignore lookup errors, fallback below
+      }
+
+      if (propertyRows && propertyRows.length > 0) {
+        const p = propertyRows[0];
+        const propertyData = {
+          id: p.listing_id,
+          title: `${p.pro_type || 'Property'} for ${p.pro_ad_type || 'Sale'} in ${p.pro_city || 'Haryana'}`,
+          slug: p.listing_id,
+          price: p.pro_amt,
+          priceUnit: p.pro_amt_unit || 'Lakh',
+          area: p.pro_area_size,
+          areaUnit: p.pro_area_size_unit,
+          city: p.pro_city,
+          subDistrict: p.pro_sub_district,
+          propertyType: p.pro_type,
+          adType: p.pro_ad_type,
+          coverImage: p.pro_cover_image,
+          url: `https://landmarkplots.com/${p.pro_url}`
+        };
+
+        const userPayload = userForEmail || { id: userId, email: userEmail };
+
+        fetch(`${baseUrl}/api/property/send-notification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user: userPayload, property: propertyData })
+        }).catch(() => {});
+      }
+    } catch (e) {
+      // Do not block success on email failures
+      console.error('Quick listing: failed to trigger notification emails', e);
+    }
+
     return NextResponse.json({
       success: true,
       propertyId,

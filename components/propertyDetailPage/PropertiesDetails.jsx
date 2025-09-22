@@ -50,7 +50,7 @@ const PropertiesDetails = ({propertyData, handleNullString}) => {
         </li>
           <li className="properties__details--info__list">
             <span className="properties__details--info__title"><span className='pro-icon'><IconDimensions /></span>Facing Road Width</span>
-            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_facing_road_width) !== 0 ? handleNullString(propertyData.pro_facing_road_width) + " " + propertyData.pro_facing_road_unit : "-"}</span>
+            <span className="properties__details--info__subtitle">{handleNullString(propertyData.pro_facing_road_width) !== 0 && propertyData.pro_facing_road_width !== null ? handleNullString(propertyData.pro_facing_road_width) + " " + propertyData.pro_facing_road_unit : "-"}</span>
         </li>
         <li className="properties__details--info__list ">
             <span className="properties__details--info__title"><span className='pro-icon'><IconStairsUp /></span> Floor Number</span>
