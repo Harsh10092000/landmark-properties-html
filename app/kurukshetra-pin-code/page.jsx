@@ -1,9 +1,9 @@
 import React from "react";
 
 export const generateMetadata = () => ({
-  title: "Kurukshetra PIN Code 136118 - Head Office Details | Landmark Plots",
+  title: "Kurukshetra PIN Code 136118 (H.O) – Address, Timing, Delivery | Landmark Plots",
   description:
-    "Kurukshetra Head Office (H.O) PIN code is 136118. See office details: telephone, taluk, division, region, delivery status and related offices.",
+    "Kurukshetra Head Office PIN 136118 in Haryana. Quick answers for address format, timings, delivery status, division, region and helpline.",
   keywords: [
     "Kurukshetra pin code",
     "136118",
@@ -18,15 +18,15 @@ export const generateMetadata = () => ({
   openGraph: {
     type: "website",
     url: "https://landmarkplots.com/kurukshetra-pin-code",
-    title: "Kurukshetra PIN Code 136118 - Head Office Details | Landmark Plots",
+    title: "Kurukshetra PIN Code 136118 (H.O) – Address & Delivery | Landmark Plots",
     description:
-      "Kurukshetra Head Office (H.O) PIN code is 136118. See office details: telephone, taluk, division, region, delivery status and related offices.",
+      "Kurukshetra H.O 136118 – address format, timings, delivery status, taluk/division/region and helpline.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kurukshetra PIN Code 136118 - Head Office Details",
+    title: "Kurukshetra 136118 – Head Post Office details",
     description:
-      "Kurukshetra H.O PIN 136118 with phone, taluk, division, region and delivery status.",
+      "Quick answers: address format, delivery status, timings and phone for Kurukshetra H.O 136118.",
   },
   robots: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
   alternates: { canonical: "https://landmarkplots.com/kurukshetra-pin-code" },
@@ -45,7 +45,7 @@ const page = async () => {
             name: 'Kurukshetra PIN Code 136118',
             url: 'https://landmarkplots.com/kurukshetra-pin-code',
             description:
-              'Kurukshetra Head Office (H.O) PIN code 136118 with office details, phone and delivery status.',
+              'Kurukshetra H.O (Head Office) PIN 136118 – quick answers on address format, timings, delivery status and helpline.',
             breadcrumb: {
               '@type': 'BreadcrumbList',
               itemListElement: [

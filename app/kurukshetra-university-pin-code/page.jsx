@@ -1,9 +1,9 @@
 import React from "react";
 
 export const generateMetadata = () => ({
-  title: "Kurukshetra University PIN Code 136119 - Campus & Nearby | Landmark Plots",
+  title: "Kurukshetra University PIN Code 136119 – KUK Sub Office | Landmark Plots",
   description:
-    "Kurukshetra University (KUK) PIN code is 136119. See campus and nearby areas in Kurukshetra, Haryana with postal details useful for address, courier and property assistance.",
+    "Kurukshetra University (KUK) Sub Office PIN 136119. Quick answers: address format, phone, delivery status, taluk/division/region and nearby areas.",
   keywords: [
     "Kurukshetra University pin code",
     "KUK pin code 136119",
@@ -15,14 +15,14 @@ export const generateMetadata = () => ({
   openGraph: {
     type: "website",
     url: "https://landmarkplots.com/kurukshetra-university-pin-code",
-    title: "Kurukshetra University PIN Code 136119 - Campus & Nearby | Landmark Plots",
+    title: "Kurukshetra University PIN 136119 – Postal Details | Landmark Plots",
     description:
-      "Kurukshetra University (KUK) PIN code is 136119. See campus and nearby areas in Kurukshetra, Haryana with postal details useful for address, courier and property assistance.",
+      "KUK Sub Office 136119 – delivery status, address format, telephone, taluk, division, region and nearby campus areas.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kurukshetra University PIN 136119 - Postal Details",
-    description: "KUK Sub Office PIN 136119 with delivery status, taluk, division and helpline.",
+    title: "KUK PIN 136119 – Sub Office details",
+    description: "Address format, delivery status, taluk/division/region and helpline for Kurukshetra University S.O.",
   },
   robots: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
   alternates: { canonical: "https://landmarkplots.com/kurukshetra-university-pin-code" },

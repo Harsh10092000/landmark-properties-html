@@ -10,12 +10,16 @@ import Step6 from "@/components/addProperty/step6";
 import { haryanaCities } from '@/components/addProperty/city.jsx';
 import { getSubDistrictsByCity } from '@/components/addProperty/subdistrict.jsx';
 import "@/components/addProperty/step-form.css";
+import QuickListingFaq from "@/components/quickListing/QuickListingFaq";
+import WhyQuickListing from "@/components/quickListing/WhyQuickListing";
 
 const GREEN = "#1dbf73";
 const BLUE = "#ec161e";
 const GRAY = "#e0e0e0";
 const DARK_GRAY = "#b0b0b0";
 const BG_GRADIENT = "linear-gradient(135deg, #f7faff 60%, #eaf1fa 100%)";
+const STORAGE_KEY = 'quickListingDraftV1';
+const AUTOSUBMIT_KEY = 'quickListingAutoSubmit';
 
 // Data from step1.jsx
 const adTypes = [
@@ -178,8 +182,69 @@ function QuickListingContent() {
     }
   }, [generateDescription, description]);
 
-  // Price formatting function (from step5.jsx)
- 
+  // Load draft from localStorage on mount (if user returned from login)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const draft = JSON.parse(saved);
+        if (draft) {
+          setAdType(draft.adType || "Sale");
+          setUserType(draft.userType || "Owner");
+          setPropertyType(draft.propertyType || "Residential");
+          // Reconstruct combined subType value
+          if (draft.propertySubType && draft.propertyType) {
+            setPropertySubType(`${draft.propertySubType},${draft.propertyType}`);
+          }
+          setAmount(draft.amount || "");
+          setAreaSize(draft.areaSize || "");
+          setAreaUnit(draft.areaUnit || "Marla");
+          setState(draft.state || "Haryana");
+          setCity(draft.city || "");
+          setCitySearch(draft.city || "");
+          setSubDistrict(draft.subDistrict || "");
+          setSubDistrictSearch(draft.subDistrict || "");
+          setLocality(draft.locality || "");
+          setPinCode(draft.pinCode || "");
+          setFacing(draft.facing || "");
+          setOwnership(draft.ownership || "");
+          setOtherRooms(Array.isArray(draft.otherRooms) ? draft.otherRooms : []);
+          setNegotiable(typeof draft.negotiable === 'boolean' ? draft.negotiable : true);
+          setRented(typeof draft.rented === 'boolean' ? draft.rented : false);
+          setCorner(typeof draft.corner === 'boolean' ? draft.corner : false);
+          setDescription(draft.description || "");
+          // We can't restore File blobs reliably; keep image names if any
+          if (draft.coverImage) setCoverImage({ uploadedName: draft.coverImage });
+          if (Array.isArray(draft.otherImages)) setOtherImages(draft.otherImages.map(name => ({ uploadedName: name })));
+
+          setPendingFormData(draft);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  // If logged in and autosubmit requested (from a previous attempt), auto-submit restored draft
+  useEffect(() => {
+    if (session) {
+      const shouldAuto = typeof window !== 'undefined' && localStorage.getItem(AUTOSUBMIT_KEY) === '1';
+      if (shouldAuto) {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try {
+            const draft = JSON.parse(saved);
+            if (draft) {
+              submitFormData(draft);
+              localStorage.removeItem(AUTOSUBMIT_KEY);
+            }
+          } catch {}
+        } else {
+          localStorage.removeItem(AUTOSUBMIT_KEY);
+        }
+      }
+    }
+  }, [session]);
 
   // Handle auto-submit after login
   useEffect(() => {
@@ -355,6 +420,11 @@ function QuickListingContent() {
           url: result.url,
           propertyUrl: `https://landmarkplots.com/${result.url}`
         });
+        // Clear any saved draft on success
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(AUTOSUBMIT_KEY);
+        } catch {}
         setShowThankYou(true);
       } else {
         const error = await response.json();
@@ -406,7 +476,12 @@ function QuickListingContent() {
         coverImage: coverImage?.uploadedName || "",
         otherImages: otherImages.map(img => img.uploadedName).filter(Boolean)
       };
-      
+      // Persist draft to localStorage for post-login restore
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+        localStorage.setItem(AUTOSUBMIT_KEY, '1');
+      } catch {}
+
       setPendingFormData(formData);
       setAutoSubmitAfterLogin(true);
       setShowAuthPrompt(true);
@@ -448,9 +523,61 @@ function QuickListingContent() {
 
   return (
     <>
-      <title>Quick Property Listing | Landmark Plots</title>
-      <meta name="description" content="Quick Property Listing | Landmark Plots" />
+      <title>Quick Property Listing in Haryana | Landmark Plots</title>
+      <meta name="description" content="List your property fast in Haryana. Quick Listing by Landmark Plots creates a professional page with photos, price, locality and LM-ID URL—built to rank and convert." />
       <meta name="canonical" content="https://landmarkplots.com/quick-listing" />
+      <meta name="keywords" content="quick property listing Haryana, HSVP sectors listing, list property fast, sell house online, rent property Haryana, Landmark Plots listing, post property free" />
+      <meta name="robots" content="index,follow,max-image-preview:large" />
+      <meta name="author" content="Landmark Plots" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Quick Property Listing in Haryana | Landmark Plots" />
+      <meta property="og:description" content="Create a professional, SEO‑ready property page in minutes. Photos, price, location and LM‑ID link—optimised for buyers in Haryana and HSVP sectors." />
+      <meta property="og:url" content="https://landmarkplots.com/quick-listing" />
+      <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Quick Property Listing in Haryana | Landmark Plots" />
+      <meta name="twitter:description" content="Launch your listing fast. Structured data and intent‑based copy help buyers find and contact you sooner." />
+      <meta name="twitter:image" content="https://landmarkplots.com/uploads/default.jpg" />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Quick Property Listing in Haryana | Landmark Plots',
+        url: 'https://landmarkplots.com/quick-listing',
+        inLanguage: 'en-IN',
+        description: 'List your property fast in Haryana. Professional page with photos, price, locality and LM‑ID URL—built to rank and convert.',
+        about: [{ '@type': 'Place', name: 'Haryana' }, { '@type': 'Organization', name: 'Landmark Plots' }],
+        isPartOf: { '@type': 'WebSite', name: 'Landmark Plots', url: 'https://landmarkplots.com' },
+        primaryImageOfPage: { '@type': 'ImageObject', url: 'https://landmarkplots.com/uploads/default.jpg' },
+        breadcrumb: {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://landmarkplots.com/' },
+            { '@type': 'ListItem', position: 2, name: 'Quick Listing', item: 'https://landmarkplots.com/quick-listing' }
+          ]
+        },
+        potentialAction: [{
+          '@type': 'ContactAction',
+          target: 'https://landmarkplots.com/contactus',
+          name: 'Contact Listing Expert'
+        }],
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['.support-title', '.hsvp-faq-q']
+        }
+      })}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'How do I list my property fast in Haryana?', acceptedAnswer: { '@type': 'Answer', text: 'Open Quick Listing, add price, area and location, upload photos and submit. Your LM‑ID URL is created instantly and the page goes live.' } },
+          { '@type': 'Question', name: 'Do I need to create an account first?', acceptedAnswer: { '@type': 'Answer', text: 'No. Fill the form freely. When you press submit we prompt login/registration and auto‑restore your data to publish.' } },
+          { '@type': 'Question', name: 'What photo formats are supported?', acceptedAnswer: { '@type': 'Answer', text: 'Upload JPG, PNG or WEBP. Add one cover photo and up to 10 gallery images for best results.' } },
+          { '@type': 'Question', name: 'How is the property URL formed?', acceptedAnswer: { '@type': 'Answer', text: 'We generate a clean city/location URL and append your unique LM‑XXXXXXX listing ID for sharing and tracking.' } },
+          { '@type': 'Question', name: 'Can I edit details after publishing?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You can request updates to price, photos and description via our support team.' } },
+          { '@type': 'Question', name: 'Does this work for HSVP sector properties?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Quick Listing supports Haryana cities and HSVP sectors with locality and PIN code inputs.' } }
+        ]
+      })}} />
       
       {showAuthPrompt && <RequiredLogin />}
       
@@ -1020,6 +1147,30 @@ function QuickListingContent() {
               </div>
             </div>
           </div>
+          {/* Supporting Sections below the form */}
+          <WhyQuickListing />
+
+          {/* CTA Section */}
+          <section className="sect-padding">
+            <div className="container">
+              <div className="hsvp-super-cta">
+                <div className="hsvp-super-cta__left">
+                  <div className="hsvp-super-cta__icon" aria-hidden>📣</div>
+                  <div>
+                    <h3 className="hsvp-super-cta__title">Need help listing your property in Haryana?</h3>
+                    <p className="hsvp-super-cta__text">Talk to Landmark Plots specialists for pricing strategy, documents, HSVP guidance and buyer outreach.</p>
+                  </div>
+                </div>
+                <div className="hsvp-super-cta__actions">
+                  <a className="btn hsvp-btn" href="/contactus">Contact Us</a>
+                  <a className="btn hsvp-btn-alt" href="/allproperties">Browse Properties</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+         <QuickListingFaq  />
         </div>
       </div>
       )}
@@ -1276,7 +1427,115 @@ function QuickListingContent() {
             padding: 1.5rem 0.5rem !important;
           }
         }
+        
+        /* Support sections styling */
+        .support-card {
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 8px 24px rgba(31,38,135,0.08);
+          padding: 1.5rem;
+        }
+        .support-title {
+          font-size: 22px;
+          font-weight: 800;
+          color: #1f2937;
+          margin-bottom: 0.75rem;
+        }
+        .support-subtitle { 
+          color: #4b5563; 
+          margin-bottom: 1rem; 
+        }
+        .support-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+        .support-item { 
+          background: #f9fafb; 
+          border-radius: 12px; 
+          padding: 1rem; 
+        }
+        .support-item h3 {
+          font-size: 16px;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 0.5rem;
+        }
+        .support-item p {
+          font-size: 14px;
+          color: #6b7280;
+          margin: 0;
+        }
+        .how-list { 
+          padding-left: 1.25rem; 
+          margin: 0 0 1rem 0; 
+          color: #374151; 
+        }
+        .support-cta {
+          display: inline-block;
+          background: #1dbf73;
+          color: #fff;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-weight: 700;
+          text-decoration: none;
+        }
+        .faq-card { 
+          background: #fff; 
+          border-radius: 16px; 
+          box-shadow: 0 8px 24px rgba(31,38,135,0.08); 
+          padding: 1.5rem; 
+        }
+        .faq-grid { 
+          display: grid; 
+          grid-template-columns: repeat(2, 1fr); 
+          gap: 0.75rem 1.5rem; 
+        }
+        .faq-item { 
+          background: #f9fafb; 
+          border-radius: 12px; 
+          padding: 0.75rem 1rem; 
+        }
+        .faq-item summary { 
+          cursor: pointer; 
+          font-weight: 700; 
+          color: #111827; 
+        }
+        .faq-answer { 
+          margin-top: 0.5rem; 
+          color: #374151; 
+        }
+        @media (max-width: 768px){ 
+          .support-grid{ grid-template-columns: 1fr; } 
+          .faq-grid{ grid-template-columns: 1fr; } 
+        }
+        
+        /* HSVP-style FAQ and CTA */
+        .sect-padding{padding-top:20px;padding-bottom:20px;}
+        .hsvp-h2{font-weight:800;font-size:clamp(18px,2.4vw,26px);margin-top:22px;margin-bottom:10px;color:#0f172a}
+        .hsvp-faq{margin-bottom:10px;padding:14px 16px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:0 4px 16px rgba(2,6,23,.05);transition:all 0.2s ease}
+        .hsvp-faq:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(2,6,23,.08)}
+        .hsvp-faq summary::-webkit-details-marker{display:none}
+        .hsvp-faq summary::before{content:"▶";color:#1a9050;margin-right:8px;font-size:12px;transition:transform 0.2s ease}
+        .hsvp-faq[open] summary::before{transform:rotate(90deg)}
+        .hsvp-faq-q{cursor:pointer;font-weight:700;color:#0f172a;font-size:15px;line-height:1.4}
+        .hsvp-faq-a{margin-top:8px;color:#475569;font-size:14px;line-height:1.5}
+        .hsvp-super-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #e2e8f0;border-radius:18px;padding:18px 20px;background:linear-gradient(90deg,#f7fafc,#eef2ff)}
+        .hsvp-super-cta__left{display:flex;align-items:center;gap:12px}
+        .hsvp-super-cta__icon{width:44px;height:44px;border-radius:12px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
+        .hsvp-super-cta__title{margin:0;font-weight:800}
+        .hsvp-super-cta__text{margin:2px 0 0 0;color:#475569}
+        .hsvp-super-cta__actions{display:flex;gap:10px}
+        .hsvp-btn{background:linear-gradient(90deg,#1a9050,#2d3748);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-weight:800; font-size: 15px;text-decoration:none;}
+        .hsvp-btn-alt{background:#0f172a;color:#fff;border:none;border-radius:12px;padding:12px 18px;font-weight:800; font-size: 15px;text-decoration:none;}
+        .hsvp-btn:hover{opacity:.92}
+        .hsvp-btn-alt:hover{opacity:.92}
+        @media (max-width: 768px){
+          .hsvp-super-cta{flex-direction:column;text-align:center;}
+          .hsvp-super-cta__actions{justify-content:center;}
+        }
       `}</style>
+  
     </>
   );
 }
