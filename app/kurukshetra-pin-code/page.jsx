@@ -1,12 +1,11 @@
 import React from "react";
 
 export const generateMetadata = () => ({
-  title: "Kurukshetra PIN Code 136118 (H.O) – Address, Timing, Delivery | Landmark Plots",
+  title: "Kurukshetra PIN Code (H.O) – Address, Timing, Delivery | Landmark Plots",
   description:
-    "Kurukshetra Head Office PIN 136118 in Haryana. Quick answers for address format, timings, delivery status, division, region and helpline.",
+    "Kurukshetra Head Office PIN in Haryana. Quick answers for address format, timings, delivery status, division, region and helpline.",
   keywords: [
     "Kurukshetra pin code",
-    "136118",
     "Kurukshetra Haryana pin code",
     "Kurukshetra head office pin",
     "Ambala HQ region pin",
@@ -42,15 +41,15 @@ const page = async () => {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebPage',
-            name: 'Kurukshetra PIN Code 136118',
+            name: 'Kurukshetra PIN Code',
             url: 'https://landmarkplots.com/kurukshetra-pin-code',
             description:
-              'Kurukshetra H.O (Head Office) PIN 136118 – quick answers on address format, timings, delivery status and helpline.',
+              'Kurukshetra H.O (Head Office) PIN – quick answers on address format, timings, delivery status and helpline.',
             breadcrumb: {
               '@type': 'BreadcrumbList',
               itemListElement: [
                 { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://landmarkplots.com/' },
-                { '@type': 'ListItem', position: 2, name: 'Kurukshetra PIN Code 136118', item: 'https://landmarkplots.com/kurukshetra-pin-code' }
+                { '@type': 'ListItem', position: 2, name: 'Kurukshetra PIN Code', item: 'https://landmarkplots.com/kurukshetra-pin-code' }
               ]
             }
           })

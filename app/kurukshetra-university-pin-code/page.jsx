@@ -6,9 +6,9 @@ export const generateMetadata = () => ({
     "Kurukshetra University (KUK) Sub Office PIN. Quick answers: address format, phone, delivery status, taluk/division/region and nearby areas.",
   keywords: [
     "Kurukshetra University pin code",
-    "KUK pin code 136119",
+    "KUK pin code",
     "Kurukshetra University postal code",
-    "Kurukshetra Haryana 136119",
+    "Kurukshetra Haryana",
     "Kurukshetra pin code list",
     "Thanesar pin code",
   ],
@@ -38,14 +38,14 @@ const page = async () => {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebPage',
-            name: 'Kurukshetra University PIN Code 136119',
+            name: 'Kurukshetra University PIN Code',
             url: 'https://landmarkplots.com/kurukshetra-university-pin-code',
-            description: 'Kurukshetra University (KUK) Sub Office PIN 136119 with postal details and nearby areas.',
+            description: 'Kurukshetra University (KUK) Sub Office PIN with postal details and nearby areas.',
             breadcrumb: {
               '@type': 'BreadcrumbList',
               itemListElement: [
                 { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://landmarkplots.com/' },
-                { '@type': 'ListItem', position: 2, name: 'KUK PIN 136119', item: 'https://landmarkplots.com/kurukshetra-university-pin-code' }
+                { '@type': 'ListItem', position: 2, name: 'KUK PIN', item: 'https://landmarkplots.com/kurukshetra-university-pin-code' }
               ]
             }
           })
