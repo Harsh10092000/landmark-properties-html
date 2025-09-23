@@ -18,15 +18,15 @@ export const generateMetadata = () => ({
   openGraph: {
     type: "website",
     url: "https://landmarkplots.com/kurukshetra-pin-code",
-    title: "Kurukshetra PIN Code 136118 (H.O) – Address & Delivery | Landmark Plots",
+    title: "Kurukshetra PIN Code (H.O) – Address & Delivery | Landmark Plots",
     description:
-      "Kurukshetra H.O 136118 – address format, timings, delivery status, taluk/division/region and helpline.",
+      "Kurukshetra H.O – address format, timings, delivery status, taluk/division/region and helpline.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kurukshetra 136118 – Head Post Office details",
+    title: "Kurukshetra – Head Post Office details",
     description:
-      "Quick answers: address format, delivery status, timings and phone for Kurukshetra H.O 136118.",
+      "Quick answers: address format, delivery status, timings and phone for Kurukshetra H.O .",
   },
   robots: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
   alternates: { canonical: "https://landmarkplots.com/kurukshetra-pin-code" },
