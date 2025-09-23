@@ -91,6 +91,7 @@ function QuickListingContent() {
   const [loading, setLoading] = useState(false);
   const [formSubmit, setFormSubmit] = useState(false);
   const [description, setDescription] = useState("");
+  const [userEditedDescription, setUserEditedDescription] = useState(false);
   const [pendingFormData, setPendingFormData] = useState(null);
   const [autoSubmitAfterLogin, setAutoSubmitAfterLogin] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
@@ -150,37 +151,116 @@ function QuickListingContent() {
     return `₹ ${formatted}${denomination}`;
   };
 
+  // Ensure description has at least 400 words by appending helpful, relevant copy
+  const ensureMinWords = (baseText, context) => {
+    try {
+      const countWords = (t) => (t || '').trim().split(/\s+/).filter(Boolean).length;
+      const trimToMax = (t, max) => {
+        const words = (t || '').trim().split(/\s+/).filter(Boolean);
+        if (words.length <= max) return (t || '').trim();
+        return words.slice(0, max).join(' ').trim();
+      };
+      let text = (baseText || '').trim();
+      const minWords = 80;
+      if (countWords(text) >= minWords) return text;
+
+      const { type, locationText, area, areaUnitText, adType, price, ownership, facing, otherRooms, negotiable, corner, rented } = context || {};
+      const genericPara = `This ${type ? type.toLowerCase() : 'property'} is positioned to serve everyday needs with reliable access to key roads, markets, healthcare and education. The neighbourhood around ${locationText || 'the locality'} supports a comfortable lifestyle with a calm residential feel and the convenience of daily essentials within short reach. ${area ? `The ${area} ${areaUnitText} layout supports practical planning with room for functional zoning and furnishing.` : ''} The broader ${locationText || 'Haryana'} region has seen consistent demand from end users and investors, supported by improving infrastructure and steady buyer interest across ${adType === 'Rent' ? 'rental' : 'sale'} segments.`;
+
+      const usabilityPara = `For day-to-day life, this ${type ? type.toLowerCase() : 'home'} offers a straightforward setup that is easy to maintain. ${facing ? `The ${facing.toLowerCase()} facing helps with light and ventilation,` : 'Natural light and ventilation have been considered,'} supporting relaxed living during most hours. ${otherRooms && otherRooms.length ? `Additional rooms such as ${otherRooms.join(', ')} allow flexible use for prayer, storage or study.` : ''} ${ownership ? `Ownership type is ${ownership.toLowerCase()},` : ''} and ${corner ? 'corner placement adds visibility and ease of access,' : 'the placement offers balanced privacy and access,'} which is appreciated by practical home seekers.`;
+
+      const connectivityPara = `${locationText ? `Connectivity in ${locationText}` : 'Connectivity in the area'} links you with routine needs and employment hubs through local streets and main corridors. Nearby facilities for shopping, healthcare and daily services reduce commute time and improve convenience. The wider real estate micro-market has stable movement, indicating balanced availability and buyer activity for ${adType === 'Rent' ? 'rental' : 'purchase'} decisions.`;
+
+      const clarityPara = `${price ? `The current asking price is ${price}. ` : ''}${negotiable ? 'Price is negotiable subject to discussion with genuine buyers. ' : ''}${rented ? 'The property is currently on rent; timelines and handover can be planned accordingly. ' : ''}Clear, complete details are provided to support an informed decision. You can request a site visit to review the space, surroundings and approach roads in person before taking the next step.`;
+
+      const callToAction = `If you are exploring options in ${locationText || 'Haryana'}, this listing is a practical fit for buyers and tenants who value location, straightforward planning and long-term usability. For more information or to schedule a visit, please share your preferred time and we will coordinate accordingly.`;
+
+      const blocks = [genericPara, usabilityPara, connectivityPara, clarityPara, callToAction];
+      for (const block of blocks) {
+        if (countWords(text) >= minWords) break;
+        text = `${text} ${block}`.trim();
+      }
+      // If still short, repeat generic context until threshold
+      while (countWords(text) < minWords) {
+        text = `${text} ${genericPara}`.trim();
+      }
+      // Cap to ~200 words
+      return trimToMax(text, 100);
+    } catch {
+      return (baseText || '').trim();
+    }
+  };
+
   // Generate description based on form data
   const generateDescription = useMemo(() => {
-    const type = propertySubType || propertyType || "Property";
+    const [subTypeName = propertyType, mainTypeName = propertyType] = propertySubType ? propertySubType.split(",") : [propertyType, propertyType];
+    const type = subTypeName || propertyType || "Property";
     const area = areaSize || "";
     const areaUnitText = areaUnit || "";
     const locationText = [subDistrict, city, state].filter(Boolean).join(", ");
     const price = amount ? priceFormat(amount) : "";
 
+    const ownershipText = ownership ? `Ownership: ${ownership}. ` : "";
+    const otherRoomsText = otherRooms && otherRooms.length ? `Includes ${otherRooms.join(", ")}. ` : "";
+    const cornerText = corner ? "Corner property. " : "";
+    const rentalStatusText = rented ? "Currently rented. " : "";
+    const negotiableText = negotiable ? "Price is negotiable. " : "";
+
     let desc = "";
     
     if (type.includes("Apartment")) {
-      desc = `Looking for apartments for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? Discover this exceptional apartment${area ? ` spanning ${area} ${areaUnitText}` : ''}${locationText ? ` in the prime location of ${locationText}` : ''}. This modern apartment offers the perfect blend of comfort, convenience, and contemporary living. Designed with an open floor plan, the interiors are bright and airy, with large windows that fill every corner with natural light throughout the day. The layout ensures maximum space utilization and a smooth flow between rooms. The home is finished with modern fittings, premium flooring, and thoughtful details that elevate everyday living. Whether you are a family looking for comfort or a working professional seeking connectivity, this apartment offers an ideal lifestyle. ${price ? `Currently available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}This is an excellent opportunity to own${adType === "Rent" ? " or rent" : ""} a well-connected, spacious home in ${locationText || "Haryana"}. Contact us today to schedule a site visit and make this premium apartment yours!`;
+      desc = `Looking for apartments for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? Discover this apartment${area ? ` spanning ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''}. ${ownershipText}${facing ? `Facing: ${facing}. ` : ''}${otherRoomsText}${price ? `Available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}${negotiableText}${cornerText}${rentalStatusText}Contact us to schedule a visit.`;
+
     } else if (type.includes("Independent House")) {
-      desc = `Searching for independent houses for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? This stunning independent house${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in the prestigious area of ${locationText}` : ''} is a true architectural masterpiece. The open layout is perfect for family gatherings and entertaining, with large windows that bring in natural light to every room. The design balances functionality with elegance, ensuring a lifestyle that is both practical and luxurious. Built with premium construction standards, this home offers timeless appeal. ${price ? `Available now for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}If you are seeking a well-connected, spacious, and comfortable independent house in ${locationText || "Haryana"}, this property is an excellent choice. Schedule a visit today and experience the grandeur of this home for yourself!`;
+      desc = `Searching for an independent house for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}? This house${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} offers a balanced lifestyle. ${ownershipText}${facing ? `Facing: ${facing}. ` : ''}${otherRoomsText}${price ? `Available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}${negotiableText}${cornerText}${rentalStatusText}Schedule a site visit today.`;
+
+    } else if (type.includes("Builder Floor")) {
+      desc = `Find builder floors for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This builder floor${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} is a smart choice. ${ownershipText}${facing ? `Facing: ${facing}. ` : ''}${otherRoomsText}${price ? `Offered for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}${negotiableText}${cornerText}${rentalStatusText}`;
+
+    } else if (type.includes("Farm House")) {
+      desc = `Explore farm houses for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This property${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} offers open spaces and privacy. ${ownershipText}${facing ? `Facing: ${facing}. ` : ''}${otherRoomsText}${price ? `Asking ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type === "RK" || type.includes("Studio Apartment")) {
+      desc = `Discover compact ${type.toLowerCase()} options for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. Area${area ? `: ${area} ${areaUnitText}. ` : ': N/A. '}${ownershipText}${price ? `Available at ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Retirement Community")) {
+      desc = `Find homes in retirement communities for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. ${area ? `Area: ${area} ${areaUnitText}. ` : ''}${ownershipText}${price ? `Asking ${price}. ` : ''}${negotiableText}${cornerText}`;
+
     } else if (type.includes("Residential Land")) {
-      desc = `Find residential land for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This prime residential plot${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in the developing area of ${locationText}` : ''} is a great choice for building your dream home. The location ensures excellent connectivity, making it a promising investment for the future. The plot is well-drained, ready for construction, and offers flexibility for various architectural designs. ${price ? `Offered for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Secure your piece of land in ${locationText || "Haryana"} today and turn it into the home you've always envisioned. This is an opportunity you should not miss!`;
-    } else if (type.includes("Commercial Land")) {
-      desc = `Search for commercial land for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This commercial plot${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in the prime commercial hub of ${locationText}` : ''} is an excellent choice for business growth. With high visibility and accessibility, it is ideal for setting up offices, retail stores, restaurants, or other commercial establishments. The location guarantees strong foot traffic and business potential. ${price ? `Available now for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Don't miss this opportunity to establish or expand your business in ${locationText || "Haryana"}. This land offers long-term commercial growth potential!`;
+      desc = `Find residential land for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This plot${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} is ideal for your home. ${ownershipText}${price ? `Offered for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Agricultural Land") || type.includes("Farm House Land") || type.includes("Institutional Land")) {
+      desc = `Explore ${type.toLowerCase()} for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. Parcel${area ? ` size: ${area} ${areaUnitText}. ` : ': N/A. '}${ownershipText}${price ? `Available at ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Commercial Land") || type.includes("Industrial Land")) {
+      desc = `Explore ${type.toLowerCase()} for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This land${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} suits business growth. ${ownershipText}${price ? `Available at ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Retail Showroom") || type.includes("Office") || type.includes("Office Complex") || type.includes("Warehouse")) {
+      desc = `Find ${type.toLowerCase()} spaces for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. Area${area ? `: ${area} ${areaUnitText}. ` : ': N/A. '}${ownershipText}${price ? `Asking ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Commercial Building") || type.includes("Institutional Building")) {
+      desc = `Discover ${type.toLowerCase()} options for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. Built-up${area ? `: ${area} ${areaUnitText}. ` : ': N/A. '}${ownershipText}${price ? `Quoted ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Software Technology Park") || type.includes("Industrial Estate")) {
+      desc = `Explore ${type.toLowerCase()} properties in ${locationText || "Haryana"}. ${area ? `Area: ${area} ${areaUnitText}. ` : ''}${ownershipText}${price ? `Asking ${price}. ` : ''}${negotiableText}${cornerText}`;
+
+    } else if (type.includes("Petrol Pump") || type.includes("Cold Store")) {
+      desc = `Special-use property: ${type.toLowerCase()} in ${locationText || "Haryana"}. ${area ? `Area: ${area} ${areaUnitText}. ` : ''}${ownershipText}${price ? `Price ${price}. ` : ''}${negotiableText}${cornerText}`;
+
     } else {
-      desc = `Search for properties for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This property${type ? ` (${type})` : ''}${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` located in ${locationText}` : ''} offers excellent potential. It can serve a variety of purposes depending on your needs. ${price ? `Available for ${adType === "Rent" ? "rent" : "sale"} at ${price}. ` : ''}Don't miss this chance to secure a valuable property in ${locationText || "Haryana"}. Contact us today for more information and a site visit!`;
+      desc = `Search properties for ${adType === "Rent" ? "rent" : "sale"} in ${locationText || "Haryana"}. This property${type ? ` (${type})` : ''}${area ? ` of ${area} ${areaUnitText}` : ''}${locationText ? ` in ${locationText}` : ''} offers potential. ${ownershipText}${facing ? `Facing: ${facing}. ` : ''}${otherRoomsText}${price ? `Available at ${price}. ` : ''}${negotiableText}${cornerText}${rentalStatusText}`;
     }
 
-    return desc.replace(/\s+/g, ' ').trim();
-  }, [propertySubType, propertyType, areaSize, areaUnit, subDistrict, city, state, amount, adType]);
+    const compact = desc.replace(/\s+/g, ' ').trim();
+    return ensureMinWords(compact, { type, locationText, area, areaUnitText, adType, price, ownership, facing, otherRooms, negotiable, corner, rented });
+  }, [propertySubType, propertyType, areaSize, areaUnit, subDistrict, city, state, amount, adType, ownership, facing, otherRooms, negotiable, rented, corner]);
 
-  // Auto-generate description when form fields change
+  // Auto-generate description when form fields change, unless user edited manually
   useEffect(() => {
-    if (generateDescription && !description) {
+    if (generateDescription && !userEditedDescription) {
       setDescription(generateDescription);
     }
-  }, [generateDescription, description]);
+  }, [generateDescription, userEditedDescription]);
 
   // Load draft from localStorage on mount (if user returned from login)
   useEffect(() => {
@@ -213,6 +293,7 @@ function QuickListingContent() {
           setRented(typeof draft.rented === 'boolean' ? draft.rented : false);
           setCorner(typeof draft.corner === 'boolean' ? draft.corner : false);
           setDescription(draft.description || "");
+          setUserEditedDescription(!!draft.description);
           // We can't restore File blobs reliably; keep image names if any
           if (draft.coverImage) setCoverImage({ uploadedName: draft.coverImage });
           if (Array.isArray(draft.otherImages)) setOtherImages(draft.otherImages.map(name => ({ uploadedName: name })));
