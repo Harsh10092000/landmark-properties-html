@@ -597,9 +597,9 @@ function QuickListingContent() {
             <div className="col-md-4 h-100">
               <div className="stepper-card p-4">
                 {/* Top Icon */}
-                <div className="top-icon">
+                {/* <div className="top-icon">
                   <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" /></svg>
-                </div>
+                </div> */}
                 
                 {/* Quick Listing Steps */}
                 <ul className="custom-stepper">
@@ -616,25 +616,56 @@ function QuickListingContent() {
                   </li>
                 </ul>
 
-                {/* Useful Information Section */}
+                {/* Useful Information Section (Add Property style) */}
                 <div className="sidebar-info-section">
-                  <div className="info-card">
-                    <h4>💡 Quick Tips</h4>
-                    <ul>
-                      <li>Add high-quality images</li>
-                      <li>Set competitive pricing</li>
-                      <li>Choose accurate location</li>
+                  <div className="ql-aside-card">
+                    <div className="ql-aside-header">
+                      <div className="ql-aside-ico" aria-hidden>💡</div>
+                      <div>
+                        <div className="ql-aside-title">Quick Tips</div>
+                        <div className="ql-aside-sub">Make your listing stand out</div>
+                      </div>
+                    </div>
+                    <ul className="ql-aside-list">
+                      <li>
+                        <span className="ql-dot">●</span>
+                        Add a clear cover photo and 6–10 gallery images
+                      </li>
+                      <li>
+                        <span className="ql-dot">●</span>
+                        Enter realistic price and keep “Negotiable” on if flexible
+                      </li>
+                      <li>
+                        <span className="ql-dot">●</span>
+                        Pick exact locality and sub‑district for better reach
+                      </li>
                     </ul>
                   </div>
 
-                  <div className="info-card">
-                    <h4>📞 Need Help?</h4>
-                    <p>Our team is here to assist you.</p>
-                    <div className="contact-info">
-                      <div>📱 +91 99967 16787</div>
-                      <div>📧 info@landmarkplots.com</div>
+                  <div className="ql-aside-card">
+                    <div className="ql-aside-header">
+                      <div className="ql-aside-ico" aria-hidden>🧭</div>
+                      <div>
+                        <div className="ql-aside-title">Pro Tip</div>
+                        <div className="ql-aside-sub">Answers that buyers look for</div>
+                      </div>
                     </div>
+                    <div className="ql-aside-note">Mention plot size + unit, facing, proximity to main road and nearby landmarks. Keep description simple and factual.</div>
                   </div>
+
+                  {/* <div className="ql-aside-card">
+                    <div className="ql-aside-header">
+                      <div className="ql-aside-ico" aria-hidden>📞</div>
+                      <div>
+                        <div className="ql-aside-title">Need Help?</div>
+                        <div className="ql-aside-sub">Talk to a listing expert</div>
+                      </div>
+                    </div>
+                    <div className="ql-contact">
+                      <div className="ql-contact-row">📱 +91 99967 16787</div>
+                      <div className="ql-contact-row">📧 info@landmarkplots.com</div>
+                    </div>
+                  </div> */}
                 </div>
 
                 {/* Bottom Card: Help */}
@@ -1108,17 +1139,7 @@ function QuickListingContent() {
                       )}
                     </div>
 
-                    {/* Description */}
-                    <div className="col-md-12">
-                      <div className="step1-label">📝 Property Description</div>
-                      <textarea
-                        className="step-input"
-                        style={{ minHeight: 90, resize: 'vertical' }}
-                        placeholder="Describe your property in detail..."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      />
-                    </div>
+                    
                   </div>
 
                   {/* Submit Button */}
@@ -1400,6 +1421,19 @@ function QuickListingContent() {
           padding: 0.25rem 0;
           font-weight: 500;
         }
+        /* Add-Property style aside cards */
+        .ql-aside-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 6px 22px rgba(2,6,23,.06);padding:16px;margin-bottom:12px}
+        .ql-aside-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+        .ql-aside-ico{width:34px;height:34px;border-radius:10px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+        .ql-aside-title{font-weight:800}
+        .ql-aside-sub{color:#64748b;font-size:14px}
+        .ql-aside-list{list-style:none;padding-left:0;margin:0}
+        .ql-aside-list li{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-top:1px dashed #e2e8f0}
+        .ql-aside-list li:first-child{border-top:0}
+        .ql-dot{color:#1dbf73;margin-top:2px}
+        .ql-aside-note{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:12px;padding:12px;color:#475569}
+        .ql-contact{display:flex;flex-direction:column;gap:6px}
+        .ql-contact-row{font-weight:600;color:#0f172a}
         .price-formatted {
           color: #388e3c;
           padding: 6px 12px;
