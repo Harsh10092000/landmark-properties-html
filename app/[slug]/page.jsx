@@ -270,6 +270,20 @@ const getData = async (slug, proId) => {
   try {
     const listingId = "LM-" + proId;
     const db = await pool;
+    // Increment view counter safely (pro_views is stored as VARCHAR)
+    const incQuery = `
+      UPDATE property_module
+      SET pro_views = (
+        CASE
+          WHEN pro_views REGEXP '^[0-9]+'
+            THEN CAST(pro_views AS UNSIGNED) + 1
+          ELSE 1
+        END
+      )
+      WHERE listing_id = ?
+    `;
+    await db.query(incQuery, [listingId]);
+
     const q = "SELECT * from property_module where listing_id = ?";
     const [rows] = await db.query(q, listingId);
 

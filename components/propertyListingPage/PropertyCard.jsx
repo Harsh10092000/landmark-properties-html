@@ -57,17 +57,50 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                       )}
                     </Link>
                   </div>
+                {typeof item?.pro_views !== 'undefined' && parseInt(item.pro_views || 0) > 0 && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '10px',
+                      left: '10px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '7px 12px',
+                      color: '#fff',
+                      background: '#cd1c1cbd',
+                      border: '1px solid rgba(255, 255, 255, 0.35)',
+                      borderRadius: '9999px',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      lineHeight: 1,
+                      letterSpacing: '.2px',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.85)',
+                      boxShadow: '0 8px 22px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.06)',
+                      zIndex: 5,
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 18, height: 18, color: '#fff' }}>
+                      <path d="M1.5 12C1.5 12 5.5 5.5 12 5.5C18.5 5.5 22.5 12 22.5 12C22.5 12 18.5 18.5 12 18.5C5.5 18.5 1.5 12 1.5 12Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6"/>
+                    </svg>
+                    <span style={{ color: '#fff' }}><strong>{parseInt(item.pro_views || 0)}</strong></span>
+                  </div>
+                )}
                   <div class="featured__badge">
                     <span class="badge__field style2">
                       For {item.pro_ad_type}
                     </span>
                   </div>
+                {/* Hide person/author image */}
+                {false && (
                   <span class="featured__author--img__style2">
                     <img
                       src="/assets/img/property/properties-author.png"
                       alt="img"
                     />
                   </span>
+                )}
                 </div>
                 <div class="listing__featured--content">
                   <div class="featured__content--list__top d-flex justify-content-between">
@@ -93,6 +126,17 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                       </Link>
                     </h3>
                     <ul class="featured__list--action d-flex">
+                      {typeof item?.pro_views !== 'undefined' && parseInt(item.pro_views || 0) > 0 && (
+                        <li class="featured__share--btn__list">
+                          <div class="featured__share--btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" style={{ width: 16, height: 16 }}>
+                              <path d="M1.5 12C1.5 12 5.5 5.5 12 5.5C18.5 5.5 22.5 12 22.5 12C22.5 12 18.5 18.5 12 18.5C5.5 18.5 1.5 12 1.5 12Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                              <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6"/>
+                            </svg>
+                            <span><strong>{parseInt(item.pro_views || 0)}</strong></span>
+                          </div>
+                        </li>
+                      )}
                       <li class="featured__share--btn__list">
                         <a class="featured__share--btn" href="tel:919996716787">
                           <svg
@@ -334,3 +378,4 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
 };
 
 export default PropertyCard;
+

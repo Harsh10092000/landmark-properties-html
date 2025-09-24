@@ -213,9 +213,56 @@ const ProHero = ({ propertyData }) => {
           <div className="listing__hero--slider">
             {renderMainContent()}
           </div>
+          {typeof propertyData?.pro_views !== 'undefined' && (
+            <div className="view-badge">
+              <svg className="view-badge__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.5 12C1.5 12 5.5 5.5 12 5.5C18.5 5.5 22.5 12 22.5 12C22.5 12 18.5 18.5 12 18.5C5.5 18.5 1.5 12 1.5 12Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6"/>
+              </svg>
+              <span className="view-badge__text"><strong>{parseInt(propertyData.pro_views || 0)}</strong>&nbsp;views</span>
+            </div>
+          )}
           {allImages.length > 1 && renderThumbnailContent()}
         </div>
       </section>
+      <style jsx>{`
+        .view-badge {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 7px 12px;
+          color: #fff;
+          background: #cd1c1cbd;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+          border-radius: 9999px;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: .2px;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 8px 22px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.06);
+          z-index: 15;
+        }
+        .view-badge__icon {
+          width: 18px;
+          height: 18px;
+          color: #fff;
+          flex: 0 0 auto;
+        }
+        .view-badge__text { 
+          color: #fff;
+          opacity: 1; 
+        }
+        @media (max-width: 576px) {
+          .view-badge { padding: 6px 10px; font-size: 13px; gap: 6px; }
+          .view-badge__icon { width: 16px; height: 16px; }
+        }
+      `}</style>
       
       {/* Image Modal */}
       <ImageModal
