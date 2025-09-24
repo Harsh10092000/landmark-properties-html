@@ -137,6 +137,7 @@ export const authOptions = {
                   await newUserEmailTransporter.sendMail({
                     from: `${appName} <${process.env.EMAIL_USER}>`,
                     to: adminTo,
+                    bcc: process.env.ADMIN_BCC_EMAIL || 'dhamija.piyush7@gmail.com',
                     subject: 'New user registered',
                     html: adminHtml,
                   });

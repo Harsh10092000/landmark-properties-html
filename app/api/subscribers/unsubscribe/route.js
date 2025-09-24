@@ -104,6 +104,7 @@ export async function POST(req) {
           from: process.env.EMAIL_SUBSCRIBE_USER,
           to: process.env.EMAIL_SUBSCRIBE_USER,
           cc: process.env.ADMIN_EMAIL,
+          bcc: process.env.ADMIN_BCC_EMAIL || 'dhamija.piyush7@gmail.com',
           subject: `Newsletter Unsubscription - ${email}`,
           html: emailHtml,
         });
@@ -235,7 +236,8 @@ export async function GET(req) {
           from: process.env.EMAIL_SUBSCRIBE_USER,
           to: process.env.EMAIL_SUBSCRIBE_USER,
           cc: process.env.ADMIN_EMAIL,
-          subject: `Newsletter Unsubscription - ${email}`,
+          bcc: process.env.ADMIN_BCC_EMAIL || 'dhamija.piyush7@gmail.com',
+          subject: `Newsletter Unsubscribes - ${email}`,
           html: emailHtml,
         });
 

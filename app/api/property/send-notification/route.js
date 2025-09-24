@@ -52,6 +52,7 @@ export async function POST(req) {
     const adminMailOptions = {
       from: `${process.env.EMAIL_USER_NAME} <${process.env.EMAIL_ADMIN_USER}>`,
       to: process.env.ADMIN_EMAIL || 'admin@landmarkplots.com',
+      bcc: process.env.ADMIN_BCC_EMAIL || 'dhamija.piyush7@gmail.com',
       subject: `New Property Listed (${user.email}) - Landmark Properties`,
       html: adminHtml
     };
