@@ -222,7 +222,7 @@ export const authOptions = {
       name: `__Secure-next-auth.session-token`,
       options: {
         httpOnly: true,
-        sameSite: 'none', // for cross-domain
+        sameSite: 'none', 
         path: '/',
         secure: true, // only over HTTPS
         domain: '.landmarkplots.com', // allow all subdomains
