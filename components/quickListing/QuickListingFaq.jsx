@@ -69,16 +69,16 @@ const QuickListingFaq = () => {
                     q: "How do I contact support?",
                     a: "Reach us at +91 99967 16787 or info@landmarkplots.com for any assistance with your listing."
                   }
-                ].map((item, idx) => (
+                  ].map((item, idx) => (
                   <details key={idx} className="hsvp-faq">
                     <summary className="hsvp-faq-q">{item.q}</summary>
                     <div className="hsvp-faq-a">{item.a}</div>
-                  </details>
-                ))}
-              </div>
+                    </details>
+                  ))}
+                </div>
+            </div>
             </div>
           </div>
-        </div>
       </section>
 
       <style jsx>{`

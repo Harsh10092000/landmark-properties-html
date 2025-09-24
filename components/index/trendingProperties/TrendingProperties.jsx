@@ -96,7 +96,30 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                       </Link>
                     </div>
                     <div className="featured__badge">
-                      <span className="badge__field">Featured</span>
+                      {parseInt(item?.pro_views || 0) > 0 && (
+                        <span
+                          className="badge__field"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            background: '#cd1c1cbd',
+                            color: '#fff',
+                            border: '1px solid rgba(255,255,255,0.35)'
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            style={{ width: 14, height: 14 }}
+                          >
+                            <path d="M1.5 12C1.5 12 5.5 5.5 12 5.5C18.5 5.5 22.5 12 22.5 12C22.5 12 18.5 18.5 12 18.5C5.5 18.5 1.5 12 1.5 12Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6"/>
+                          </svg>
+                          <strong>{parseInt(item.pro_views || 0)}</strong>
+                        </span>
+                      )}
                       <span className="badge__field style2">
                         For {item.pro_ad_type}
                       </span>

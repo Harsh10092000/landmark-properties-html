@@ -296,7 +296,7 @@ const getData = async (slug, proId) => {
     //   property_module.pro_user_id = agent_data.user_cnct_id where pro_listed = 1 group by pro_id ORDER BY pro_id DESC limit 6`;
     // const [latestProperty] = await db.query(q2);
 
-    const q2 = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size , pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image, pro_creation_date FROM property_module where pro_listed = 1 ORDER BY pro_id DESC limit 6`;
+    const q2 = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size , pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image, pro_creation_date, pro_views FROM property_module where pro_listed = 1 ORDER BY pro_id DESC limit 6`;
     const [latestProperty] = await db.query(q2);
 
     // const q3 =

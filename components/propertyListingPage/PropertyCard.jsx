@@ -126,7 +126,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                       </Link>
                     </h3>
                     <ul class="featured__list--action d-flex">
-                      {typeof item?.pro_views !== 'undefined' && parseInt(item.pro_views || 0) > 0 && (
+                      {/* {typeof item?.pro_views !== 'undefined' && parseInt(item.pro_views || 0) > 0 && (
                         <li class="featured__share--btn__list">
                           <div class="featured__share--btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" style={{ width: 16, height: 16 }}>
@@ -136,7 +136,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                             <span><strong>{parseInt(item.pro_views || 0)}</strong></span>
                           </div>
                         </li>
-                      )}
+                      )} */}
                       <li class="featured__share--btn__list">
                         <a class="featured__share--btn" href="tel:919996716787">
                           <svg
