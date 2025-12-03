@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "./step-form.css";
 
 const MAX_OTHER_IMAGES = 10;
-const MAX_SIZE = 1000000; // 1MB
+const MAX_SIZE = 5242880; // 5MB (5 * 1024 * 1024 bytes)
 const MIN_SIZE = 10000;   // 10KB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
 
@@ -57,7 +57,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
         if (!ALLOWED_TYPES.includes(file.type)) {
             error = "Invalid format (only JPG, PNG, WEBP)";
         } else if (file.size > MAX_SIZE || file.size < MIN_SIZE) {
-            error = "File size must be 10KB - 1MB";
+            error = `File size must be 10KB - 5MB (current: ${(file.size / 1024 / 1024).toFixed(2)}MB)`;
         }
         setCoverImage({ file, url: URL.createObjectURL(file), error });
     };
@@ -73,7 +73,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
             if (!ALLOWED_TYPES.includes(file.type)) {
                 error = "Invalid format (only JPG, PNG, WEBP)";
             } else if (file.size > MAX_SIZE || file.size < MIN_SIZE) {
-                error = "File size must be 10KB - 1MB";
+                error = `File size must be 10KB - 5MB (current: ${(file.size / 1024 / 1024).toFixed(2)}MB)`;
             }
             // Prevent duplicate files by name+size
             if (
@@ -126,13 +126,23 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
             filesToUpload.forEach((file, idx) => {
                 formData.append(`file${idx}`, file);
             });
-            const res = await fetch('/api/property/upload-image', {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await res.json();
-            if (data.success && Array.isArray(data.filenames)) {
-                filenames = data.filenames;
+            try {
+                const res = await fetch('/api/property/upload-image', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await res.json();
+                if (data.success && Array.isArray(data.filenames)) {
+                    filenames = data.filenames;
+                } else {
+                    // Handle backend validation errors
+                    const errorMsg = data.error || data.errors?.join('; ') || 'Failed to upload images';
+                    alert(`Upload Error: ${errorMsg}`);
+                    return; // Stop submission if upload fails
+                }
+            } catch (error) {
+                alert(`Upload Error: ${error.message || 'Failed to upload images. Please try again.'}`);
+                return; // Stop submission if upload fails
             }
         }
 
@@ -186,7 +196,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
                         {!coverImage && (
                             <div className="image-upload-content">
                                 <strong>Click to upload cover image</strong>
-                                <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 1MB)</div>
+                                <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 5MB)</div>
                             </div>
                         )}
                         {coverImage && (
@@ -224,7 +234,7 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
                         />
                         <div className="image-upload-content">
                             <strong>Click to upload other images</strong>
-                            <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 1MB, up to {MAX_OTHER_IMAGES} images)</div>
+                            <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 5MB, up to {MAX_OTHER_IMAGES} images)</div>
                         </div>
                     </div>
                     {otherImages.length > 0 && (

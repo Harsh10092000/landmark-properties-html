@@ -80,6 +80,26 @@ const propertyFacing = [
 const ownershipOptions = ["Ownership", "Power of Attorney"];
 const otherRoomsOptions = ["Puja Room", "Store Room", "Study Room"];
 
+// File upload constants
+const MAX_OTHER_IMAGES = 10;
+const MAX_FILE_SIZE = 5242880; // 5MB (5 * 1024 * 1024 bytes)
+const MIN_FILE_SIZE = 10240;   // 10KB
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+
+// File validation helper
+const validateImageFile = (file) => {
+  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+    return "Invalid format (only JPG, PNG, WEBP allowed)";
+  }
+  if (file.size < MIN_FILE_SIZE) {
+    return `File too small (minimum: ${(MIN_FILE_SIZE / 1024).toFixed(0)}KB)`;
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return `File too large (maximum: ${(MAX_FILE_SIZE / 1024 / 1024).toFixed(0)}MB, current: ${(file.size / 1024 / 1024).toFixed(2)}MB)`;
+  }
+  return "";
+};
+
 export default function QuickListingPage() {
   return <QuickListingContent />;
 }
@@ -379,9 +399,10 @@ function QuickListingContent() {
     }
   }, [subDistrictSearch, availableSubDistricts]);
 
-  if (status === "loading") {
-    return <Loading />;
-  }
+  // Remove loading state - not needed since we handle login flow differently
+  // if (status === "loading") {
+  //   return <Loading />;
+  // }
 
   if (status === "error") {
     return <Error message="Authentication error. Please try again." />;
@@ -454,6 +475,15 @@ function QuickListingContent() {
     if (!pinCode.trim()) newErrors.pinCode = "Pin Code is required";
     else if (!/^[1-9][0-9]{5}$/.test(pinCode)) newErrors.pinCode = "Please enter a valid 6-digit pin code";
     if (!description.trim()) newErrors.description = "Property Description is required";
+    
+    // Validate images
+    if (coverImage && coverImage.error) {
+      newErrors.coverImage = coverImage.error;
+    }
+    const invalidOtherImages = otherImages.filter(img => img.error);
+    if (invalidOtherImages.length > 0) {
+      newErrors.otherImages = `Some images have errors. Please fix them before submitting.`;
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -1112,7 +1142,7 @@ function QuickListingContent() {
 
                     {/* Description */}
                     <div className="col-md-12">
-                      <div className="step1-label">📝 Property Description <span style={{color:'#ec161e'}}>*</span></div>
+                      <div className="step1-label">📝 Property Description</div>
                       <textarea
                         className="step-input"
                         placeholder="Describe your property in detail..."
@@ -1142,7 +1172,13 @@ function QuickListingContent() {
                           onChange={(e) => {
                             const file = e.target.files[0];
                             if (file) {
-                              setCoverImage({ file, url: URL.createObjectURL(file), uploadedName: file.name });
+                              const error = validateImageFile(file);
+                              setCoverImage({ 
+                                file, 
+                                url: URL.createObjectURL(file), 
+                                uploadedName: file.name,
+                                error: error || ""
+                              });
                             }
                             e.target.value = "";
                           }}
@@ -1150,7 +1186,7 @@ function QuickListingContent() {
                         {!coverImage && (
                           <div className="image-upload-content">
                             <strong>Click to upload cover image</strong>
-                            <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 1MB)</div>
+                            <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 5MB)</div>
                           </div>
                         )}
                         {coverImage && (
@@ -1164,8 +1200,8 @@ function QuickListingContent() {
                                 title="Remove"
                               >×</button>
                             </div>
-                            <div className="image-success-msg">
-                              {coverImage.file ? `${(coverImage.file.size / 1024).toFixed(0)} KB` : 'Uploaded'}
+                            <div className={coverImage.error ? "image-error-msg" : "image-success-msg"}>
+                              {coverImage.error ? coverImage.error : (coverImage.file ? `${(coverImage.file.size / 1024).toFixed(0)} KB` : 'Uploaded')}
                             </div>
                             <div className="image-filename">{coverImage?.file?.name || coverImage?.uploadedName}</div>
                           </div>
@@ -1185,15 +1221,16 @@ function QuickListingContent() {
                             const newImages = files.map(file => ({
                               file,
                               url: URL.createObjectURL(file),
-                              uploadedName: file.name
+                              uploadedName: file.name,
+                              error: validateImageFile(file) || ""
                             }));
-                            setOtherImages(prev => [...prev, ...newImages].slice(0, 10)); // Max 10 images
+                            setOtherImages(prev => [...prev, ...newImages].slice(0, MAX_OTHER_IMAGES)); // Max 10 images
                             e.target.value = "";
                           }}
                         />
                         <div className="image-upload-content">
                           <strong>Click to upload other images</strong>
-                          <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 1MB, up to 10 images)</div>
+                          <div className="image-upload-note">(JPG, PNG, WEBP, 10KB - 5MB, up to {MAX_OTHER_IMAGES} images)</div>
                         </div>
                       </div>
                       
@@ -1210,8 +1247,8 @@ function QuickListingContent() {
                                   title="Remove"
                                 >×</button>
                               </div>
-                              <div className="image-success-msg">
-                                {img.file ? `${(img.file.size / 1024).toFixed(0)} KB` : 'Uploaded'}
+                              <div className={img.error ? "image-error-msg" : "image-success-msg"}>
+                                {img.error ? img.error : (img.file ? `${(img.file.size / 1024).toFixed(0)} KB` : 'Uploaded')}
                               </div>
                               <div className="image-filename">{img?.file?.name || img?.uploadedName}</div>
                             </div>
@@ -1233,10 +1270,10 @@ function QuickListingContent() {
                     type="submit"
                     form="quick-listing-form"
                     className="step1-next-btn"
-                    disabled={loading}
+                    disabled={loading || (coverImage && coverImage.error) || otherImages.some(img => img.error)}
                     style={{
-                      background: loading ? '#ccc' : '#1dbf73',
-                      cursor: loading ? 'not-allowed' : 'pointer'
+                      background: (loading || (coverImage && coverImage.error) || otherImages.some(img => img.error)) ? '#ccc' : '#1dbf73',
+                      cursor: (loading || (coverImage && coverImage.error) || otherImages.some(img => img.error)) ? 'not-allowed' : 'pointer'
                     }}
                   >
                     {loading ? "Publishing..." : "Finish & Publish"}
