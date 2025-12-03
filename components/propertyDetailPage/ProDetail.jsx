@@ -24,9 +24,9 @@ const ProDetail = ({ propertyData, proSlug }) => {
                           {propertyData.pro_locality}
                         </span>
                         ,&nbsp;
-                        {propertyData.pro_sub_district
+                        {/* {propertyData.pro_sub_district
                           ? propertyData.pro_sub_district + ", "
-                          : ""}
+                          : ""} */}
                         {propertyData.pro_city},&nbsp;
                         {propertyData.pro_state}
                                   </span>
@@ -35,7 +35,7 @@ const ProDetail = ({ propertyData, proSlug }) => {
         <div className="listing__details--price__id d-flex align-items-center">
             <div className="listing__details--price d-flex">
                 <span className="listing__details--price__new">{propertyData.pro_amt
-                                  ? ShowPrice(propertyData.pro_ad_type, propertyData.pro_amt)
+                                  ? "Price " + ShowPrice(propertyData.pro_ad_type, propertyData.pro_amt)
                                   : "Ask Price"}</span>
                
             </div>

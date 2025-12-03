@@ -575,7 +575,7 @@ for ${
               </div>
               <div className="col-lg-4">
                 <div className="property-id">
-                  Property <span class="listing__details--badge">{propertyData?.listing_id}</span>
+                  Property ID <span class="listing__details--badge">{propertyData?.listing_id}</span>
                 </div>
               </div>
               <div className="col-lg-12">
