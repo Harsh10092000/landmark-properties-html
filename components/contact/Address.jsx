@@ -72,7 +72,8 @@ const Address = () => {
           <div class="contact__us--info__content">
             <h3 class="contact__us--info__title">Office address</h3>
             <p class="contact__us--info__text desc">
-              SCO no 32 Sector 10 Kurukshetra, Haryana
+              {/* Reuse central business address for consistency */}
+              1st Floor, Cabin 2, SCO 32, beside New Bus Stand, Sector 10, Kurukshetra, Haryana 136118
             </p>
           </div>
         </div>

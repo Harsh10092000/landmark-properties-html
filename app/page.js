@@ -16,45 +16,36 @@ import PropertiesCategories from '@/components/about/PropertiesCategories'
 //import NewsletterSection from '@/components/common/NewsletterSection'
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from './api/auth/[...nextauth]/route';
+import { siteConfig } from '@/app/config/site';
 
 // const TrendingProperties = dynamic(() => import('@/components/index/trendingProperties/TrendingProperties'), {
 //   loading: () => <div>Loading...</div>,
 // })
 
 export async function generateMetadata({ params }, parent) {
-
-  
-
-
-
-  //const proId1 = arrproId[arrproId.length - 1];
-  //const { row : propertyData} = await getData(slug, proId1);
-
-  const desc = `Discover your dream property with LandmarkPlots.com, a premier platform offering exclusive land and real estate opportunities. Explore a curated selection of prime plots, residential, and commercial properties tailored to your needs.`;
-
-  
-
+  const desc = siteConfig.description;
+  const title = "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today";
+  const ogImage = `${siteConfig.url}${siteConfig.seo.defaultImage}`;
 
   return {
-    title: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
+    title,
     description: desc,
     openGraph: {
-      type: 'website',  
-      url: `https://landmarkplots.com/`,
-      title: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
+      type: 'website',
+      url: siteConfig.url + '/',
+      title,
       description: desc,
       images: [{
-        url: 'https://landmarkplots.com/images/property-banner-img.jpg',
+        url: ogImage,
         width: 1200,
         height: 630,
-        alt: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today"
+        alt: title
       }]
     },
-    metadataBase: new URL('https://landmarkplots.com'),
+    metadataBase: new URL(siteConfig.url),
     alternates: {
-      canonical: `https://landmarkplots.com/`
+      canonical: siteConfig.url + '/'
     },
-    
   };
 }
 

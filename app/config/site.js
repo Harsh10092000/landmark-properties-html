@@ -74,7 +74,74 @@ export const siteConfig = {
       "New Bus Stand Kurukshetra",
       "property dealer Kurukshetra"
     ]
+  },
+  
+  // Default images mapping based on property type/subcategory
+  defaultImages: {
+    // Main property types (fallback)
+    "Residential": "default.jpg",
+    "Commercial": "default.jpg",
+    "Land": "default.jpg",
+    // Residential subcategories
+    "Apartment": "default.jpg",
+    "Independent House": "default.jpg",
+    "Builder Floor": "default.jpg",
+    "Farm House": "default.jpg",
+    "Raw House": "default.jpg",
+    "Retirement Community": "default.jpg",
+    "Studio Apartment": "default.jpg",
+    "RK": "default.jpg",
+    // Land subcategories
+    "Residential Land": "default.jpg",
+    "Commercial Land": "default.jpg",
+    "Industrial Land": "default.jpg",
+    "Agricultural Land": "default.jpg",
+    "Farm House Land": "default.jpg",
+    "Institutional Land": "default.jpg",
+    // Commercial subcategories
+    "Retail Showroom": "default.jpg",
+    "Commercial Building": "default.jpg",
+    "Office Complex": "default.jpg",
+    "Software Technology Park": "default.jpg",
+    "Warehouse": "default.jpg",
+    "Industrial Estate": "default.jpg",
+    "Institutional Building": "default.jpg",
+    "Petrol Pump": "default.jpg",
+    "Cold Store": "default.jpg",
+    // Fallback
+    "default": "default.jpg"
   }
 };
+
+/**
+ * Get default image based on property type and subcategory
+ * @param {string} proType - Property type (e.g., "Residential", "Commercial", "Land")
+ * @param {string} proSubCat - Property subcategory (e.g., "Apartment,Residential")
+ * @returns {string} Default image filename
+ */
+export function getDefaultImage(proType, proSubCat) {
+  if (!proType && !proSubCat) {
+    return siteConfig.defaultImages.default;
+  }
+  
+  // First try to match subcategory (more specific)
+  if (proSubCat) {
+    // proSubCat format is usually "SubCategory,Type" (e.g., "Apartment,Residential")
+    const subCatParts = proSubCat.split(",");
+    const subCategory = subCatParts[0]?.trim();
+    
+    if (subCategory && siteConfig.defaultImages[subCategory]) {
+      return siteConfig.defaultImages[subCategory];
+    }
+  }
+  
+  // Fallback to property type
+  if (proType && siteConfig.defaultImages[proType]) {
+    return siteConfig.defaultImages[proType];
+  }
+  
+  // Final fallback
+  return siteConfig.defaultImages.default;
+}
 
 export default siteConfig;

@@ -1,6 +1,11 @@
 import React from 'react'
+import { siteConfig } from '@/app/config/site'
 
 const QuickListingFaq = () => {
+  const {
+    contact: { phone, email },
+  } = siteConfig;
+
   return (
     <>
       <section className="sect-padding">
@@ -67,7 +72,7 @@ const QuickListingFaq = () => {
                   },
                   {
                     q: "How do I contact support?",
-                    a: "Reach us at +91 99967 16787 or info@landmarkplots.com for any assistance with your listing."
+                    a: `Reach us at ${phone} or ${email} for any assistance with your listing.`
                   }
                   ].map((item, idx) => (
                   <details key={idx} className="hsvp-faq">

@@ -4,17 +4,18 @@ import Link from "next/link";
 import { Icon } from "@mui/material";
 import { IconBrandWhatsapp, IconHome, IconPhoneCall, IconPlus, IconStar, IconUser, IconLogin, IconList } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
-import { SessionProvider } from "next-auth/react";
+import { siteConfig } from "@/app/config/site";
+
 const Footer = () => {
-  return (
-    <SessionProvider>
-      <FooterContent />
-    </SessionProvider>
-  );
+  return <FooterContent />;
 };
 
 const FooterContent = () => {
-  const {status } = useSession();
+  const { status } = useSession();
+  const {
+    contact: { email, phone, secondaryPhone },
+    business: { address },
+  } = siteConfig;
   return (
     <>
       <footer className="footer footer__section color-accent-2">
@@ -61,8 +62,8 @@ const FooterContent = () => {
               </span>
               <p className="contact__information--email__text">
                 Contact us at{" "}
-                <a href="mailto:info@landmarkplots.com">
-                  info@landmarkplots.com
+                <a href={`mailto:${email}`}>
+                  {email}
                 </a>{" "}
               </p>
             </div>
@@ -95,9 +96,9 @@ const FooterContent = () => {
                 </h3>
                 <a
                   className="contact__information--phone__number"
-                  href="tel:+9996716787"
+                  href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
                 >
-                  +91 99967 16787, +91 90500 48884
+                  {phone}{secondaryPhone ? `, ${secondaryPhone}` : ""}
                 </a>
               </div>
             </div>
@@ -166,7 +167,7 @@ const FooterContent = () => {
                           />
                         </svg>
                         <p className="footer__widget--info__text">
-                          SCO no 32 Sector 10 Kurukshetra
+                          {address.fullAddress || address.streetAddress}
                         </p>
                       </li>
                       <li className="footer__widget--info_list">
@@ -201,9 +202,9 @@ const FooterContent = () => {
                         </svg>
                         <a
                           className="footer__widget--info__text"
-                          href="mailto:info@landmarkplots.com"
+                          href={`mailto:${email}`}
                         >
-                          info@landmarkplots.com
+                          {email}
                         </a>
                       </li>
                       <li className="footer__widget--info_list">
@@ -223,9 +224,9 @@ const FooterContent = () => {
                         </svg>
                         <a
                           className="footer__widget--info__text"
-                          href="tel:+1234567898"
+                          href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
                         >
-                          : +91 99967 16787, +91 90500 48884
+                          : {phone}{secondaryPhone ? `, ${secondaryPhone}` : ""}
                         </a>
                       </li>
                     </ul>

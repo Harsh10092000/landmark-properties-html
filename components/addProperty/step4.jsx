@@ -127,13 +127,13 @@ export default function Step4({ handleStepChange, onSubmit, loading, initialData
                 formData.append(`file${idx}`, file);
             });
             try {
-                const res = await fetch('/api/property/upload-image', {
-                    method: 'POST',
-                    body: formData,
-                });
-                const data = await res.json();
-                if (data.success && Array.isArray(data.filenames)) {
-                    filenames = data.filenames;
+            const res = await fetch('/api/property/upload-image', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await res.json();
+            if (data.success && Array.isArray(data.filenames)) {
+                filenames = data.filenames;
                 } else {
                     // Handle backend validation errors
                     const errorMsg = data.error || data.errors?.join('; ') || 'Failed to upload images';

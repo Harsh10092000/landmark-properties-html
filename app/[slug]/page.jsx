@@ -17,14 +17,41 @@ import FavoriteStar from "@/components/common/FavoriteStar";
 import PropertyNotFound from "@/components/common/PropertyNotFound";
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
-import { siteConfig } from '@/app/config/site';
+import { siteConfig, getDefaultImage } from '@/app/config/site';
+import { notFound } from 'next/navigation';
 
-export async function generateMetadata({ params }, parent) {
+const MIN_SLUG_PARTS = 5;
+
+const buildSafeSlugParts = (slug) => {
+  if (!slug) return null;
+  const parts = slug.split("-").filter(Boolean);
+  if (parts.length < MIN_SLUG_PARTS) return null;
+  return parts;
+};
+
+const buildRelatedLinks = () => [
+  `${siteConfig.url}/residential-properties`,
+  `${siteConfig.url}/commercial-properties`,
+  `${siteConfig.url}/land-properties`,
+];
+
+const buildSignificantLinks = () => [
+  `${siteConfig.url}/allproperties`,
+  `${siteConfig.url}/contactus`,
+  `${siteConfig.url}/aboutus`,
+  `${siteConfig.url}/properties-for-sale`,
+  `${siteConfig.url}/properties-for-rent`,
+];
+
+export async function generateMetadata({ params }) {
   const { slug } = params;
-  if (!slug) {
-    return <div>Invalid Property ID</div>;
+  const arrproId = buildSafeSlugParts(slug);
+  if (!arrproId) {
+    return {
+      title: "Property not found",
+      description: "Invalid property URL.",
+    };
   }
-  const arrproId = slug.split("-");
   const proId = arrproId[arrproId.length - 1];
   const listingId = "LM-" + proId;
   const db = await pool;
@@ -52,7 +79,7 @@ for ${
     .join(" ");
 
   const [propertyData] = await db.query(
-    "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type, pro_amt, pro_area_size, pro_area_size_unit, pro_bedroom, pro_washrooms, pro_locality, pro_city, pro_state FROM property_module WHERE listing_id = ?",
+    "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type, pro_sub_cat, pro_amt, pro_area_size, pro_area_size_unit, pro_bedroom, pro_washrooms, pro_locality, pro_city, pro_state FROM property_module WHERE listing_id = ?",
     listingId
   );
   const data = propertyData[0] || {};
@@ -118,18 +145,8 @@ for ${
       },
       "propertyType": data.pro_type || "Property"
     },
-    "relatedLink": [
-      `https://landmarkplots.com/properties/residential-properties`,
-      `https://landmarkplots.com/properties/commercial-properties`,
-      `https://landmarkplots.com/properties/land-properties`
-    ].filter(Boolean),
-    "significantLink": [
-      "https://landmarkplots.com/allproperties",
-      "https://landmarkplots.com/contactus",
-      "https://landmarkplots.com/aboutus",
-      "https://landmarkplots.com/properties/properties-for-sale",
-      "https://landmarkplots.com/properties/properties-for-rent",
-    ]
+    "relatedLink": buildRelatedLinks(),
+    "significantLink": buildSignificantLinks(),
   };
 
   // LocalBusiness schema for regional focus
@@ -250,9 +267,9 @@ for ${
       images: [
         {
           url:
-            images[0] !== undefined
-              ? `https://landmarkplots.com/uploads/${images[0].pro_cover_image}`
-              : "https://landmarkplots.com/uploads/default.jpg",
+            images[0] !== undefined && images[0].pro_cover_image
+              ? `${siteConfig.url}/uploads/${images[0].pro_cover_image}`
+              : `${siteConfig.url}/uploads/${getDefaultImage(data.pro_type, data.pro_sub_cat)}`,
           width: 1200,
           height: 630,
           alt: capitalizedName1,
@@ -337,11 +354,11 @@ const page = async ({ params }) => {
   const currentUser = session?.user?.id || "";
 
   const { slug } = params;
-  if (!slug) {
-    return <div>Invalid Property ID</div>;
+  const arrproId = buildSafeSlugParts(slug);
+  if (!arrproId) {
+    notFound();
   }
 
-  const arrproId = slug.split("-");
   const proId1 = arrproId[arrproId.length - 1];
 
   const {
@@ -381,7 +398,6 @@ const page = async ({ params }) => {
 
     // Generate structured data for this specific property
   const generatePropertyStructuredData = () => {
-    const arrproId = slug.split("-");
     const capitalizedName1 = arrproId
       .slice(0, arrproId.length - 2)
       .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
@@ -453,18 +469,8 @@ for ${
         },
         "propertyType": propertyData?.pro_type || "Property"
       },
-      "relatedLink": [
-        `https://landmarkplots.com/properties/residential-properties`,
-        `https://landmarkplots.com/properties/commercial-properties`,
-        `https://landmarkplots.com/properties/land-properties`
-      ],
-      "significantLink": [
-        "https://landmarkplots.com/allproperties",
-        "https://landmarkplots.com/contactus",
-        "https://landmarkplots.com/aboutus",
-        "https://landmarkplots.com/properties/properties-for-sale",
-        "https://landmarkplots.com/properties/properties-for-rent",
-      ]
+    "relatedLink": buildRelatedLinks(),
+    "significantLink": buildSignificantLinks(),
     };
 
     // LocalBusiness schema for regional focus - Property Detail Page specific
