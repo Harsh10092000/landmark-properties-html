@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { getUploadImageUrl } from '@/app/config/site';
 
 const ImageModal = ({ isOpen, onClose, images, initialIndex = 0 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -59,7 +60,7 @@ const ImageModal = ({ isOpen, onClose, images, initialIndex = 0 }) => {
   if (!isOpen || !images || images.length === 0) return null;
 
   const currentImage = images[currentIndex];
-  const imageUrl = `${process.env.webURL}/uploads/${currentImage}`;
+  const imageUrl = getUploadImageUrl(currentImage);
 
   return (
     <>

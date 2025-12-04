@@ -12,6 +12,7 @@ import { getSubDistrictsByCity } from '@/components/addProperty/subdistrict.jsx'
 import "@/components/addProperty/step-form.css";
 import QuickListingFaq from "@/components/quickListing/QuickListingFaq";
 import WhyQuickListing from "@/components/quickListing/WhyQuickListing";
+import { getBusinessImageUrl } from "@/app/config/site";
 
 const GREEN = "#1dbf73";
 const BLUE = "#ec161e";
@@ -20,6 +21,7 @@ const DARK_GRAY = "#b0b0b0";
 const BG_GRADIENT = "linear-gradient(135deg, #f7faff 60%, #eaf1fa 100%)";
 const STORAGE_KEY = 'quickListingDraftV1';
 const AUTOSUBMIT_KEY = 'quickListingAutoSubmit';
+const DEFAULT_OG_IMAGE = getBusinessImageUrl();
 
 // Data from step1.jsx
 const adTypes = [
@@ -644,11 +646,11 @@ function QuickListingContent() {
       <meta property="og:title" content="Quick Property Listing in Haryana | Landmark Plots" />
       <meta property="og:description" content="Create a professional, SEO‑ready property page in minutes. Photos, price, location and LM‑ID link—optimised for buyers in Haryana and HSVP sectors." />
       <meta property="og:url" content="https://landmarkplots.com/quick-listing" />
-      <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+      <meta property="og:image" content={DEFAULT_OG_IMAGE} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Quick Property Listing in Haryana | Landmark Plots" />
       <meta name="twitter:description" content="Launch your listing fast. Structured data and intent‑based copy help buyers find and contact you sooner." />
-      <meta name="twitter:image" content="https://landmarkplots.com/uploads/default.jpg" />
+      <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
@@ -659,7 +661,7 @@ function QuickListingContent() {
         description: 'List your property fast in Haryana. Professional page with photos, price, locality and LM‑ID URL—built to rank and convert.',
         about: [{ '@type': 'Place', name: 'Haryana' }, { '@type': 'Organization', name: 'Landmark Plots' }],
         isPartOf: { '@type': 'WebSite', name: 'Landmark Plots', url: 'https://landmarkplots.com' },
-        primaryImageOfPage: { '@type': 'ImageObject', url: 'https://landmarkplots.com/uploads/default.jpg' },
+        primaryImageOfPage: { '@type': 'ImageObject', url: DEFAULT_OG_IMAGE },
         breadcrumb: {
           '@type': 'BreadcrumbList',
           itemListElement: [
@@ -763,20 +765,6 @@ function QuickListingContent() {
                     </div>
                     <div className="ql-aside-note">Mention plot size + unit, facing, proximity to main road and nearby landmarks. Keep description simple and factual.</div>
                   </div>
-
-                  {/* <div className="ql-aside-card">
-                    <div className="ql-aside-header">
-                      <div className="ql-aside-ico" aria-hidden>📞</div>
-                      <div>
-                        <div className="ql-aside-title">Need Help?</div>
-                        <div className="ql-aside-sub">Talk to a listing expert</div>
-                      </div>
-                    </div>
-                    <div className="ql-contact">
-                      <div className="ql-contact-row">📱 +91 99967 16787</div>
-                      <div className="ql-contact-row">📧 info@landmarkplots.com</div>
-                    </div>
-                  </div> */}
                 </div>
 
                 {/* Bottom Card: Help */}
