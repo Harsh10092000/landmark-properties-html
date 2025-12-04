@@ -79,39 +79,64 @@ export const siteConfig = {
   // Default images mapping based on property type/subcategory
   defaultImages: {
     // Main property types (fallback)
-    "Residential": "default.jpg",
-    "Commercial": "default.jpg",
-    "Land": "default.jpg",
+    "Residential": "/images/default_images/residential.webp",
+    "Commercial": "/images/default_images/commercial.webp",
+    "Land": "/images/default_images/land.webp",
     // Residential subcategories
-    "Apartment": "default.jpg",
-    "Independent House": "default.jpg",
-    "Builder Floor": "default.jpg",
-    "Farm House": "default.jpg",
-    "Raw House": "default.jpg",
-    "Retirement Community": "default.jpg",
-    "Studio Apartment": "default.jpg",
-    "RK": "default.jpg",
+    "Apartment": "/images/default_images/apartment.webp",
+    "Independent House": "/images/default_images/independent-house.webp",
+    "Builder Floor": "/images/default_images/builder-floor.webp",
+    "Farm House": "/images/default_images/farm-house.webp",
+    "Raw House": "/images/default_images/raw-house.webp",
+    "Retirement Community": "/images/default_images/retirement-community.webp",
+    "Studio Apartment": "/images/default_images/studio-apartment.webp",
+    "RK": "/images/default_images/residential.webp",
     // Land subcategories
-    "Residential Land": "default.jpg",
-    "Commercial Land": "default.jpg",
-    "Industrial Land": "default.jpg",
-    "Agricultural Land": "default.jpg",
-    "Farm House Land": "default.jpg",
-    "Institutional Land": "default.jpg",
+    "Residential Land": "/images/default_images/residential-land.webp",
+    "Commercial Land": "/images/default_images/commercial-land.webp",
+    "Industrial Land": "/images/default_images/industrial-land.webp",
+    "Agricultural Land": "/images/default_images/agricultural-land.webp",
+    "Farm House Land": "/images/default_images/farm-house-land.webp",
+    "Institutional Land": "/images/default_images/institutional-land.webp",
     // Commercial subcategories
-    "Retail Showroom": "default.jpg",
-    "Commercial Building": "default.jpg",
-    "Office Complex": "default.jpg",
-    "Software Technology Park": "default.jpg",
-    "Warehouse": "default.jpg",
-    "Industrial Estate": "default.jpg",
-    "Institutional Building": "default.jpg",
-    "Petrol Pump": "default.jpg",
-    "Cold Store": "default.jpg",
+    "Retail Showroom": "/images/default_images/retail-showroom.webp",
+    "Commercial Building": "/images/default_images/commercial-building.webp",
+    "Office Complex": "/images/default_images/office-complex.webp",
+    "Software Technology Park": "/images/default_images/software-technology-park.webp",
+    "Warehouse": "/images/default_images/warehouse.webp",
+    "Industrial Estate": "/images/default_images/industrial-estate.webp",
+    "Institutional Building": "/images/default_images/institutional-building.webp",
+    "Petrol Pump": "/images/default_images/petrol-pump.webp",
+    "Cold Store": "/images/default_images/cold-store.webp",
+    "Commercial": "/images/default_images/commercial.webp",
     // Fallback
-    "default": "default.jpg"
+    "default": "/images/default_images/residential.webp"
+  },
+  assets: {
+    galleryFallback: "/images/default_images/residential.webp"
   }
 };
+
+const ensureLeadingSlash = (path = "") => {
+  if (!path) return "";
+  if (path.startsWith("http")) return path;
+  return path.startsWith("/") ? path : `/${path}`;
+};
+
+export const getSiteImagePath = (path = siteConfig.seo.defaultImage) => {
+  if (!path) return siteConfig.seo.defaultImage;
+  if (path.startsWith("http")) return path;
+  return ensureLeadingSlash(path);
+};
+
+export const getSiteImageUrl = (path = siteConfig.seo.defaultImage) => {
+  if (!path) return `${siteConfig.url}${siteConfig.seo.defaultImage}`;
+  if (path.startsWith("http")) return path;
+  return `${siteConfig.url}${ensureLeadingSlash(path)}`;
+};
+
+export const getBusinessImageUrl = () => getSiteImageUrl(siteConfig.seo.businessImage);
+export const getDefaultSeoImageUrl = () => getSiteImageUrl(siteConfig.seo.defaultImage);
 
 /**
  * Get default image based on property type and subcategory
@@ -143,5 +168,79 @@ export function getDefaultImage(proType, proSubCat) {
   // Final fallback
   return siteConfig.defaultImages.default;
 }
+
+export const getUploadImagePath = (fileName) => {
+  if (!fileName) {
+    return getSiteImagePath(siteConfig.seo.businessImage);
+  }
+  if (fileName.startsWith("http")) {
+    return fileName;
+  }
+  if (fileName.startsWith("/")) {
+    return fileName;
+  }
+  return `/uploads/${fileName}`;
+};
+
+export const getUploadImageUrl = (fileName) => {
+  if (!fileName) {
+    return getBusinessImageUrl();
+  }
+  if (fileName.startsWith("http")) {
+    return fileName;
+  }
+  if (fileName.startsWith("/")) {
+    return `${siteConfig.url}${fileName}`;
+  }
+  return `${siteConfig.url}/uploads/${fileName}`;
+};
+
+export const getDefaultImageFile = (proType, proSubCat) =>
+  getDefaultImage(proType, proSubCat);
+
+const buildImagePath = (value) => {
+  if (!value) {
+    return getSiteImagePath(siteConfig.seo.defaultImage);
+  }
+  if (value.startsWith("http")) {
+    return value;
+  }
+  if (value.startsWith("/")) {
+    return value;
+  }
+  return getUploadImagePath(value);
+};
+
+const buildImageUrl = (value) => {
+  if (!value) {
+    return getBusinessImageUrl();
+  }
+  if (value.startsWith("http")) {
+    return value;
+  }
+  if (value.startsWith("/")) {
+    return `${siteConfig.url}${value}`;
+  }
+  return getUploadImageUrl(value);
+};
+
+export function getDefaultImagePath(proType, proSubCat) {
+  const fileName = getDefaultImageFile(proType, proSubCat);
+  return buildImagePath(fileName);
+}
+
+export function getDefaultImageUrl(proType, proSubCat) {
+  const fileName = getDefaultImageFile(proType, proSubCat);
+  return buildImageUrl(fileName);
+}
+
+export const getGalleryFallbackImageFile = () =>
+  siteConfig.assets?.galleryFallback || siteConfig.defaultImages.default;
+
+export const getGalleryFallbackImagePath = () =>
+  buildImagePath(getGalleryFallbackImageFile());
+
+export const getGalleryFallbackImageUrl = () =>
+  buildImageUrl(getGalleryFallbackImageFile());
 
 export default siteConfig;

@@ -16,13 +16,14 @@ import Link from "next/link";
 import RequiredLogin from "@/components/common/RequiredLogin";
 import Loading from "@/components/common/Loading";
 import Error from "@/components/common/Error";
-
+import { getBusinessImageUrl } from "@/app/config/site";
 
 const GREEN = "#1dbf73";
 const BLUE = "#ec161e";
 const GRAY = "#e0e0e0";
 const DARK_GRAY = "#b0b0b0";
 const BG_GRADIENT = "linear-gradient(135deg, #f7faff 60%, #eaf1fa 100%)";
+const DEFAULT_OG_IMAGE = getBusinessImageUrl();
 
 const STEPS = [
   { label: "Basic Details" },
@@ -272,7 +273,7 @@ function StepperCardContent() {
     <meta name="author" content="Landmark Plots" />
     <meta property="og:title" content="Add Property | Landmark Plots" />
     <meta property="og:description" content="Add Property | Landmark Plots" />
-    <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+    <meta property="og:image" content={DEFAULT_OG_IMAGE} />
  
     {showAuthPrompt && <RequiredLogin />}
     <div style={{ minHeight: "100vh", background: BG_GRADIENT, padding: 0, filter: sessionStatus === "unauthenticated" ? 'blur(2px) grayscale(0.5)' : 'none', pointerEvents: sessionStatus === "unauthenticated" ? 'none' : 'auto', opacity: sessionStatus === "unauthenticated" ? 0.5 : 1, transition: 'filter 0.2s, opacity 0.2s' }}>

@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Controller } from 'swiper/modules';
 import { Autoplay } from 'swiper/modules';
 import ImageModal from './ImageModal';
+import { getDefaultImageFile, getUploadImageUrl } from '@/app/config/site';
 
 // Import Swiper styles
 // import 'swiper/css';
@@ -38,12 +39,25 @@ const ProHero = ({ propertyData }) => {
       otherImages = propertyData.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
     }
   }
-  //const allImages = [coverImage, ...otherImages, "default.jpg"];
-  //console.log('allImages:', allImages, typeof allImages);
+  otherImages = Array.isArray(otherImages)
+    ? otherImages
+        .map((img) => {
+          if (!img) return null;
+          if (typeof img === "string") return img;
+          if (typeof img === "object" && img.img_link) return img.img_link;
+          return null;
+        })
+        .filter(Boolean)
+    : [];
 
-  // Always add dummy.webp, but filter out empty/falsey values
-  const allImages = [coverImage, ...otherImages, "dummy.webp"].filter(Boolean);
-  console.log('allImages:', allImages, typeof allImages);
+  const fallbackFile = getDefaultImageFile(propertyData?.pro_type, propertyData?.pro_sub_cat);
+
+  const explicitImages = [coverImage, ...otherImages].filter(Boolean);
+  const allImages =
+    explicitImages.length > 0
+      ? [...explicitImages, fallbackFile].filter(Boolean)
+      : [fallbackFile].filter(Boolean);
+  const toImageUrl = (src) => (src?.startsWith("http") ? src : getUploadImageUrl(src));
 
   // Swiper controller refs
   const [mainSwiper, setMainSwiper] = useState(null);
@@ -92,11 +106,7 @@ const ProHero = ({ propertyData }) => {
                   width="438px"
                   height="304px"
                   className="cursor-pointer bg-img"
-                  src={
-                    process.env.webURL +
-                    "/uploads/" +
-                    item
-                  }
+                  src={toImageUrl(item)}
                   alt={`/${propertyData.pro_area_size + " " + propertyData.pro_area_size_unit + " "
                     }
                 ${propertyData.pro_type ? propertyData.pro_type.split(",")[0] : ""} For ${" " + propertyData.pro_ad_type + " in " + propertyData.pro_city
@@ -106,12 +116,7 @@ const ProHero = ({ propertyData }) => {
                 />
                 <img
                   className="listing__hero--slider__media cursor-pointer"
-                  //src={image.img_link}
-                  src={
-                    process.env.webURL +
-                    "/uploads/" +
-                    item
-                  }
+                  src={toImageUrl(item)}
                   onClick={() => handleImageClick(index)}
                   style={{ cursor: 'pointer' }}
                 // alt={image.alt} 
@@ -127,15 +132,9 @@ const ProHero = ({ propertyData }) => {
         <div className="listing__hero--slider__items position-relative">
           <img
             className="listing__hero--slider__media cursor-pointer"
-            // src={images[0].img_link} 
-            //  width="438px"
             width="100%"
             height="404px"
-            src={
-              process.env.webURL +
-              "/uploads/" +
-              "dummy.webp"
-            }
+            src={toImageUrl(allImages[0])}
             onClick={() => handleImageClick(0)}
             style={{ cursor: 'pointer' }}
           // alt={mainImages[0].alt} 
@@ -177,11 +176,7 @@ const ProHero = ({ propertyData }) => {
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    src={
-                      process.env.webURL +
-                      "/uploads/" +
-                      item
-                    }
+                    src={toImageUrl(item)}
                   //alt={image.alt}
                   />
                 </div>

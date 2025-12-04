@@ -10,6 +10,10 @@ import Providers from "./progressBarprovider";
 import SocialMediaFooter from "@/components/common/SocialMediaFooter";
 import AppSessionProvider from "./AppSessionProvider";
 import StructuredData from "@/components/common/StructuredData";
+import { getBusinessImageUrl, getDefaultSeoImageUrl } from "@/app/config/site";
+
+const DEFAULT_SEO_IMAGE = getDefaultSeoImageUrl();
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 export const metadata = {
   title: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
@@ -31,7 +35,7 @@ export const metadata = {
     siteName: "LandmarkPlots",
     images: [
       {
-        url: "https://landmarkplots.com/images/property-banner-img.jpg",
+        url: DEFAULT_SEO_IMAGE,
         width: 1200,
         height: 630,
         alt: "LandmarkPlots - Buy, Rent, Sell Your Ideal Property Today",
@@ -84,7 +88,7 @@ export default function RootLayout({ children }) {
         <meta name="business:floor" content="1st Floor, Cabin 2" />
         
         {/* Social media and business image meta tags */}
-        <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+        <meta property="og:image" content={BUSINESS_IMAGE} />
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content="Landmark Properties - Real Estate Broker & Builders" />

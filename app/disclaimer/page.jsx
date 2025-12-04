@@ -1,6 +1,9 @@
 
 import React from 'react';
 import DisclaimerClinet from './DisclaimerClinet';
+import { getBusinessImageUrl } from '@/app/config/site';
+
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 // SEO Metadata
 export const metadata = {
@@ -14,7 +17,7 @@ export const metadata = {
     siteName: 'Landmark Plots',
     images: [
       {
-        url: 'https://landmarkplots.com/uploads/default.jpg',
+        url: BUSINESS_IMAGE,
         width: 1200,
         height: 630,
         alt: 'Landmark Plots Disclaimer',
@@ -27,7 +30,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Disclaimer - Landmark Plots | Legal Information & Terms',
     description: 'Read our comprehensive disclaimer for Landmark Plots. Important legal information about property listings, images, and transaction guidelines.',
-    images: ['https://landmarkplots.com/uploads/default.jpg'],
+    images: [BUSINESS_IMAGE],
   },
   alternates: {
     canonical: 'https://landmarkplots.com/disclaimer',

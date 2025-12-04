@@ -15,10 +15,11 @@ import PropertyHeader from "@/components/propertyDetailPage/PropertyHeader";
 import PropertiesDetails2 from "@/components/propertyDetailPage/PropertiesDetails2";
 import FavoriteStar from "@/components/common/FavoriteStar";
 import PropertyNotFound from "@/components/common/PropertyNotFound";
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../api/auth/[...nextauth]/route';
-import { siteConfig, getDefaultImage } from '@/app/config/site';
-import { notFound } from 'next/navigation';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { siteConfig, getDefaultImageUrl } from "@/app/config/site";
+import { notFound } from "next/navigation";
+import Link from "next/link";
 
 const MIN_SLUG_PARTS = 5;
 
@@ -43,6 +44,34 @@ const buildSignificantLinks = () => [
   `${siteConfig.url}/properties-for-rent`,
 ];
 
+const buildPropertyTitle = (parts = []) => {
+  if (!Array.isArray(parts) || parts.length === 0) {
+    return "Featured Property";
+  }
+
+  const sliceIndex = Math.max(parts.length - 2, 1);
+  return parts
+    .slice(0, sliceIndex)
+    .filter(Boolean)
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join(" ");
+};
+
+const buildPropertyDescription = (parts = []) => {
+  if (!Array.isArray(parts) || parts.length === 0) {
+    return "Explore this featured property listed on Landmark Properties.";
+  }
+
+  const safeParts = parts.filter(Boolean);
+  const descriptor = safeParts.slice(0, Math.min(safeParts.length - 1, 4)).join(" ");
+  const forIndex = safeParts.indexOf("for");
+  const purpose =
+    forIndex !== -1 && safeParts[forIndex + 1] ? safeParts[forIndex + 1] : safeParts[safeParts.length - 2];
+  const area = forIndex > 0 ? safeParts[forIndex - 1] : safeParts[safeParts.length - 3];
+
+  return `Check out this ${descriptor || "exclusive property"} for ${purpose || "sale"}. It is an ideal investment opportunity in a prime ${area || "location"} area with verified property assurance.`;
+};
+
 export async function generateMetadata({ params }) {
   const { slug } = params;
   const arrproId = buildSafeSlugParts(slug);
@@ -59,24 +88,8 @@ export async function generateMetadata({ params }) {
   const [images] = await db.query(q1, listingId);
   const imageData = Array.isArray(images) && images.length > 0 ? images[0] : null;
 
-  //const proId1 = arrproId[arrproId.length - 1];
-  //const { row : propertyData} = await getData(slug, proId1);
-
-  const desc = `Check out this ${
-    arrproId[0] + " " + arrproId[1] + " " + arrproId[2] + " "
-  }${arrproId[3] !== "for" ? arrproId[3] : ""}
-for ${
-    arrproId[3] === "for" ? arrproId[4] : arrproId[5]
-  }. It is an ideal investment opportunity in a prime${
-    arrproId[3] !== "for"
-      ? " " + arrproId[2] + " " + arrproId[3]
-      : " " + arrproId[2] + ""
-  } area with verified property assurance.`;
-
-  const capitalizedName1 = arrproId
-    .slice(0, arrproId.length - 2)
-    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
-    .join(" ");
+  const desc = buildPropertyDescription(arrproId);
+  const capitalizedName1 = buildPropertyTitle(arrproId);
 
   const [propertyData] = await db.query(
     "SELECT pro_url, pro_creation_date, pro_ad_type, pro_type, pro_sub_cat, pro_amt, pro_area_size, pro_area_size_unit, pro_bedroom, pro_washrooms, pro_locality, pro_city, pro_state FROM property_module WHERE listing_id = ?",
@@ -269,7 +282,7 @@ for ${
           url:
             imageData?.pro_cover_image
               ? `${siteConfig.url}/uploads/${imageData.pro_cover_image}`
-              : `${siteConfig.url}/uploads/${getDefaultImage(data.pro_type, data.pro_sub_cat)}`,
+              : getDefaultImageUrl(data.pro_type, data.pro_sub_cat),
           width: 1200,
           height: 630,
           alt: capitalizedName1,

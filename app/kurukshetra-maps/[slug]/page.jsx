@@ -1,4 +1,7 @@
 import pool from '../../libs/mysql';
+import { getBusinessImageUrl } from '@/app/config/site';
+
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 const getMapById = async (id) => {
   try {
@@ -41,7 +44,7 @@ export async function generateMetadata({ params }, parent) {
             url:
               images[0] !== undefined
                 ? `https://adminapi.landmarkplots.com/mapImages/${images[0].map_image}`
-                : "https://landmarkplots.com/uploads/default.jpg",
+                : BUSINESS_IMAGE,
             width: 1200,
             height: 630,
             alt: title,

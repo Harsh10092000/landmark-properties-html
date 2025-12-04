@@ -14,6 +14,9 @@ import "./markdownstyling.css";
 import Link from "next/link";
 import Image from "next/image";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
+import { getBusinessImageUrl } from "@/app/config/site";
+
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 export async function generateMetadata({ params }, parent) {
   // Fetch the post data using the slug from params
@@ -77,7 +80,7 @@ export async function generateMetadata({ params }, parent) {
       title: res.title,
       description: res.excerpt || "Description for the Open Graph",
       images: [
-        res.featuredImage ? res.featuredImage.sourceUrl : "/default-image.jpg",
+        res.featuredImage ? res.featuredImage.sourceUrl : BUSINESS_IMAGE,
       ], // Full URL to image
     },
     jsonLd: {

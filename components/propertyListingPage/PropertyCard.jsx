@@ -5,9 +5,10 @@ import React from "react";
 import { ShowPrice } from "../HelperComponents";
 import moment from "moment";
 import FavoriteStar from "@/components/common/FavoriteStar";
-
+import { getDefaultImagePath } from "@/app/config/site";
 
 const PropertyCard = ({ item, index, currentUser = "" }) => {
+  const fallbackImage = getDefaultImagePath(item.pro_type, item.pro_sub_cat);
   return (
     <div key={index} class="listing__page--wrapper">
       <div class="listing__main--content">
@@ -45,9 +46,9 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                         />
                       ) : (
                         <Image
-                          src={`/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`}
-                          alt={`${item.pro_sub_cat.split(",")[0]} in ${
-                            item.pro_city
+                          src={fallbackImage}
+                          alt={`${(item.pro_sub_cat || "").split(",")[0] || "Property"} in ${
+                            item.pro_city || "Kurukshetra"
                           }`}
                           className="featured__thumbnail--img"
                           width={380}

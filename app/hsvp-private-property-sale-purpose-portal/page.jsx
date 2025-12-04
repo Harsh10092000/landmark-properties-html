@@ -1,7 +1,9 @@
 import React from 'react'
 import HsvpClient from './HsvpClient'
 import Head from 'next/head'
+import { getBusinessImageUrl } from '@/app/config/site'
 
+const BUSINESS_IMAGE = getBusinessImageUrl()
 
 export const metadata = {
   title: 'HSVP Private Property Sale–Purchase Portal | Guide, Policy PDF, Highlights',
@@ -15,7 +17,7 @@ export const metadata = {
     siteName: 'Landmark Plots',
     images: [
       {
-        url: 'https://landmarkplots.com/uploads/default.jpg',
+        url: BUSINESS_IMAGE,
         width: 1200,
         height: 630,
         alt: 'HSVP Private Property Sale Purchase Portal',
@@ -28,7 +30,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'HSVP Private Property Sale–Purchase Portal | Guide, Policy PDF, Highlights',
     description: 'Transparent, digital, policy-compliant HSVP private property sale–purchase portal. Highlights, FAQs, handbook PDF, and seller/buyer journey.',
-    images: ['https://landmarkplots.com/uploads/default.jpg'],
+    images: [BUSINESS_IMAGE],
   },
   alternates: {
     canonical: 'https://landmarkplots.com/hsvp-private-property-sale-purpose-portal',
@@ -71,7 +73,7 @@ const page = () => {
               "@type": "Organization",
               "name": "Landmark Plots",
               "url": "https://landmarkplots.com/",
-              "logo": "https://landmarkplots.com/uploads/default.jpg",
+              "logo": BUSINESS_IMAGE,
               "sameAs": [
                 "https://landmarkplots.com/"
               ]
@@ -94,14 +96,14 @@ const page = () => {
                 "name": "Landmark Plots", 
                 "logo": { 
                   "@type": "ImageObject", 
-                  "url": "https://landmarkplots.com/uploads/default.jpg" 
+                  "url": BUSINESS_IMAGE 
                 } 
               },
               "mainEntityOfPage": { 
                 "@type": "WebPage", 
                 "@id": "https://landmarkplots.com/hsvp-private-property-sale-purpose-portal" 
               },
-              "image": ["https://landmarkplots.com/uploads/default.jpg"],
+              "image": [BUSINESS_IMAGE],
               "url": "https://landmarkplots.com/hsvp-private-property-sale-purpose-portal",
               "datePublished": "2024-01-01",
               "dateModified": "2024-12-19"

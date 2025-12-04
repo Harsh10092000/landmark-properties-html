@@ -6,8 +6,6 @@ const MAX_SIZE = 5242880; // 5MB (5 * 1024 * 1024 bytes)
 const MIN_SIZE = 10000;   // 10KB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
 
-const DEFAULT_IMAGE = process.env.NEXT_PUBLIC_DEFAULT_IMAGE || "default.jpg";
-
 // Helper to normalize image object for preview (for both uploaded and selected images)
 function normalizeImage(img) {
     if (!img) return null;

@@ -1,9 +1,11 @@
 import React from 'react';
-import { siteConfig } from '@/app/config/site';
+import { siteConfig, getBusinessImageUrl } from '@/app/config/site';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import pool from '../libs/mysql';
 import KurukshetraRealEstateClient from './KurukshetraRealEstateClient';
+
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 export const metadata = {
   title: "Real Estate in Kurukshetra - Buy, Sell, Rent Properties | Landmark Properties",
@@ -17,7 +19,7 @@ export const metadata = {
     siteName: "Landmark Properties",
     images: [
       {
-        url: "https://landmarkplots.com/uploads/default.jpg",
+        url: BUSINESS_IMAGE,
         width: 1200,
         height: 630,
         alt: "Real Estate in Kurukshetra - Landmark Properties",
@@ -29,7 +31,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Real Estate in Kurukshetra - Buy, Sell, Rent Properties | Landmark Properties",
     description: "Discover the best real estate opportunities in Kurukshetra. Expert property consultation services by Landmark Properties.",
-    images: ["https://landmarkplots.com/uploads/default.jpg"],
+    images: [BUSINESS_IMAGE],
   },
   alternates: {
     canonical: "https://landmarkplots.com/kurukshetra-real-estate",
@@ -71,7 +73,7 @@ const KurukshetraRealEstatePage = async () => {
       "email": siteConfig.contact.email,
       "image": {
         "@type": "ImageObject",
-        "url": `${siteConfig.url}${siteConfig.seo.businessImage}`,
+        "url": BUSINESS_IMAGE,
         "width": 800,
         "height": 600
       },

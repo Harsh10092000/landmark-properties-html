@@ -7,6 +7,7 @@ import { ShowPrice } from "@/components/HelperComponents";
 import Link from "next/link";
 import moment from "moment";
 import FavoriteStar from "@/components/common/FavoriteStar";
+import { getDefaultImagePath } from "@/app/config/site";
 import "./TrendingProperties.css";
 
 
@@ -83,10 +84,10 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                           src={
                             item.pro_cover_image
                               ? `/uploads/${item.pro_cover_image}`
-                              :  `/uploads/${process.env.NEXT_PUBLIC_DEFAULT_IMAGE}`
+                              : getDefaultImagePath(item.pro_type, item.pro_sub_cat)
                           }
-                          alt={`${item.pro_type.split(",")[0]} in ${
-                            item.pro_city
+                          alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                            item.pro_city || "Kurukshetra"
                           }`}
                           className="featured__thumbnail--img"
                           width={380}

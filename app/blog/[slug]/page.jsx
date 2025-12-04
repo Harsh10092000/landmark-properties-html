@@ -9,6 +9,9 @@ import {
 import "./markdownstyling.css";
 import Link from "next/link";
 import BlogListingSideBar from "@/components/blog/BlogListingSideBar";
+import { getBusinessImageUrl } from "@/app/config/site";
+
+const BUSINESS_IMAGE = getBusinessImageUrl();
 
 export async function generateMetadata({ params }) {
   try {
@@ -76,16 +79,16 @@ export async function generateMetadata({ params }) {
     }
 
     // Return metadata for the page
-    return {
-      title: res.title || "Blog Post",
-      description: res.excerpt || "Default description for the page.", // Fallback description if excerpt is not available
-      openGraph: {
+      return {
         title: res.title || "Blog Post",
-        description: res.excerpt || "Description for the Open Graph",
-        images: [
-          res.featuredImage?.node?.sourceUrl || "/default-image.jpg",
-        ], // Full URL to image
-      },
+        description: res.excerpt || "Default description for the page.", // Fallback description if excerpt is not available
+        openGraph: {
+          title: res.title || "Blog Post",
+          description: res.excerpt || "Description for the Open Graph",
+          images: [
+            res.featuredImage?.node?.sourceUrl || BUSINESS_IMAGE,
+          ], // Full URL to image
+        },
       jsonLd: {
         __html: addProductJsonLd(res).__html,
       },
@@ -158,7 +161,7 @@ const page = async ({ params }) => {
                   <div class="blog__details--thumbnail mb-30">
                     <img
                       class="blog__details--thumbnail--media"
-                      src={post.featuredImage.node.sourceUrl}
+                      src={post.featuredImage.node.sourceUrl || BUSINESS_IMAGE}
                       alt={post.title || "Blog post image"}
                     />
                   </div>

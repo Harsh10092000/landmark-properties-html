@@ -4,7 +4,9 @@ import Section1 from '@/components/about/Section1'
 import BreadcrumbSection from '@/components/common/BreadcrumbSection'
 import Reviews from '@/components/common/Reviews'
 import React from 'react'
+import { getBusinessImageUrl } from '@/app/config/site'
 
+const BUSINESS_IMAGE = getBusinessImageUrl()
 
 const page = () => {
   return (
@@ -16,7 +18,7 @@ const page = () => {
           <meta name="author" content="Landmark Plots" />
           <meta property="og:title" content="About Us | Landmark Plots" />
           <meta property="og:description" content="Landmark Plots is a leading real estate company in India. We are a team of experienced professionals who are dedicated to providing the best possible service to our clients." />
-          <meta property="og:image" content="https://landmarkplots.com/uploads/default.jpg" />
+          <meta property="og:image" content={BUSINESS_IMAGE} />
           <meta property="og:url" content="https://landmarkplots.com/aboutus" />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Landmark Plots" />
