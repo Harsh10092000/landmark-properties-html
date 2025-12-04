@@ -57,7 +57,7 @@ export async function generateMetadata({ params }) {
   const db = await pool;
   const q1 = "SELECT pro_cover_image from property_module WHERE listing_id = ?";
   const [images] = await db.query(q1, listingId);
-  // console.log("images : " , images[0].img_link);
+  const imageData = Array.isArray(images) && images.length > 0 ? images[0] : null;
 
   //const proId1 = arrproId[arrproId.length - 1];
   //const { row : propertyData} = await getData(slug, proId1);
@@ -267,8 +267,8 @@ for ${
       images: [
         {
           url:
-            images[0] !== undefined && images[0].pro_cover_image
-              ? `${siteConfig.url}/uploads/${images[0].pro_cover_image}`
+            imageData?.pro_cover_image
+              ? `${siteConfig.url}/uploads/${imageData.pro_cover_image}`
               : `${siteConfig.url}/uploads/${getDefaultImage(data.pro_type, data.pro_sub_cat)}`,
           width: 1200,
           height: 630,
