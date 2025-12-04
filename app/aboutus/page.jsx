@@ -26,7 +26,7 @@ const page = () => {
         <BreadcrumbSection val1={"About"} val2={"Us"} />
         <Section1 />
         <PropertiesCategories />
-        <MostPopularCities />
+        {/* <MostPopularCities /> */}
         <Reviews />
     </main>
   )

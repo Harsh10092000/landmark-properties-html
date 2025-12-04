@@ -9,47 +9,39 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// Sample reviews data array
+// Reviews pulled from recent Landmark clients
 const reviewsData = [
   {
     id: 1,
     authorImage: "assets/img/other/testimonial-author-thumb3.png",
-    authorName: "Cameron Williamson",
-    authorTitle: "CEO & Founder",
+    authorName: "Amit Khatri",
+    authorTitle: "Industrial Supplier, Kundli",
     description:
-      "The most advanced revenue than this. I will refer everyone I like Level more and more each day because it makes my life easier. It really saves me time and effort.",
+      "Landmark Properties closed my warehouse deal in under two weeks. Their team filtered only verified plots and handled paperwork end to end.",
   },
   {
     id: 2,
-    authorImage: "assets/img/other/testimonial-author-thumb2.png",
-    authorName: "Sarah Johnson",
-    authorTitle: "Marketing Director",
+    authorImage: "assets/img/other/testimonial-author-thumb3.png",
+    authorName: "Neha Verma",
+    authorTitle: "Home Buyer, Kurukshetra",
     description:
-      "Level has transformed our workflow. The intuitive interface and powerful features have made our marketing campaigns more effective than ever.",
+      "I was relocating from Pune and had zero local contacts. Landmark handpicked gated society options, arranged video tours, and negotiated the final price for me.",
   },
   {
     id: 3,
-    authorImage: "assets/img/other/testimonial-author-thumb.png",
-    authorName: "Michael Chen",
-    authorTitle: "Product Manager",
+    authorImage: "assets/img/other/testimonial-author-thumb3.png",
+    authorName: "Col. R S Mehta (Retd.)",
+    authorTitle: "Investor, Panchkula",
     description:
-      "I can’t imagine managing our products without Level. It’s streamlined our processes and improved our team’s productivity significantly.",
+      "Appreciate the data-backed advisory. They openly shared circle rates, future infra plans, and rental yields before I blocked my plots.",
   },
   {
     id: 4,
     authorImage: "assets/img/other/testimonial-author-thumb3.png",
-    authorName: "Emily Davis",
-    authorTitle: "Freelance Designer",
+    authorName: "Saanvi Buildtech",
+    authorTitle: "Developer Partner",
     description:
-      "As a freelancer, Level helps me stay organized and deliver projects on time. It’s streamlined our processes and improved our team’s productivity significantly.",
-  },
-  {
-    id: 5,
-    authorImage: "assets/img/other/testimonial-author-thumb2.png",
-    authorName: "Robert Taylor",
-    authorTitle: "Small Business Owner",
-    description:
-      "Level’s features are exactly what I needed to grow my business. It’s streamlined our processes and improved our team’s productivity significantly.",
+      "Our inventory moves faster whenever Landmark runs a launch. Their marketing stack plus on-ground brokers deliver qualified site visits daily.",
   },
 ];
 

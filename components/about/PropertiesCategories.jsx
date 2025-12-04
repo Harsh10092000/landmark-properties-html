@@ -10,7 +10,7 @@ const PropertiesCategories = () => {
       image: "/assets/img/other/categories1.png",
       count: 13,
       description:
-        "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
+        "Secure freehold and licensed land parcels around NH-44, SH-6, and industrial belts with clear titles vetted by our in-house legal desk.",
       link: "/properties/land-properties",
       delay: 100,
     },
@@ -20,7 +20,7 @@ const PropertiesCategories = () => {
       image: "/assets/img/other/categories2.png",
       count: 24,
       description:
-        "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
+        "Curated floors, villas, and gated apartments in Kurukshetra, Karnal, and Panchkula with verified builders and transparent pricing.",
       link: "/properties/residential-properties",
       delay: 150,
     },
@@ -30,7 +30,7 @@ const PropertiesCategories = () => {
       image: "/assets/img/other/categories3.png",
       count: 43,
       description:
-        "With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.",
+        "Showrooms, SCOs, warehouses, and office spaces located near Metro corridors and high-footfall markets, backed by rental yield data.",
       link: "properties/commercial-properties",
       delay: 200,
     },
