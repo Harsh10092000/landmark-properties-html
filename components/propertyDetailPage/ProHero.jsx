@@ -22,12 +22,16 @@ const ProHero = ({ propertyData }) => {
 
   // console.log("allImages : ", allImages);
 
-  const coverImage = propertyData?.pro_cover_image;
+  // Get cover image - only if it exists and is not empty
+  const coverImage = propertyData?.pro_cover_image && propertyData.pro_cover_image.trim() !== '' 
+    ? propertyData.pro_cover_image 
+    : null;
+  
   let otherImages = [];
   console.log("propertyData?.pro_other_images : ", propertyData?.pro_other_images);
   if (Array.isArray(propertyData?.pro_other_images)) {
     otherImages = propertyData.pro_other_images;
-  } else if (typeof propertyData?.pro_other_images === "string") {
+  } else if (typeof propertyData?.pro_other_images === "string" && propertyData.pro_other_images.trim() !== '') {
     try {
       // Parse JSON array string
       const parsed = JSON.parse(propertyData.pro_other_images);
@@ -43,6 +47,7 @@ const ProHero = ({ propertyData }) => {
     ? otherImages
         .map((img) => {
           if (!img) return null;
+          if (typeof img === "string" && img.trim() === '') return null; // Filter out empty strings
           if (typeof img === "string") return img;
           if (typeof img === "object" && img.img_link) return img.img_link;
           return null;
@@ -52,11 +57,17 @@ const ProHero = ({ propertyData }) => {
 
   const fallbackFile = getDefaultImageFile(propertyData?.pro_type, propertyData?.pro_sub_cat);
 
-  const explicitImages = [coverImage, ...otherImages].filter(Boolean);
+  // Only include images that actually exist (not null, not empty string)
+  const explicitImages = [coverImage, ...otherImages].filter(img => {
+    if (!img) return false;
+    if (typeof img === 'string' && img.trim() === '') return false;
+    return true;
+  });
+  // Only show default image if user hasn't uploaded ANY images (neither cover nor other images)
   const allImages =
     explicitImages.length > 0
-      ? [...explicitImages, fallbackFile].filter(Boolean)
-      : [fallbackFile].filter(Boolean);
+      ? explicitImages  // Use only user-uploaded images if they exist
+      : [fallbackFile].filter(Boolean);  // Only show default if no images at all
   const toImageUrl = (src) => (src?.startsWith("http") ? src : getUploadImageUrl(src));
 
   // Swiper controller refs

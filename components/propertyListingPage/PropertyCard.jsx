@@ -7,8 +7,43 @@ import moment from "moment";
 import FavoriteStar from "@/components/common/FavoriteStar";
 import { getDefaultImagePath } from "@/app/config/site";
 
+// Helper function to check if property has any images
+const hasAnyImages = (coverImage, otherImages) => {
+  // Check cover image
+  if (coverImage && coverImage.trim() !== '') {
+    return true;
+  }
+  
+  // Check other images
+  if (otherImages) {
+    if (Array.isArray(otherImages) && otherImages.length > 0) {
+      return true;
+    }
+    if (typeof otherImages === 'string') {
+      try {
+        const parsed = JSON.parse(otherImages);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return true;
+        }
+      } catch {
+        // If not JSON, try comma-separated
+        const images = otherImages.split(',').map(img => img.trim()).filter(Boolean);
+        if (images.length > 0) {
+          return true;
+        }
+      }
+    }
+  }
+  
+  return false;
+};
+
 const PropertyCard = ({ item, index, currentUser = "" }) => {
   const fallbackImage = getDefaultImagePath(item.pro_type, item.pro_sub_cat);
+  
+  // Check if property has any images (cover or other)
+  const hasImages = hasAnyImages(item.pro_cover_image, item.pro_other_images);
+  
   return (
     <div key={index} class="listing__page--wrapper">
       <div class="listing__main--content">
@@ -29,7 +64,7 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                       class="featured__thumbnail--link"
                       href={`/${item.pro_url}`}
                     >
-                      {item.pro_cover_image ? (
+                      {hasImages && item.pro_cover_image ? (
                         <img
                           src={`${process.env.webURL}/uploads/${item.pro_cover_image}`}
                           alt={`Property For ${
@@ -44,6 +79,55 @@ const PropertyCard = ({ item, index, currentUser = "" }) => {
                           height={220}
                           loading="lazy"
                         />
+                      ) : hasImages && !item.pro_cover_image ? (
+                        // If has other images but no cover, use first other image
+                        (() => {
+                          let firstImage = '';
+                          if (item.pro_other_images) {
+                            if (Array.isArray(item.pro_other_images) && item.pro_other_images.length > 0) {
+                              firstImage = item.pro_other_images[0];
+                            } else if (typeof item.pro_other_images === 'string') {
+                              try {
+                                const parsed = JSON.parse(item.pro_other_images);
+                                if (Array.isArray(parsed) && parsed.length > 0) {
+                                  firstImage = parsed[0];
+                                }
+                              } catch {
+                                const images = item.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
+                                if (images.length > 0) {
+                                  firstImage = images[0];
+                                }
+                              }
+                            }
+                          }
+                          return firstImage ? (
+                            <img
+                              src={`${process.env.webURL}/uploads/${firstImage}`}
+                              alt={`Property For ${
+                                item.pro_ad_type === "Rent" ? "Rent" : "Sale"
+                              } in ${
+                                item.pro_city
+                                  ? item.pro_city + ", " + item.pro_state
+                                  : item.pro_state
+                              }`}
+                              className="featured__thumbnail--img"
+                              width={380}
+                              height={220}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <Image
+                              src={fallbackImage}
+                              alt={`${(item.pro_sub_cat || "").split(",")[0] || "Property"} in ${
+                                item.pro_city || "Kurukshetra"
+                              }`}
+                              className="featured__thumbnail--img"
+                              width={380}
+                              height={220}
+                              loading="lazy"
+                            />
+                          );
+                        })()
                       ) : (
                         <Image
                           src={fallbackImage}

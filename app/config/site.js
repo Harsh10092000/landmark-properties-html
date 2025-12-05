@@ -92,7 +92,7 @@ export const siteConfig = {
     "Studio Apartment": "/images/default_images/studio-apartment.webp",
     "RK": "/images/default_images/residential.webp",
     // Land subcategories
-    "Residential Land": "/images/default_images/residential-land.webp",
+    "Residential Land": "/images/default_images/land.webp",
     "Commercial Land": "/images/default_images/commercial-land.webp",
     "Industrial Land": "/images/default_images/industrial-land.webp",
     "Agricultural Land": "/images/default_images/agricultural-land.webp",

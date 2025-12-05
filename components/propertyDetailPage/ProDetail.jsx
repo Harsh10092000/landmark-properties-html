@@ -7,7 +7,7 @@ const ProDetail = ({ propertyData, proSlug }) => {
     <div className="listing__details--content">
    
     <div className="listing__details--content__step">
-        <h2 className="listing__details--title mb-25">
+        <h2 className="listing__details--title mb-25" style={{fontSize:"31px"}}>
           {/* {propertyData */}
                               {/* .slice(0, proSlug.length - 2)
                                 .map((item, index) => ( */}
@@ -23,11 +23,11 @@ const ProDetail = ({ propertyData, proSlug }) => {
                         <span className="text-capitalize">
                           {propertyData.pro_locality}
                         </span>
-                        ,&nbsp;
                         {/* {propertyData.pro_sub_district
-                          ? propertyData.pro_sub_district + ", "
+                          ? " " + propertyData.pro_sub_district
                           : ""} */}
-                        {propertyData.pro_city},&nbsp;
+                        {propertyData.pro_sub_district ? " " : " "}
+                        {propertyData.pro_city}&nbsp;
                         {propertyData.pro_state}
                                   </span>
                                 {/* ))} */}

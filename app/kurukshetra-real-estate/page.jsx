@@ -41,7 +41,7 @@ export const metadata = {
 const getData = async () => {
   try {
     const db = await pool;
-    const q = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size, pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image, pro_creation_date FROM property_module where pro_listed = 1 AND pro_city = 'Kurukshetra' ORDER BY pro_id DESC limit 6`;
+    const q = `SELECT pro_ad_type, pro_amt, pro_locality, pro_washrooms, pro_bedroom, pro_area_size, pro_area_size_unit, pro_user_id, pro_user_type, pro_url, listing_id, pro_type, pro_city, pro_state, pro_cover_image, pro_other_images, pro_creation_date FROM property_module where pro_listed = 1 AND pro_city = 'Kurukshetra' ORDER BY pro_id DESC limit 6`;
     const [rows] = await db.query(q);
     return { data: rows };
   } catch (err) {

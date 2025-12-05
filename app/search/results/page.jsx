@@ -238,7 +238,29 @@ const SearchResultsContent = () => {
     let filtered = [...sortedUsers];
 
     if (proWithPhotos) {
-      filtered = filtered.filter((i) => (i.pro_cover_image || "") !== "");
+      // Check if property has cover image or other images
+      filtered = filtered.filter((i) => {
+        const hasCover = i.pro_cover_image && i.pro_cover_image.trim() !== "";
+        let hasOtherImages = false;
+        if (i.pro_other_images) {
+          if (Array.isArray(i.pro_other_images) && i.pro_other_images.length > 0) {
+            hasOtherImages = true;
+          } else if (typeof i.pro_other_images === 'string') {
+            try {
+              const parsed = JSON.parse(i.pro_other_images);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                hasOtherImages = true;
+              }
+            } catch {
+              const images = i.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
+              if (images.length > 0) {
+                hasOtherImages = true;
+              }
+            }
+          }
+        }
+        return hasCover || hasOtherImages;
+      });
     }
     if (proWithParking) {
       filtered = filtered.filter((i) => Number(i.pro_parking) > 0);

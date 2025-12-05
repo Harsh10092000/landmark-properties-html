@@ -305,7 +305,27 @@ const ClientComp = ({
     const filteredData = sortedUsers
       .filter((code) => {
         if (proWithPhotos === true) {
-          return code.pro_cover_image !== "" || code.pro_cover_image !== "";
+          // Check if property has cover image or other images
+          const hasCover = code.pro_cover_image && code.pro_cover_image.trim() !== "";
+          let hasOtherImages = false;
+          if (code.pro_other_images) {
+            if (Array.isArray(code.pro_other_images) && code.pro_other_images.length > 0) {
+              hasOtherImages = true;
+            } else if (typeof code.pro_other_images === 'string') {
+              try {
+                const parsed = JSON.parse(code.pro_other_images);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                  hasOtherImages = true;
+                }
+              } catch {
+                const images = code.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
+                if (images.length > 0) {
+                  hasOtherImages = true;
+                }
+              }
+            }
+          }
+          return hasCover || hasOtherImages;
         } else if (proWithPhotos === false) {
           return true;
         }

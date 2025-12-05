@@ -10,6 +10,36 @@ import FavoriteStar from "@/components/common/FavoriteStar";
 import { getDefaultImagePath } from "@/app/config/site";
 import "./TrendingProperties.css";
 
+// Helper function to check if property has any images
+const hasAnyImages = (coverImage, otherImages) => {
+  // Check cover image
+  if (coverImage && coverImage.trim() !== '') {
+    return true;
+  }
+  
+  // Check other images
+  if (otherImages) {
+    if (Array.isArray(otherImages) && otherImages.length > 0) {
+      return true;
+    }
+    if (typeof otherImages === 'string') {
+      try {
+        const parsed = JSON.parse(otherImages);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return true;
+        }
+      } catch {
+        // If not JSON, try comma-separated
+        const images = otherImages.split(',').map(img => img.trim()).filter(Boolean);
+        if (images.length > 0) {
+          return true;
+        }
+      }
+    }
+  }
+  
+  return false;
+};
 
 const TrendingProperties = ({data, currentUser = ""}) => {
   return (
@@ -80,20 +110,80 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                               alt={`${item.pro_type.split(",")[0]} in ${item.pro_city}`}
                           /> */}
 
-                        <Image
-                          src={
-                            item.pro_cover_image
-                              ? `/uploads/${item.pro_cover_image}`
-                              : getDefaultImagePath(item.pro_type, item.pro_sub_cat)
+                        {(() => {
+                          const hasImages = hasAnyImages(item.pro_cover_image, item.pro_other_images);
+                          
+                          if (hasImages && item.pro_cover_image) {
+                            return (
+                              <Image
+                                src={`/uploads/${item.pro_cover_image}`}
+                                alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                                  item.pro_city || "Kurukshetra"
+                                }`}
+                                className="featured__thumbnail--img"
+                                width={380}
+                                height={330}
+                                loading="lazy"
+                              />
+                            );
+                          } else if (hasImages && !item.pro_cover_image) {
+                            // If has other images but no cover, use first other image
+                            let firstImage = '';
+                            if (item.pro_other_images) {
+                              if (Array.isArray(item.pro_other_images) && item.pro_other_images.length > 0) {
+                                firstImage = item.pro_other_images[0];
+                              } else if (typeof item.pro_other_images === 'string') {
+                                try {
+                                  const parsed = JSON.parse(item.pro_other_images);
+                                  if (Array.isArray(parsed) && parsed.length > 0) {
+                                    firstImage = parsed[0];
+                                  }
+                                } catch {
+                                  const images = item.pro_other_images.split(',').map(img => img.trim()).filter(Boolean);
+                                  if (images.length > 0) {
+                                    firstImage = images[0];
+                                  }
+                                }
+                              }
+                            }
+                            return firstImage ? (
+                              <Image
+                                src={`/uploads/${firstImage}`}
+                                alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                                  item.pro_city || "Kurukshetra"
+                                }`}
+                                className="featured__thumbnail--img"
+                                width={380}
+                                height={330}
+                                loading="lazy"
+                              />
+                            ) : (
+                              <Image
+                                src={getDefaultImagePath(item.pro_type, item.pro_sub_cat)}
+                                alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                                  item.pro_city || "Kurukshetra"
+                                }`}
+                                className="featured__thumbnail--img"
+                                width={380}
+                                height={330}
+                                loading="lazy"
+                              />
+                            );
+                          } else {
+                            return (
+                              <Image
+                                src={getDefaultImagePath(item.pro_type, item.pro_sub_cat)}
+                                alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                                  item.pro_city || "Kurukshetra"
+                                }`}
+                                className="featured__thumbnail--img"
+                                width={380}
+                                height={330}
+                                loading="lazy"
+                              />
+                            );
                           }
-                          alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
-                            item.pro_city || "Kurukshetra"
-                          }`}
-                          className="featured__thumbnail--img"
-                          width={380}
-                          height={330}
-                          loading="lazy"
-                        />
+                        })()}
                       </Link>
                     </div>
                     <div className="featured__badge">
