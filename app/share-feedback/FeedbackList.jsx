@@ -11,7 +11,7 @@ export default function FeedbackList({ reviews }) {
             setCopiedId(review.id);
 
             // Open Google Reviews immediately to avoid popup blockers
-            window.open("https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeYvDubAqwXKwXZrOwuYzyuk73q3OWZq5V5gp3uIzl5-MjCycsMtPpGtjn1VuVvdj4txgVO-qfCAGMl4FoDm1LBj2lAJZI3OGdZegucHajhm9yUvWpp-9AaS7O7djWo0Ol6xlORBgrnUxC6KyM3LvAXCJpVt&sa=X&ved=2ahUKEwj1ocnsrZmSAxVvWnADHTa-Ei8Q0bkNegQIHxAH", "_blank");
+            window.open("https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeYvDubAqwXKwXZrOwuYzyuk73q3OWZq5V5gp3uIzl5-MjCycsMtPpGtjn1VuVvdj4txgVO-qfCAGMl4FoDm1LBj2lAJZI3OGdZegucHajhm9yUvWpp-9AaS7O7djWo0Ol6xlORBgrnUxC6KyM3LvAXCJpVt&sa=X&ved=2ahUKEwj1ocnsrZmSAxVvWnADHTa-Ei8Q0bkNegQIHxAH#lrd=0x390e470336eef35d:0xd98da635dd8ae2b4,3,,,,", "_blank");
 
             // Reset the button state after 3 seconds so it doesn't stay "Copied" forever
             setTimeout(() => {

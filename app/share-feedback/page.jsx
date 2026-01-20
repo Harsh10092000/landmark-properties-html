@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import React from 'react';
 import pool from '@/app/libs/mysql';
 import FeedbackList from './FeedbackList';
@@ -33,16 +34,30 @@ export default async function ShareFeedbackPage() {
     return (
         <div className="feedback-page">
             <div className="container">
-                <div className="text-center mb-5" data-aos="fade-up">
-                    <span className="d-inline-block py-2 px-4 rounded-pill bg-white text-success fw-bold mb-4 shadow-sm feedback-badge">
-                        ⭐ SHARE YOUR EXPERIENCE
-                    </span>
+                <div className="text-center mb-5" data-aos="fade-up" style={{ "padding-bottom": "30px" }}>
+                    <div className="mb-4">
+                        <span className="d-inline-block py-2 px-4 rounded-pill bg-white text-success fw-bold shadow-sm feedback-badge">
+                            ✅ QR SCANNED SUCCESSFULLY
+                        </span>
+                    </div>
+
                     <h2 className="section__heading--title mb-3 feedback-header-title">
                         We Value Your Feedback
                     </h2>
-                    <p className="section__heading--desc mx-auto feedback-header-desc">
-                        Select a review below that matches your experience, click <strong>Copy Review</strong>, and paste it on our Google Reviews page. It takes less than 10 seconds!
+
+                    <p className="section__heading--desc mx-auto feedback-header-desc mb-4">
+                        Thank you for scanning! To make it easy, we've generated some reviews for you based on our services.
+                        <strong> Select one, click "Copy Review", and paste it on our Google page.</strong>
                     </p>
+
+                    <a
+                        href="https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeYvDubAqwXKwXZrOwuYzyuk73q3OWZq5V5gp3uIzl5-MjCycsMtPpGtjn1VuVvdj4txgVO-qfCAGMl4FoDm1LBj2lAJZI3OGdZegucHajhm9yUvWpp-9AaS7O7djWo0Ol6xlORBgrnUxC6KyM3LvAXCJpVt&sa=X&ved=2ahUKEwj1ocnsrZmSAxVvWnADHTa-Ei8Q0bkNegQIHxAH#lrd=0x390e470336eef35d:0xd98da635dd8ae2b4,3,,,,"
+                        target="_blank"
+                        className="btn btn-outline-success rounded-pill px-4 fw-bold shadow-sm mb-2"
+                        style={{ fontSize: '18px' }}
+                    >
+                        🌐 Write a Review
+                    </a>
                 </div>
 
                 {reviews.length > 0 ? (
