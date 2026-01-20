@@ -19,6 +19,7 @@ const pool = mysql.createPool({
   database: "u706648698_landmark_plots",
   waitForConnections: true,
   port: 3306,
+  multipleStatements: true
 })
 
 export default pool

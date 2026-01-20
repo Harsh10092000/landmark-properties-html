@@ -115,7 +115,7 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                           
                           if (hasImages && item.pro_cover_image) {
                             return (
-                              <Image
+                        <Image
                                 src={`/uploads/${item.pro_cover_image}`}
                                 alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
                                   item.pro_city || "Kurukshetra"
@@ -173,14 +173,14 @@ const TrendingProperties = ({data, currentUser = ""}) => {
                             return (
                               <Image
                                 src={getDefaultImagePath(item.pro_type, item.pro_sub_cat)}
-                                alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
-                                  item.pro_city || "Kurukshetra"
-                                }`}
-                                className="featured__thumbnail--img"
-                                width={380}
-                                height={330}
-                                loading="lazy"
-                              />
+                          alt={`${(item.pro_type || "").split(",")[0] || "Property"} in ${
+                            item.pro_city || "Kurukshetra"
+                          }`}
+                          className="featured__thumbnail--img"
+                          width={380}
+                          height={330}
+                          loading="lazy"
+                        />
                             );
                           }
                         })()}
