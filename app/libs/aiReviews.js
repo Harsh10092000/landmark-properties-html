@@ -4,215 +4,146 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
 
 export async function generateAIReviews() {
     try {
-        if (!process.env.GOOGLE_GEMINI_API_KEY) {
-            console.warn("AI Review Generation: Missing GOOGLE_GEMINI_API_KEY. Using fallback.");
-            return null;
-        }
-
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        const prompt1 = `
-You are a real customer who has used Landmark Properties, a real estate brokerage and builder in Kurukshetra, Haryana.
-
-Write 9 short, natural customer reviews in English based on real buying or renting experiences.
-
-LANGUAGE RULES:
-- Use very very simple English
-- It must be human written
-- Sound like a normal person, not a company
-- 1–3 short sentences per review
-- Honest, calm, and satisfied tone
-- No marketing words, no emojis, no hashtags
-- Do not sound promotional
-
-PROPERTY RULES:
-- Each review must mention ONLY ONE property type
-- Do not repeat the same property type in back-to-back reviews
-
-Property Types (use naturally):
-Apartment, Independent House, Builder Floor, Studio Apartment, Farm House,
-Residential Land, Commercial Land, Industrial Land, Agricultural Land,
-Retail Showroom, Office Space, Warehouse
-
-Buy Type:
-Mix Sale and Rent experiences
-
-LOCAL CONTEXT (use naturally, optional per review):
-Mention location like a real buyer would, such as:
-- Sector 7, Sector 13, Sector 3, Sector 30, Sector 4 , Sector 5, Sector 8, Sector 17, Sector 10
-- Pipli Road, New Bus Stand Road
-- Thanesar, Urban Estate
-- Near Brahma Sarovar, Pipli Chowk
-- Kurukshetra University area
-
-LOCATION STYLE EXAMPLES (do NOT copy exactly):
-- "in Sector 13"
-- "near Pipli Chowk"
-- "around the University area"
-- "on Pipli Road side"
-
-EXPERIENCE (pick ONE per review):
-- Clear and honest dealing
-- Verified plot or papers
-- Fair price as per circle rate
-- Helpful for NRI or outstation buyer
-- Smooth paperwork and quick deal
-- Proper guidance without pressure
-
-OUTPUT RULES (VERY IMPORTANT):
-- Return ONLY valid JSON
-- No markdown
-- No explanation
-- Format exactly like this:
-
-[
-  "Review text 1",
-  "Review text 2",
-  "Review text 3"
-]
-`;
-
-
         const prompt = `
-Write 9 authentic customer reviews for Landmark Properties in Kurukshetra. Write like a REAL INDIAN PERSON who actually bought or rented.
+Generate 9 UNIQUE and DIFFERENT 5-star Google reviews for "Landmark Properties" - a real estate dealer in Kurukshetra, Haryana, India.
 
-AUTHENTIC INDIAN ENGLISH RULES:
-- Use very very simple English
-- Use words Indians actually say
-- Not formal, just normal talking
-- Short simple sentences
-- Sound like friend telling experience
-- All positive reviews (happy customer)
+IMPORTANT: Each review must be COMPLETELY DIFFERENT from others. Do NOT repeat same phrases or structure.
 
-REAL INDIAN ENGLISH EXAMPLES:
+CUSTOMER TYPES TO MIX (use different ones for each review):
+- First-time home buyer (nervous, asking many questions)
+- Investor looking for land/plot
+- Business owner needing commercial space
+- Family relocating to Kurukshetra
+- NRI investing from abroad
+- Young professional renting apartment
+- Retired person buying peaceful home
+- Shop owner looking for showroom
+- Someone who bought through friend's reference
 
-NOT THIS (sounds fake):
-- "They told me straight, no lies at all"
-- "The process was transparent"
-- "Highly recommended"
+REVIEW ELEMENTS TO VARY:
+- Some start with greeting ("Great service!")
+- Some start with their situation ("Was looking for...")
+- Some mention staff by name or title ("The owner himself...")
+- Some mention time taken ("Got deal done in 2 weeks")
+- Some mention comparison ("Tried other dealers but...")
+- Some are short and direct (3 lines)
+- Some are detailed (5 lines)
 
-LIKE THIS (real Indian):
-- "Bhai log honest the"
-- "Jhunjhun nahi tha"
-- "Bilkul theek tha"
-- "Mast tha"
-- "Achha deal tha"
-- "Khatam ho gaya"
-- "Mil gaya"
-- "Achhha tha"
-- "Satisfied hoon"
-- "Paisa ka value mila"
-- "Sab simple tha"
+PROPERTY TYPES: Plot, Flat, Apartment, House, Builder Floor, Shop, Office, Warehouse, Land, Commercial Space
 
-REAL INDIAN ENGLISH REVIEW EXAMPLES (IN ENGLISH):
+KURUKSHETRA AREAS: Sector 7, Sector 13, Sector 3, Sector 30, Sector 4, Sector 5, Pipli Road, Thanesar, Urban Estate, Near University
 
-1. "Got apartment in Sector 7. Was searching for long time. The rate was fair and the broker gave good deal. Very happy now."
+LANGUAGE:
+- 6-7 reviews in simple English
+- 2-3 can have Hindi words like "bahut accha", "sahi deal", "mast", "theek hai"
+- Keep it casual, not formal corporate language
 
-2. "Rented studio apartment in Sector 13. First time having own space. Owner was very helpful, rent also affordable. Everything is good."
+WHAT TO MENTION:
+- Specific location where they bought/rented
+- What property type
+- What staff did (showed options, helped with loan, paperwork)
+- Their satisfaction
 
-3. "Found farmhouse on Pipli Road. My mother liked it very much. Honest price, no cheating. It is a nice property."
+BANNED WORDS (sound fake):
+- exceptional, outstanding, seamless, comprehensive, exemplary
+- transparent dealings, professional approach
+- papa/mummy/wife ke liye
+- highly recommended (at end of every review)
 
-4. "Builder floor near New Bus Stand Road. Good space and nice rate. Landlord is cooperative. No problems so far."
+CRITICAL: Generate FRESH content. Do NOT reuse any phrases. Each review should feel like a different person wrote it on a different day.
 
-5. "Bought independent house in Thanesar. Perfect for family. All papers were correct, seller was honest. I am very satisfied."
-
-6. "Rented office space in Sector 30. Very good location, everything is nearby. Business is running well, no issues at all."
-
-7. "Got warehouse in Urban Estate. Needed it for business. Everything got done on time. It was a good investment."
-
-8. "Bought residential land in Sector 5. For investment purpose. The rate was fair, no cheating involved. Money was well spent."
-
-9. "Got showroom in Sector 17. Needed it for my business. Location is very nice, good foot traffic. Very happy with this deal."
-
-10. I had a great experience with Landmark Properties. The team was professional, transparent, and very supportive throughout the entire process. All documentation was handled smoothly. Highly recommended for real estate services in Kurukshetra.”
-
-
-
-11. "Excellent service and quick response. Landmark Properties helped me find the right property at a fair price. The staff is knowledgeable and guided me at every step. Very satisfied with their service."
-
-
-
-12. "Trustworthy and reliable real estate consultants. They provided clear property details, proper verification, and timely updates. The whole process was smooth and hassle-free."
-
-
-
-13. "Professional team with good local market knowledge. From property selection to final paperwork, everything was managed efficiently. I would definitely recommend Landmark Properties."
-
-
-14. "Great service, honest guidance, and smooth property dealing. Highly recommended."
-
-REAL INDIAN WORDS TO USE:
-- Bhai, log, parivar (family)
-- Theek, achhha, mast, bohot
-- Milgaya, chal raha tha, khatam ho gaya
-- Jhunjhun, pressure, tension
-- Rate, deal, investment
-- Papers, seller, owner
-- Satisfied, happy, khush
-
-AVOID (NOT HOW INDIANS TALK):
-- excellent, outstanding, exceptional
-- transparent, authentic, verified
-- seamless, innovative, comprehensive
-- highly recommend, exemplary
-- opportunity, potential, investment opportunity
-
-PROPERTY TYPES (each one different):
-Apartment, Independent House, Builder Floor, Studio Apartment, Farm House, Residential Land, Commercial Land, Industrial Land, Agricultural Land, Retail Showroom, Office Space, Warehouse
-
-LOCATIONS YOU GAVE (use all of them):
-Sector 7, Sector 13, Sector 3, Sector 30, Sector 4, Sector 5, Sector 8, Sector 17, Sector 10, Pipli Road, New Bus Stand Road, Thanesar, Urban Estate, Brahma Sarovar, Pipli Chowk, University area
-
-SPREAD LOCATIONS: Use 1-2 locations per review naturally
-
-BUY TYPE: Mix of buying and renting
-
-TONE:
-- All positive (customer is happy)
-- Like friend talking
-- Real Indian English
-- Personal touch
-- Enthusiastic but natural
-
-LENGTH: 2-3 sentences each, simple
-
-NO NEGATIVES: Only good things mentioned
-
-OUTPUT: ONLY valid JSON:
-
-[
-  "Review 1",
-  "Review 2",
-  "Review 3",
-  "Review 4",
-  "Review 5",
-  "Review 6",
-  "Review 7",
-  "Review 8",
-  "Review 9"
-]
+OUTPUT: Valid JSON array of 9 unique strings only. No markdown, no explanation.
 `;
 
+        // --- TRY GEMINI MODELS IN ORDER ---
+        if (process.env.GOOGLE_GEMINI_API_KEY) {
+            const modelsToTry = [
+                "gemini-2.5-flash-lite-preview-09-2025",
+                "gemini-3-flash-preview",
+                "gemini-1.5-flash",
+                "gemini-1.5-flash-latest",
+                "gemini-2.0-flash-exp",
+                "gemini-1.5-pro",
+                "gemini-1.5-pro-latest",
+                "gemini-pro",
+                "gemini-1.0-pro",
+                "gemini-3-flash-preview",
+                "gemini-3-pro-preview"
+            ];
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+            for (const modelName of modelsToTry) {
+                try {
+                    console.log(`AI Review Generation: Trying Gemini (${modelName})...`);
+                    const model = genAI.getGenerativeModel({ model: modelName });
+                    const result = await model.generateContent(prompt);
+                    const response = await result.response;
+                    const responseText = response.text();
 
-        // Extract JSON if AI included markdown backticks
-        const jsonMatch = text.match(/\[.*\]/s);
-        if (jsonMatch) {
-            const reviews = JSON.parse(jsonMatch[0]);
-            // Format to match database structure for consistency
-            return reviews.map((text, index) => ({
-                id: `ai-${index}-${Date.now()}`,
-                review_text: text,
-                is_ai: true
-            }));
+                    if (responseText) {
+                        const strResponse = String(responseText);
+                        const jsonMatch = strResponse.match(/\[.*\]/s);
+                        if (jsonMatch) {
+                            console.log(`AI Review Generation: Success with ${modelName} (JSON Found)!`);
+                            const reviews = JSON.parse(jsonMatch[0]);
+                            return reviews.map((text, index) => ({
+                                id: `ai-${index}-${Date.now()}`,
+                                review_text: text,
+                                is_ai: true
+                            }));
+                        }
+                    }
+                } catch (err) {
+                    console.warn(`AI Review Generation: ${modelName} failed.`, err.message);
+                }
+            }
         }
 
+        // --- TRY PUTER.JS IF GEMINI FAILS ---
+        try {
+            console.log("AI Review Generation: Trying Puter.js...");
+
+            const puter = await import('@heyputer/puter.js').then(m => m.default).catch(() => null);
+
+            if (puter && puter.ai && typeof puter.ai.chat === 'function') {
+                const puterResponse = await puter.ai.chat(prompt);
+
+                let responseText;
+                if (typeof puterResponse === 'string') {
+                    responseText = puterResponse;
+                } else if (puterResponse?.message?.content) {
+                    responseText = puterResponse.message.content;
+                } else if (puterResponse?.text) {
+                    responseText = puterResponse.text;
+                } else if (puterResponse?.content) {
+                    responseText = puterResponse.content;
+                } else {
+                    responseText = JSON.stringify(puterResponse);
+                }
+
+                if (responseText) {
+                    const strResponse = String(responseText);
+                    const jsonMatch = strResponse.match(/\[.*\]/s);
+                    if (jsonMatch) {
+                        console.log("AI Review Generation: Success with Puter.js (JSON Found)!");
+                        const reviews = JSON.parse(jsonMatch[0]);
+                        return reviews.map((text, index) => ({
+                            id: `ai-${index}-${Date.now()}`,
+                            review_text: text,
+                            is_ai: true
+                        }));
+                    }
+                }
+            } else {
+                console.log("AI Review Generation: Puter.js not available in this environment.");
+            }
+        } catch (err) {
+            console.warn("AI Review Generation: Puter.js failed.", err.message);
+        }
+
+        console.error("AI Review Generation: All AI options failed. Using database fallback.");
         return null;
     } catch (error) {
-        console.error("AI Review Generation Error:", error);
+        console.error("AI Review Generation Final Error:", error);
         return null;
     }
 }

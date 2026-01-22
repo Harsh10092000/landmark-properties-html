@@ -1,81 +1,107 @@
-export const dynamic = 'force-dynamic';
-import React from 'react';
-import pool from '@/app/libs/mysql';
-import FeedbackList from './FeedbackList';
-import { generateAIReviews } from '@/app/libs/aiReviews';
+"use client";
 
-export const metadata = {
-    title: 'Share Your Feedback - Landmark Properties',
-    description: 'Help us improve by sharing your experience using one of our pre-written reviews.',
-};
+import { useState, useEffect } from "react";
+import PlatformCard from "@/components/PlatformCard";
+import { siteConfig } from "@/app/data/siteConfig";
+import { staticReviewsByPlatform } from "@/app/data/reviewsData";
 
-async function getFallbackReviews() {
-    try {
-        const db = await pool;
-        const [rows] = await db.query('SELECT * FROM feedback_reviews ORDER BY RAND() LIMIT 9');
-        return JSON.parse(JSON.stringify(rows));
-    } catch (error) {
-        console.error('Error fetching fallback reviews:', error);
-        return [];
-    }
-}
+export default function ReviewGeneratorPage() {
+    const initialPlatforms = siteConfig.platforms.map(platform => ({
+        ...platform,
+        reviews: staticReviewsByPlatform[platform.id] || []
+    }));
 
-export default async function ShareFeedbackPage() {
-    // Attempt AI Generation first
-    let reviews = await generateAIReviews();
-    let isAI = true;
+    const [platforms, setPlatforms] = useState(initialPlatforms);
+    const [loading, setLoading] = useState(true);
 
-    // Fallback if AI fails
-    if (!reviews || reviews.length === 0) {
-        reviews = await getFallbackReviews();
-        isAI = false;
-    }
+    useEffect(() => {
+        async function fetchAllPlatforms() {
+            try {
+                const platformPromises = initialPlatforms.map(async (platform) => {
+                    try {
+                        const response = await fetch(`/api/generate-reviews?platform=${platform.name}`);
+                        const data = await response.json();
+
+                        if (data.success && data.reviews?.length > 0) {
+                            return {
+                                ...platform,
+                                reviews: data.reviews,
+                            };
+                        }
+                    } catch (err) {
+                        console.warn(`Failed to fetch reviews for ${platform.name}:`, err);
+                    }
+                    return platform;
+                });
+
+                const updatedPlatforms = await Promise.all(platformPromises);
+                setPlatforms(updatedPlatforms);
+                setLoading(false);
+
+            } catch (error) {
+                console.error("Global fetch error:", error);
+                setLoading(false);
+            }
+        }
+
+        fetchAllPlatforms();
+    }, []);
+
+    const isSinglePlatform = platforms.length === 1;
 
     return (
-        <div className="feedback-page">
+        <div className="review-generator-page">
+            {/* Hero Section - Centered like share-feedback */}
             <div className="container">
-                <div className="text-center mb-5" data-aos="fade-up" style={{ "padding-bottom": "30px" }}>
-                    <div className="mb-4">
-                        <span className="d-inline-block py-2 px-4 rounded-pill bg-white text-success fw-bold shadow-sm feedback-badge">
+                <div className="rg-hero-centered" data-aos="fade-up">
+                    <div className="rg-badge-wrapper">
+                        <span className="rg-success-badge">
                             ✅ QR SCANNED SUCCESSFULLY
                         </span>
                     </div>
 
-                    <h2 className="section__heading--title mb-3 feedback-header-title">
+                    <h2 className="rg-main-title">
                         We Value Your Feedback
                     </h2>
 
-                    <p className="section__heading--desc mx-auto feedback-header-desc mb-4">
+                    <p className="rg-main-desc">
                         Thank you for scanning! To make it easy, we've generated some reviews for you based on our services.
                         <strong> Select one, click "Copy Review", and paste it on our Google page.</strong>
                     </p>
 
                     <a
-                        href="https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeYvDubAqwXKwXZrOwuYzyuk73q3OWZq5V5gp3uIzl5-MjCycsMtPpGtjn1VuVvdj4txgVO-qfCAGMl4FoDm1LBj2lAJZI3OGdZegucHajhm9yUvWpp-9AaS7O7djWo0Ol6xlORBgrnUxC6KyM3LvAXCJpVt&sa=X&ved=2ahUKEwj1ocnsrZmSAxVvWnADHTa-Ei8Q0bkNegQIHxAH#lrd=0x390e470336eef35d:0xd98da635dd8ae2b4,3,,,,"
+                        href="https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews"
                         target="_blank"
-                        className="btn btn-outline-success rounded-pill px-4 fw-bold shadow-sm mb-2"
-                        style={{ fontSize: '18px' }}
+                        rel="noopener noreferrer"
+                        className="rg-write-review-btn"
                     >
                         🌐 Write a Review
                     </a>
                 </div>
-
-                {reviews.length > 0 ? (
-                    <FeedbackList reviews={reviews} />
-                ) : (
-                    <div className="text-center py-5">
-                        <div className="spinner-border text-success" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                        <p className="mt-3 text-muted">Loading customized reviews...</p>
-                        {/* Fallback if DB is empty or error */}
-                    </div>
-                )}
-
-                <div className="text-center mt-5 text-muted small">
-                    <p>Thank you for choosing Landmark Properties!</p>
-                </div>
             </div>
+
+            {/* Reviews Section */}
+            <section className="rg-reviews-section">
+                <div className="container">
+                    {loading ? (
+                        <div className="rg-loading">
+                            <div className="rg-spinner"></div>
+                            <p className="rg-loading-text">Generating personalized reviews for all platforms...</p>
+                            <p className="rg-loading-subtext">Please wait while we generate reviews for you</p>
+                        </div>
+                    ) : (
+                        <div className="rg-platforms-list">
+                            {platforms.map((platform) => (
+                                <PlatformCard
+                                    key={platform.id}
+                                    platform={platform}
+                                    isSinglePlatform={isSinglePlatform}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
         </div>
     );
 }
