@@ -144,6 +144,24 @@ export const staticReviewsByPlatform = {
             author: "Vijay Laxmi",
             rating: 5,
         },
+        {
+            id: "f7",
+            text: "Landmark Properties helped me sell my plot at a very good price. Transparent dealing.",
+            author: "Sandeep Singh",
+            rating: 5,
+        },
+        {
+            id: "f8",
+            text: "Very reliable real estate agent. Clarified all my doubts regarding property laws.",
+            author: "Meenakshi Garg",
+            rating: 5,
+        },
+        {
+            id: "f9",
+            text: "Good collection of properties. Found a nice rental house quickly.",
+            author: "Rahul Sharma",
+            rating: 5,
+        }
     ],
     instagram: [
         {
@@ -164,5 +182,23 @@ export const staticReviewsByPlatform = {
             author: "@tech_guru",
             rating: 5,
         },
+        {
+            id: "i4",
+            text: "Just bought my first plot! So excited! Thanks for making it easy! 🎉 #LandmarkProperties",
+            author: "@travel_diaries_with_amit",
+            rating: 5,
+        },
+        {
+            id: "i5",
+            text: "Their team is super helpful. If you need property in KKR, DM them! 💯",
+            author: "@kurukshetra_updates",
+            rating: 5,
+        },
+        {
+            id: "i6",
+            text: "Vibe of our new office is just perfect. Thanks for finding this gem! 🏢✨",
+            author: "@startup_hustle",
+            rating: 5,
+        }
     ],
 };

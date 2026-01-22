@@ -6,10 +6,19 @@ import { siteConfig } from "@/app/data/siteConfig";
 import { staticReviewsByPlatform } from "@/app/data/reviewsData";
 
 export default function ReviewGeneratorPage() {
-    const initialPlatforms = siteConfig.platforms.map(platform => ({
-        ...platform,
-        reviews: staticReviewsByPlatform[platform.id] || []
-    }));
+    // Shuffle initial reviews
+    const initialPlatforms = siteConfig.platforms.map(platform => {
+        const staticReviews = staticReviewsByPlatform[platform.id] || [];
+        // Shuffle and slice to 6 items max
+        const shuffledReviews = [...staticReviews]
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 6);
+
+        return {
+            ...platform,
+            reviews: shuffledReviews
+        };
+    });
 
     const [platforms, setPlatforms] = useState(initialPlatforms);
     const [loading, setLoading] = useState(true);

@@ -12,14 +12,27 @@ export default function ReviewGeneratorPage() {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                // Initial load with static data
-                setReviews(staticReviewsByPlatform);
+                // Shuffle static reviews for variety on each load
+                const shuffledStatic = {};
+                Object.keys(staticReviewsByPlatform).forEach(key => {
+                    // Randomly sort and pick 3-6 reviews
+                    shuffledStatic[key] = [...staticReviewsByPlatform[key]]
+                        .sort(() => 0.5 - Math.random())
+                        .slice(0, 6);
+                });
+
+                // Initial load with shuffled static data
+                setReviews(shuffledStatic);
 
                 // Fetch AI reviews
                 const response = await fetch('/api/generate-reviews');
                 if (response.ok) {
                     const data = await response.json();
-                    setReviews(prev => ({ ...prev, ...data }));
+                    if (data.reviews && data.reviews.length > 0) {
+                        // This part needs to be smarter if API returns structure differently
+                        // But for now, since AI fails, we rely on shuffledStatic
+                        // setReviews(prev => ({ ...prev, ...data }));
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching reviews:", error);

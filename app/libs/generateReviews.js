@@ -30,61 +30,77 @@ export function buildPrompt(config, platform = "Google") {
     } = config;
 
     let platformInstruction = "";
+
+    // Define distinct personas and styles per platform
     switch (platform.toLowerCase()) {
+        case "instagram":
+            platformInstruction = `
+            STYLE: "Instagram Comment" style. VERY SHORT (1-2 sentences). 
+            TONE: Enthusiastic, visual, trendy.
+            FORMAT: purely casual, NO formal greeting.
+            MUST USE: Emojis (🔥, 🏠, ❤️, ✨, 🙌), Hashtags (#DreamHome, #Kurukshetra, #LandmarkProperties, #NewBeginnings).
+            FOCUS: The "look" of the property, the "vibe", personal excitement.
+            Examples: "Obsessed with our new view! 😍 Thanks @Landmark for finding this gem. #HomeSweetHome", "Best decision ever! 🔥"
+            `;
+            break;
+
         case "facebook":
             platformInstruction = `
-            STYLE: Casual, friendly, can use emojis (Not too many). 
-            Mention "recommend" or "recommendation". 
-            Examples: "Highly recommend!", "Great experience 🏠"
+            STYLE: "Community Recommendation" style. Conversational, story-telling.
+            TONE: Trustworthy, neighborly, helpful.
+            FORMAT: 2-4 sentences. Can use simple emojis (👍, 🏡).
+            MUST MENTION: "Friends", "Family", "Recommendation", "Trust".
+            FOCUS: The experience, the helpfulness of staff, recommending to others in the social circle.
+            Examples: "Start with: 'If anyone is looking for...'", "Highly recommend Landmark for their honest dealing."
             `;
             break;
+
         case "trustpilot":
             platformInstruction = `
-            STYLE: Professional, service-oriented, detailed. 
-            Focus on trust, transparency, and process.
+            STYLE: "Verified Customer" style. Professional, objective, detailed.
+            TONE: Serious, grateful, transparent.
+            FORMAT: 3-5 sentences. NO emojis.
+            FOCUS: Process transparency, documentation, legality, specific names of staff, price fairness.
+            Examples: "The documentation process was seamless.", "Mr. [Name] guided us well regarding legalities."
             `;
             break;
+
         case "google":
         default:
             platformInstruction = `
-            STYLE: Balanced mix of professional and casual. 
-            Standard Google Review format.
+            STYLE: "Standard Local Guide" style. Balanced (Professional yet personal).
+            TONE: Informative, direct.
+            FORMAT: 3-4 lines. Standard punctuation.
+            FOCUS: Location specific (Sector numbers), Price, Time taken, Property specs.
+            Examples: "Bought a 250 sq yard plot in Sector 7.", "Good dealing for commercial properties."
             `;
             break;
     }
 
     return `
-Generate ${reviewCount} UNIQUE and DIFFERENT 5-star ${platform} reviews for "${businessName}" - a ${businessType} dealer in ${location}, India.
+    Generate ${reviewCount} COMPLETELY UNIQUE ${platform} reviews for "${businessName}" - a ${businessType} dealer in ${location}.
 
-PLATFORM CONTEXT: ${platform}
-${platformInstruction}
+    STRICT PLATFORM RULES:
+    ${platformInstruction}
 
-IMPORTANT: Each review must be COMPLETELY DIFFERENT from others. Do NOT repeat same phrases or structure.
+    GENERAL REQUIREMENTS:
+    - VARY the customer persona (Investor, First-time buyer, Shop owner, NRI, Retired couple).
+    - VARY the specific location (${areas.join(", ")}) and property type (${propertyTypes.join(", ")}).
+    - VARY the tone (some excited, some calm/professional, some grateful).
 
-CUSTOMER TYPES TO MIX:
-- First-time home buyer
-- Investor
-- Business owner
-- Family relocating
-- NRI
-- Young professional
-- Retired person
+    LANGUAGE MIX:
+    - Mostly English.
+    - 2-3 reviews can be "Hinglish" (casual Indian English) using words like "Sahi deal", "Bahut badhiya", "Mast location", "Theek daam".
 
-REVIEW ELEMENTS TO VARY:
-- Greetings/Situations/Staff names/Time taken/Specific locations
+    ANTIPATTERNS (DO NOT DO THIS):
+    - DO NOT start every review with "I recently...".
+    - DO NOT use robotic words: "seamless", "exemplary", "top-notch", "impeccable", "beacon".
+    - DO NOT repeat the same structure.
 
-PROPERTY TYPES: ${propertyTypes.join(", ")}
-LOCAL AREAS: ${areas.join(", ")}
-
-LANGUAGE:
-- 6-7 reviews in simple English
-- 2-3 can have Hinglish words (bahut accha, sahi deal, mast)
-
-BANNED WORDS: exceptional, outstanding, seamless, comprehensive, exemplary, transparent dealings.
-
-OUTPUT: Return ONLY a valid JSON array of ${reviewCount} strings.
-Example: ["Review 1...", "Review 2..."]
-`;
+    OUTPUT FORMAT:
+    Return ONLY a valid JSON array of strings. 
+    Example: ["Review text 1", "Review text 2"]
+    `;
 }
 
 /**
