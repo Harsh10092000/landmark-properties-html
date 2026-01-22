@@ -56,7 +56,7 @@ export const siteConfig = {
             id: "google",
             name: "Google",
             icon: "google",
-            reviewUrl: "https://www.google.com/search?q=Landmark+Properties+Reviews",
+            reviewUrl: "https://www.google.com/search?q=Landmark+Properties+-+Real+Estate+Broker+%26+Builders+Reviews&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeYvDubAqwXKwXZrOwuYzyuk73q3OWZq5V5gp3uIzl5-MjCycsMtPpGtjn1VuVvdj4txgVO-qfCAGMl4FoDm1LBj2lAJZI3OGdZegucHajhm9yUvWpp-9AaS7O7djWo0Ol6xlORBgrnUxC6KyM3LvAXCJpVt&sa=X&ved=2ahUKEwj1ocnsrZmSAxVvWnADHTa-Ei8Q0bkNegQIHxAH#lrd=0x390e470336eef35d:0xd98da635dd8ae2b4,3,,,,",
             buttonText: "Can't find a match? Write your own Review on Google",
             colors: {
                 primary: "#4285F4",
@@ -101,7 +101,7 @@ export const siteConfig = {
                 primary: "#C13584", // Darker Insta pink/purple for better visibility
                 secondary: "#FDF2F5",
                 stars: "#E1306C",
-                gradient: "from-[#833AB4] via-[#FD1D1D] to-[#FCB045]"
+                gradient: "linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4)"
             }
         },
     ],

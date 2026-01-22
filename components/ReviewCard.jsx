@@ -37,8 +37,14 @@ export default function ReviewCard({ review, colors, redirectUrl }) {
         >
             {/* Gradient accent - uses platform gradient class or primary color fallback */}
             <div
-                className={`review-card-accent bg-gradient-to-r ${theme.gradient || ''}`}
-                style={!theme.gradient ? { background: `linear-gradient(to right, ${theme.primary}, ${theme.primary}dd)` } : {}}
+                className={`review-card-accent ${theme.gradient && !theme.gradient.includes('linear-gradient') ? `bg-gradient-to-r ${theme.gradient}` : ''}`}
+                style={{
+                    background: theme.gradient && theme.gradient.includes('linear-gradient')
+                        ? theme.gradient
+                        : !theme.gradient
+                            ? `linear-gradient(to right, ${theme.primary}, ${theme.primary}dd)`
+                            : undefined
+                }}
             ></div>
 
             {/* Quote icon - uses platform color */}
